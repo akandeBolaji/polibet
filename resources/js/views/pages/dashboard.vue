@@ -6,7 +6,7 @@
         <v-toolbar-title class="green--text">Polibet</v-toolbar-title>
          <v-spacer></v-spacer>
           <v-btn class="white--text" color='green' v-if="userData.account">
-              Bal - N{{ userData.account.balance }}.00
+              Bal - N{{ userData.balance }}.00
          </v-btn>
        </v-toolbar>
        <v-navigation-drawer

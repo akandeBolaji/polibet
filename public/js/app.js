@@ -52269,7 +52269,7 @@ var render = function() {
                     [
                       _vm._v(
                         "\n            Bal - N" +
-                          _vm._s(_vm.userData.account.balance) +
+                          _vm._s(_vm.userData.balance) +
                           ".00\n       "
                       )
                     ]

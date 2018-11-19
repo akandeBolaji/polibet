@@ -70,6 +70,7 @@ class AuthController extends Controller
 
 
 
+
         $user = JWTAuth::parseToken()->authenticate();
         $profile = $user->Profile;
         $bet = $user->Bets;
@@ -79,6 +80,8 @@ class AuthController extends Controller
         $account = $user->Account;
         $referral_bonus = $user->ReferralBonus;
         $signup_bonus = $user->SignupBonus;
+        $referral_total = \App\referralBonus::where('user_id', $user->id)->sum('amount');
+        $balance = $account->balance + $signup_bonus->amount + $referral_total;
         $funds = $user->Funds;
 
         $referrals = \App\User::where('referrer_id', $user->refer_id)->get();
@@ -90,7 +93,7 @@ class AuthController extends Controller
         $referrals_name =  \App\User::where('referrer_id', $user->refer_id)->get(['full_name']);
         }
 
-        return response()->json(compact('user','profile', 'bet', 'funds', 'bet_friends', 'referrals_name', 'vote', 'amount', 'account', 'referral_bonus', 'signup_bonus'), 201);
+        return response()->json(compact('user','profile', 'bet', 'balance','funds', 'bet_friends', 'referrals_name', 'vote', 'amount', 'account', 'referral_bonus', 'signup_bonus'), 201);
     }
 
     public function getStats(){
