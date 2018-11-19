@@ -312,7 +312,7 @@
        <v-expansion-panel-content
       >
         <div slot="header">Referrals</div>
-        <v-card v-if="userData.referrals_name != 0"  :key="referral" v-for="referral in userData.referrals_name">
+        <v-card v-if="userData.referrals_name != 0"  :key="referral.id" v-for="referral in userData.referrals_name">
           <v-card-text  class="grey lighten-3" >{{ referral.full_name }}</v-card-text>
           <v-divider></v-divider>
         </v-card>

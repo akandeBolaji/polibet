@@ -90,7 +90,7 @@ class AuthController extends Controller
             $referrals_name = [];
         }
         else {
-        $referrals_name =  \App\User::where('referrer_id', $user->refer_id)->get(['full_name']);
+        $referrals_name =  \App\User::where('referrer_id', $user->refer_id)->get(['full_name', 'id']);
         }
 
         return response()->json(compact('user','profile', 'bet', 'balance','funds', 'bet_friends', 'referrals_name', 'vote', 'amount', 'account', 'referral_bonus', 'signup_bonus'), 201);

@@ -53700,7 +53700,7 @@ var render = function() {
                             return _vm.userData.referrals_name != 0
                               ? _c(
                                   "v-card",
-                                  { key: referral },
+                                  { key: referral.id },
                                   [
                                     _c(
                                       "v-card-text",
