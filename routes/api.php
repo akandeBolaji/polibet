@@ -34,6 +34,7 @@ Route::group(['middleware' => ['jwt.auth']], function () {
     Route::get('/auth/user','AuthController@getAuthUser');
       Route::get('/user','UserController@index');
       Route::post('/user/add-bet','UserController@addBet');
+      Route::post('/user/add-fund','UserController@addFund');
       Route::post('/user/add-betfriend','UserController@addBetFriend');
       Route::delete('/user/{id}','UserController@destroy');
       Route::get('/user/dashboard','UserController@dashboard');

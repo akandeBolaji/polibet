@@ -447,10 +447,30 @@
         <v-card-title>
           <span class="headline">Fund Account</span>
         </v-card-title>
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout wrap>
+                <v-text-field label="Amount" v-model="fund.real_amount" data-vv-scope="fund" name="Amount" v-validate="'required|numeric'"></v-text-field>
+                <v-alert :value="errors.has('fund.Amount')" type="error">{{ errors.first('fund.Amount') }}</v-alert>
+            </v-layout>
+          </v-container>
+        </v-card-text>
         <v-card-actions>
+          <v-btn flat @click.native="fundAccount_dialog = false">Close</v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="fundAccount_dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="fundAccount_dialog = false">Save</v-btn>
+        <paystack
+        :amount="amount"
+        :email="email"
+        :paystackkey="paystackkey"
+        :reference="reference"
+        :callback="callback"
+        :close="close"
+        :embed="false"
+       >
+
+          <v-btn color="green"  class="white--text fas fa-money-bill-alt">Make Payment</v-btn>
+       </paystack>
+
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -507,9 +527,19 @@
 </template>
 
 <script>
+import paystack from 'vue-paystack';
   export default {
+    components: {
+        paystack
+    },
     data() {
         return {
+            paystackkey: "pk_test_8e49810c12ca188a313ff2340e5d4d7113fd1acf", //paystack public key
+            fund: {
+            real_amount: 0,
+            //email: userData.user.email, // Customer email
+            //amount: real_amount * 100,  // in kobo
+            },
             panel:[],
             bet: {
              check: '',
@@ -609,6 +639,29 @@
            this.dialog = true;
          }
        },
+        'addFundStatus': function(){
+         if(this.addFundStatus == 2){
+             this.fundAccount_dialog = false;
+             this.dialog = false;
+             this.infotext = this.$store.getters.getAddFundMessage;
+             this.info = true;
+             this.$router.go();
+         }
+         else if (this.addFundStatus == 3){
+           this.dialog = false;
+           if (this.$store.getters.getAddFundMessage) {
+           this.infotext = this.$store.getters.getAddFundMessage
+           this.info = true;
+           }
+           else {
+             this.infotext = 'A network error has occured . Please Contact Support';
+             this.info = true;
+           };
+         }
+         else if (this.addFundStatus == 1){
+           this.dialog = true;
+         }
+       },
        'logoutLoadStatus': function(){
          if(this.logoutLoadStatus == 2){
             this.$router.push("/login");
@@ -646,6 +699,23 @@
    },
 
     computed: {
+        amount(){
+          let kobo = 100;
+          return this.fund.real_amount * kobo ;
+        },
+        email(){
+          let userData = this.$store.getters.getUserData;
+          return userData.user.email;
+        },
+          reference(){
+        let text = "";
+        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+        for( let i=0; i < 10; i++ )
+          text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+      },
         computedTotal(){
            let bet = this.$store.getters.getUserData.bet;
            let total = 0;
@@ -704,6 +774,9 @@
        addBetStatus(){
        return this.$store.getters.getAddBetStatus;
      },
+       addFundStatus(){
+       return this.$store.getters.getAddFundStatus;
+     },
       userData(){
        return this.$store.getters.getUserData;
      },
@@ -713,6 +786,30 @@
    },
 
     methods: {
+            callback: function(response){
+                if (response.status == 'success' && response.message == 'Approved' && response.reference == response.trxref ) {
+                console.log(response);
+                console.log('transaction successful');
+                let fundData;
+                fundData = {
+                   amount: this.fund.real_amount,
+                   reference: response.reference,
+                   transaction_id: response.transaction
+                };
+                this.$store.dispatch( 'addFund',
+               {
+               fundData
+               });
+                //this.$router.go();
+                }
+                else {
+                    console.log(response);
+                    console.log('transaction not successful');
+                }
+      },
+      close: function(){
+          console.log("You cancelled Payment, please try again");
+      },
         generateReferralLink() {
          let userData = this.$store.getters.getUserData;
          return 'https://polibet.site/?ref=' + userData.refer_id;

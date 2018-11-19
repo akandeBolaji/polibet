@@ -66,6 +66,31 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Your profile has been updated!','user' => $user]);
     }
+    public function addFund(Request $request){
+        $validation = Validator::make($request->all(),[
+            'amount' => 'required',
+            'reference' => 'required',
+            'transaction_id' => 'required',
+        ],[
+          'required' => 'We seem to have a problem processing your Topup. Please contact support.'
+        ]
+    );
+
+       if($validation->fails())
+      return response()->json(['message' => $validation->messages()->first()],422);
+
+    $user = JWTAuth::parseToken()->authenticate();
+    $account = $user->Account;
+    $account->balance = request('amount') + $account->balance;
+    $account->save();
+    $newFund = new \App\Fund;
+    $newFund->amount = request('amount');
+    $newFund->reference = request('reference');
+    $newFund->transaction_id = request('transaction_id');
+    $user->funds()->save($newFund);
+
+    return response()->json(['message' => 'You have successfully funded your account!']);
+}
 
     public function addBetFriend(Request $request){
         $validation = Validator::make($request->all(),[
@@ -528,7 +553,7 @@ class UserController extends Controller
         }
         $newVote->save();
 
-        return response()->json(['message' => 'Your bet was placed successfully!','user' => $user]);
+        return response()->json(['message' => 'Your bet was placed successfully!']);
     }
 
     public function updateAvatar(Request $request){
