@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Fund extends Model
 {
-    protected $hidden = [];
+    protected $hidden = ['reference', 'transaction_id'];
 
     public function user()
     {

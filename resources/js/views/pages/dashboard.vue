@@ -270,19 +270,21 @@
             </v-list-tile>
             <div  v-if="userData.funds">
             <v-card-title>Fund Details</v-card-title>
-            <v-list-tile>
+            <div v-for="fund in userData.funds" :key="fund.id">
+            <v-list-tile >
               <v-list-tile-content>Fund ID:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N2000</v-list-tile-content>
+              <v-list-tile-content class="align-end">{{fund.id}}</v-list-tile-content>
             </v-list-tile>
               <v-list-tile >
               <v-list-tile-content>Amount:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{ computedWinAmount }}</v-list-tile-content>
+              <v-list-tile-content class="align-end">N {{ fund.amount }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Fund Date:</v-list-tile-content>
-              <v-list-tile-content class="align-end" >N {{ computedWinAmount }}</v-list-tile-content>
+              <v-list-tile-content class="align-end" > {{ fund.created_at }}</v-list-tile-content>
             </v-list-tile>
             <v-divider></v-divider>
+            </div>
             </div>
             </v-list>
         </v-card>
@@ -788,8 +790,6 @@ import paystack from 'vue-paystack';
     methods: {
             callback: function(response){
                 if (response.status == 'success' && response.message == 'Approved' && response.reference == response.trxref ) {
-                console.log(response);
-                console.log('transaction successful');
                 let fundData;
                 fundData = {
                    amount: this.fund.real_amount,
@@ -803,18 +803,14 @@ import paystack from 'vue-paystack';
                 //this.$router.go();
                 }
                 else {
-                    console.log(response);
-                    console.log('transaction not successful');
+                     this.infotext = "Transaction not successful, please try again";
+                     this.info = true;
                 }
       },
       close: function(){
-          console.log("You cancelled Payment, please try again");
+           this.infotext = "You cancelled Payment, please try again";
+             this.info = true;
       },
-        generateReferralLink() {
-         let userData = this.$store.getters.getUserData;
-         return 'https://polibet.site/?ref=' + userData.refer_id;
-        },
-
         adjustCategory(category, candidate) {
            if (category == 1) {
                if (candidate == 1) {

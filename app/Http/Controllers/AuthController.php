@@ -79,6 +79,7 @@ class AuthController extends Controller
         $account = $user->Account;
         $referral_bonus = $user->ReferralBonus;
         $signup_bonus = $user->SignupBonus;
+        $funds = $user->Funds;
 
         $referrals = \App\User::where('referrer_id', $user->refer_id)->get();
 
@@ -89,7 +90,7 @@ class AuthController extends Controller
         $referrals_name =  \App\User::where('referrer_id', $user->refer_id)->get(['full_name']);
         }
 
-        return response()->json(compact('user','profile', 'bet', 'bet_friends', 'referrals_name', 'vote', 'amount', 'account', 'referral_bonus', 'signup_bonus'), 201);
+        return response()->json(compact('user','profile', 'bet', 'funds', 'bet_friends', 'referrals_name', 'vote', 'amount', 'account', 'referral_bonus', 'signup_bonus'), 201);
     }
 
     public function getStats(){

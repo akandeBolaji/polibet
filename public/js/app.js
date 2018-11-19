@@ -51820,6 +51820,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -52077,8 +52079,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {
     callback: function callback(response) {
       if (response.status == 'success' && response.message == 'Approved' && response.reference == response.trxref) {
-        console.log(response);
-        console.log('transaction successful');
         var fundData = void 0;
         fundData = {
           amount: this.fund.real_amount,
@@ -52090,16 +52090,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
         //this.$router.go();
       } else {
-        console.log(response);
-        console.log('transaction not successful');
+        this.infotext = "Transaction not successful, please try again";
+        this.info = true;
       }
     },
     close: function close() {
-      console.log("You cancelled Payment, please try again");
-    },
-    generateReferralLink: function generateReferralLink() {
-      var userData = this.$store.getters.getUserData;
-      return 'https://polibet.site/?ref=' + userData.refer_id;
+      this.infotext = "You cancelled Payment, please try again";
+      this.info = true;
     },
     adjustCategory: function adjustCategory(category, candidate) {
       if (category == 1) {
@@ -53413,77 +53410,103 @@ var render = function() {
                                                 _vm._v("Fund Details")
                                               ]),
                                               _vm._v(" "),
-                                              _c(
-                                                "v-list-tile",
-                                                [
-                                                  _c("v-list-tile-content", [
-                                                    _vm._v("Fund ID:")
-                                                  ]),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-list-tile-content",
-                                                    {
-                                                      staticClass: "align-end"
-                                                    },
-                                                    [_vm._v("N2000")]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-list-tile",
-                                                [
-                                                  _c("v-list-tile-content", [
-                                                    _vm._v("Amount:")
-                                                  ]),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-list-tile-content",
-                                                    {
-                                                      staticClass: "align-end"
-                                                    },
+                                              _vm._l(
+                                                _vm.userData.funds,
+                                                function(fund) {
+                                                  return _c(
+                                                    "div",
+                                                    { key: fund.id },
                                                     [
-                                                      _vm._v(
-                                                        "N " +
-                                                          _vm._s(
-                                                            _vm.computedWinAmount
+                                                      _c(
+                                                        "v-list-tile",
+                                                        [
+                                                          _c(
+                                                            "v-list-tile-content",
+                                                            [_vm._v("Fund ID:")]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "v-list-tile-content",
+                                                            {
+                                                              staticClass:
+                                                                "align-end"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._s(fund.id)
+                                                              )
+                                                            ]
                                                           )
-                                                      )
-                                                    ]
-                                                  )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-list-tile",
-                                                [
-                                                  _c("v-list-tile-content", [
-                                                    _vm._v("Fund Date:")
-                                                  ]),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "v-list-tile-content",
-                                                    {
-                                                      staticClass: "align-end"
-                                                    },
-                                                    [
-                                                      _vm._v(
-                                                        "N " +
-                                                          _vm._s(
-                                                            _vm.computedWinAmount
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-list-tile",
+                                                        [
+                                                          _c(
+                                                            "v-list-tile-content",
+                                                            [_vm._v("Amount:")]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "v-list-tile-content",
+                                                            {
+                                                              staticClass:
+                                                                "align-end"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                "N " +
+                                                                  _vm._s(
+                                                                    fund.amount
+                                                                  )
+                                                              )
+                                                            ]
                                                           )
-                                                      )
-                                                    ]
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "v-list-tile",
+                                                        [
+                                                          _c(
+                                                            "v-list-tile-content",
+                                                            [
+                                                              _vm._v(
+                                                                "Fund Date:"
+                                                              )
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "v-list-tile-content",
+                                                            {
+                                                              staticClass:
+                                                                "align-end"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                " " +
+                                                                  _vm._s(
+                                                                    fund.created_at
+                                                                  )
+                                                              )
+                                                            ]
+                                                          )
+                                                        ],
+                                                        1
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c("v-divider")
+                                                    ],
+                                                    1
                                                   )
-                                                ],
-                                                1
-                                              ),
-                                              _vm._v(" "),
-                                              _c("v-divider")
+                                                }
+                                              )
                                             ],
-                                            1
+                                            2
                                           )
                                         : _vm._e()
                                     ],
