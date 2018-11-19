@@ -5,7 +5,7 @@
          <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         <v-toolbar-title class="green--text">Polibet</v-toolbar-title>
          <v-spacer></v-spacer>
-          <v-btn class="white--text" color='green' v-if="userData.account">
+          <v-btn class="white--text" color='green' v-if="userData.balance != null">
               Bal - N{{ userData.balance }}.00
          </v-btn>
        </v-toolbar>
@@ -103,25 +103,25 @@
              <v-expansion-panel-content
       >
         <div slot="header">Placed bets</div>
-        <div v-if="userData.bet">
-          <v-list dense v-if="userData">
+        <div v-if="userData.bet != 0">
+          <v-list dense v-if="userData.bet != 0">
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Placed bets Amount:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{computedTotal}}</v-list-tile-content>
+              <v-list-tile-content v-if="userData.bet != 0" class="align-end">N {{computedTotal}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Present Win Amount:</v-list-tile-content>
               <v-list-tile-content class="align-end" >N {{ computedWinAmount }}</v-list-tile-content>
             </v-list-tile>
             <v-divider></v-divider>
-            <div v-for="bet in userData.bet" :key="bet.id">
+            <div v-if="userData.bet != 0" v-for="bet in userData.bet" :key="bet.id">
              <v-list-tile >
               <v-list-tile-content>Bet ID:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{adjustId(bet.id)}}</v-list-tile-content>
              </v-list-tile>
              <v-list-tile>
               <v-list-tile-content>Bet Amount:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{bet.amount}}</v-list-tile-content>
+            <v-list-tile-content v-if="userData.bet.amount" class="align-end">N {{bet.amount}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Placed By:</v-list-tile-content>
@@ -129,7 +129,7 @@
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content> Present Win Amount:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{adjustWinAmount(bet.amount, bet.category, bet.candidate)}}</v-list-tile-content>
+              <v-list-tile-content v-if="userData.bet.amount"  class="align-end">N {{adjustWinAmount(bet.amount, bet.category, bet.candidate)}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Bet Candidate and Category:</v-list-tile-content>
@@ -137,7 +137,6 @@
             </v-list-tile>
             <v-divider></v-divider>
             </div>
-
           </v-list>
         </div>
         <v-card v-else>
@@ -154,7 +153,7 @@
         <v-card>
           <v-card-title><h4>Presidential Category</h4></v-card-title>
           <v-divider></v-divider>
-          <v-list dense v-if="userData">
+          <v-list dense v-if="userData.vote && userData.amount">
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Eligble Votes in Category:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{ userData.vote.category_one }}</v-list-tile-content>
@@ -185,7 +184,7 @@
         <v-card>
           <v-card-title><h4>Lagos Governorship Category</h4></v-card-title>
           <v-divider></v-divider>
-            <v-list dense v-if="userData">
+            <v-list dense v-if="userData.vote && userData.amount">
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Eligble Votes in Category:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{ userData.vote.category_two }}</v-list-tile-content>
@@ -239,9 +238,9 @@
             </v-list>
         </v-card>
          <v-card>
-            <v-card-title><h4>Referral Bonus</h4></v-card-title>
-            <v-list dense v-if="userData.referral_bonus != 0">
-            <div v-for="bonus in userData.referral_bonus" :key="bonus.id">
+            <v-card-title  v-if="userData.referral_bonus != 0"><h4>Referral Bonus</h4></v-card-title>
+            <v-list dense>
+            <div v-if="userData.referral_bonus != 0" v-for="bonus in userData.referral_bonus" :key="bonus.id">
             <v-list-tile>
               <v-list-tile-content>Referred's Name:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{bonus.referred}}</v-list-tile-content>
@@ -257,20 +256,17 @@
             <v-divider></v-divider>
             </div>
             </v-list>
-            <v-list v-else>
-            <v-card-text class="grey lighten-3">No referrals yet</v-card-text>
-            </v-list>
         </v-card>
            <v-card>
             <v-card-title><h4>Account Balance</h4></v-card-title>
-            <v-list dense v-if="userData">
+            <v-list dense v-if="userData.account">
                 <v-list-tile class="grey lighten-3">
               <v-list-tile-content> <h4>Account Balance Left:</h4></v-list-tile-content>
               <v-list-tile-content class="align-end">N {{userData.account.balance}}.00</v-list-tile-content>
             </v-list-tile>
-            <div  v-if="userData.funds">
-            <v-card-title>Fund Details</v-card-title>
-            <div v-for="fund in userData.funds" :key="fund.id">
+            <div  v-if="userData.funds != 0">
+            <v-card-title><h4>Fund Details</h4></v-card-title>
+            <div  v-if="userData.funds != 0" v-for="fund in userData.funds" :key="fund.id">
             <v-list-tile >
               <v-list-tile-content>Fund ID:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{fund.id}}</v-list-tile-content>
@@ -302,22 +298,23 @@
         <div slot="header">Check Referral link</div>
         <v-card>
              <v-card-title><h4>Share your referral link below with friends and foes and get a bonus of 100 naira for each valid referral. Each referral bonus has a validity of 5 days</h4></v-card-title>
-          <v-card-text class="grey lighten-3">http://polibet.site/?ref={{userData.user.refer_id}}</v-card-text>
+          <v-card-text class="grey lighten-3" v-if="userData.user">https://polibet.ng/?ref={{userData.user.refer_id}}</v-card-text>
         </v-card>
       </v-expansion-panel-content>
        <v-expansion-panel-content
       >
         <div slot="header">Check Bet id</div>
         <v-card>
-         <v-card-title><h4>Bet id : {{userData.user.bet_id}}</h4></v-card-title>
+         <v-card-title  v-if="userData.user"><h4>Bet id : {{userData.user.bet_id}}</h4></v-card-title>
           <v-card-text class="grey lighten-3">Your Bet id allows your friends place bet for you. Please note that for Subsequent bets in a category, you are not allowed to stake for another candidate </v-card-text>
         </v-card>
       </v-expansion-panel-content>
        <v-expansion-panel-content
       >
         <div slot="header">Referrals</div>
-        <v-card v-if="userData.referrals_name != 0">
-          <v-card-text  class="grey lighten-3" :key="referral" v-for="referral in userData.referrals_name">{{ referral.full_name }}</v-card-text>
+        <v-card v-if="userData.referrals_name != 0"  :key="referral" v-for="referral in userData.referrals_name">
+          <v-card-text  class="grey lighten-3" >{{ referral.full_name }}</v-card-text>
+          <v-divider></v-divider>
         </v-card>
         <v-card v-else>
             <v-card-text  class="grey lighten-3">No Valid Referrals Yet</v-card-text>
@@ -326,9 +323,8 @@
        <v-expansion-panel-content
       >
         <div slot="header">Placed bets for friends</div>
-        <div v-if="userData.bet_friends != 0">
+        <div v-if="userData.bet_friends != 0" v-for="bet in userData.bet_friends" :key="bet.id">
           <v-list dense>
-            <div v-for="bet in userData.bet_friends" :key="bet.id">
              <v-list-tile >
               <v-list-tile-content>Bet ID:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{adjustId(bet.id)}}</v-list-tile-content>
@@ -346,8 +342,6 @@
               <v-list-tile-content class="align-end">{{adjustCategory(bet.category, bet.candidate)}}</v-list-tile-content>
             </v-list-tile>
             <v-divider></v-divider>
-            </div>
-
           </v-list>
         </div>
         <v-card v-else>
@@ -707,7 +701,10 @@ import paystack from 'vue-paystack';
         },
         email(){
           let userData = this.$store.getters.getUserData;
+          if (userData.user){
           return userData.user.email;
+          }
+          return "no email found";
         },
           reference(){
         let text = "";
@@ -721,15 +718,18 @@ import paystack from 'vue-paystack';
         computedTotal(){
            let bet = this.$store.getters.getUserData.bet;
            let total = 0;
+           if (bet != null){
            bet.forEach(element => {
                total = element.amount + total;
            });
+           }
            return total;
         },
         computedWinAmount() {
             let bet = this.$store.getters.getUserData.bet;
             let userData = this.$store.getters.getUserData;
             let total = 0;
+            if (bet != null) {
             bet.forEach(element => {
                 if (element.category == 1){
               if (element.candidate == 1){
@@ -757,6 +757,7 @@ import paystack from 'vue-paystack';
               }
           }
            });
+            }
            return total;
         },
         filteredFriendCandidate(){
@@ -877,6 +878,9 @@ import paystack from 'vue-paystack';
         submitBet() {
         this.$validator.validateAll('addbet').then(result => {
         if (result) {
+            let userData = this.$store.getters.getUserData;
+            if (userData.balance != null) {
+            if (userData.balance >= 5000) {
               let betData;
               betData = this.bet;
                this.$store.dispatch( 'addBet',
@@ -885,6 +889,11 @@ import paystack from 'vue-paystack';
                }
                );
           console.log('submit bet');
+        }  else {
+             this.infotext = 'Insufficient Funds';
+             this.info = true;
+        }
+        }
         }
         })
         },
@@ -892,6 +901,9 @@ import paystack from 'vue-paystack';
          submitFriendBet() {
          this.$validator.validateAll('addfriendbet').then(result => {
          if (result) {
+             let userData = this.$store.getters.getUserData;
+             if (userData.balance != null) {
+            if (userData.balance >= 5000) {
               let betData;
               betData = this.betfriend;
                this.$store.dispatch( 'addBetFriend',
@@ -900,7 +912,12 @@ import paystack from 'vue-paystack';
                }
                );
           console.log('submit friend bet');
+        } else {
+             this.infotext = 'Insufficient Funds';
+             this.info = true;
         }
+        }
+         }
         })
         },
 

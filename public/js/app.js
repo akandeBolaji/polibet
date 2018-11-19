@@ -51816,12 +51816,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -51989,7 +51983,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     email: function email() {
       var userData = this.$store.getters.getUserData;
-      return userData.user.email;
+      if (userData.user) {
+        return userData.user.email;
+      }
+      return "no email found";
     },
     reference: function reference() {
       var text = "";
@@ -52002,42 +51999,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computedTotal: function computedTotal() {
       var bet = this.$store.getters.getUserData.bet;
       var total = 0;
-      bet.forEach(function (element) {
-        total = element.amount + total;
-      });
+      if (bet != null) {
+        bet.forEach(function (element) {
+          total = element.amount + total;
+        });
+      }
       return total;
     },
     computedWinAmount: function computedWinAmount() {
       var bet = this.$store.getters.getUserData.bet;
       var userData = this.$store.getters.getUserData;
       var total = 0;
-      bet.forEach(function (element) {
-        if (element.category == 1) {
-          if (element.candidate == 1) {
-            var category_amount = userData.amount.category_one;
-            var candidate_amount = userData.amount.candidate_one;
-            var winamount = Math.floor(element.amount / candidate_amount * category_amount);
-            total = winamount + total;
-          } else if (element.candidate == 2) {
-            var _category_amount = userData.amount.category_one;
-            var _candidate_amount = userData.amount.candidate_two;
-            var _winamount = Math.floor(element.amount / _candidate_amount * _category_amount);
-            total = _winamount + total;
+      if (bet != null) {
+        bet.forEach(function (element) {
+          if (element.category == 1) {
+            if (element.candidate == 1) {
+              var category_amount = userData.amount.category_one;
+              var candidate_amount = userData.amount.candidate_one;
+              var winamount = Math.floor(element.amount / candidate_amount * category_amount);
+              total = winamount + total;
+            } else if (element.candidate == 2) {
+              var _category_amount = userData.amount.category_one;
+              var _candidate_amount = userData.amount.candidate_two;
+              var _winamount = Math.floor(element.amount / _candidate_amount * _category_amount);
+              total = _winamount + total;
+            }
+          } else if (element.category == 2) {
+            if (element.candidate == 3) {
+              var _category_amount2 = userData.amount.category_two;
+              var _candidate_amount2 = userData.amount.candidate_three;
+              var _winamount2 = Math.floor(element.amount / _candidate_amount2 * _category_amount2);
+              total = _winamount2 + total;
+            } else if (candidate == 2) {
+              var _category_amount3 = userData.amount.category_two;
+              var _candidate_amount3 = userData.amount.candidate_four;
+              var _winamount3 = Math.floor(element.amount / _candidate_amount3 * _category_amount3);
+              total = _winamount3 + total;
+            }
           }
-        } else if (element.category == 2) {
-          if (element.candidate == 3) {
-            var _category_amount2 = userData.amount.category_two;
-            var _candidate_amount2 = userData.amount.candidate_three;
-            var _winamount2 = Math.floor(element.amount / _candidate_amount2 * _category_amount2);
-            total = _winamount2 + total;
-          } else if (candidate == 2) {
-            var _category_amount3 = userData.amount.category_two;
-            var _candidate_amount3 = userData.amount.candidate_four;
-            var _winamount3 = Math.floor(element.amount / _candidate_amount3 * _category_amount3);
-            total = _winamount3 + total;
-          }
-        }
-      });
+        });
+      }
       return total;
     },
     filteredFriendCandidate: function filteredFriendCandidate() {
@@ -52164,12 +52165,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.$validator.validateAll('addbet').then(function (result) {
         if (result) {
-          var betData = void 0;
-          betData = _this3.bet;
-          _this3.$store.dispatch('addBet', {
-            betData: betData
-          });
-          console.log('submit bet');
+          var userData = _this3.$store.getters.getUserData;
+          if (userData.balance != null) {
+            if (userData.balance >= 5000) {
+              var betData = void 0;
+              betData = _this3.bet;
+              _this3.$store.dispatch('addBet', {
+                betData: betData
+              });
+              console.log('submit bet');
+            } else {
+              _this3.infotext = 'Insufficient Funds';
+              _this3.info = true;
+            }
+          }
         }
       });
     },
@@ -52178,12 +52187,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
       this.$validator.validateAll('addfriendbet').then(function (result) {
         if (result) {
-          var betData = void 0;
-          betData = _this4.betfriend;
-          _this4.$store.dispatch('addBetFriend', {
-            betData: betData
-          });
-          console.log('submit friend bet');
+          var userData = _this4.$store.getters.getUserData;
+          if (userData.balance != null) {
+            if (userData.balance >= 5000) {
+              var betData = void 0;
+              betData = _this4.betfriend;
+              _this4.$store.dispatch('addBetFriend', {
+                betData: betData
+              });
+              console.log('submit friend bet');
+            } else {
+              _this4.infotext = 'Insufficient Funds';
+              _this4.info = true;
+            }
+          }
         }
       });
     },
@@ -52262,7 +52279,7 @@ var render = function() {
               _vm._v(" "),
               _c("v-spacer"),
               _vm._v(" "),
-              _vm.userData.account
+              _vm.userData.balance != null
                 ? _c(
                     "v-btn",
                     { staticClass: "white--text", attrs: { color: "green" } },
@@ -52514,11 +52531,11 @@ var render = function() {
                             [_vm._v("Placed bets")]
                           ),
                           _vm._v(" "),
-                          _vm.userData.bet
+                          _vm.userData.bet != 0
                             ? _c(
                                 "div",
                                 [
-                                  _vm.userData
+                                  _vm.userData.bet != 0
                                     ? _c(
                                         "v-list",
                                         { attrs: { dense: "" } },
@@ -52533,16 +52550,22 @@ var render = function() {
                                                 )
                                               ]),
                                               _vm._v(" "),
-                                              _c(
-                                                "v-list-tile-content",
-                                                { staticClass: "align-end" },
-                                                [
-                                                  _vm._v(
-                                                    "N " +
-                                                      _vm._s(_vm.computedTotal)
+                                              _vm.userData.bet != 0
+                                                ? _c(
+                                                    "v-list-tile-content",
+                                                    {
+                                                      staticClass: "align-end"
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "N " +
+                                                          _vm._s(
+                                                            _vm.computedTotal
+                                                          )
+                                                      )
+                                                    ]
                                                   )
-                                                ]
-                                              )
+                                                : _vm._e()
                                             ],
                                             1
                                           ),
@@ -52578,148 +52601,176 @@ var render = function() {
                                           _vm._l(_vm.userData.bet, function(
                                             bet
                                           ) {
-                                            return _c(
-                                              "div",
-                                              { key: bet.id },
-                                              [
-                                                _c(
-                                                  "v-list-tile",
+                                            return _vm.userData.bet != 0
+                                              ? _c(
+                                                  "div",
+                                                  { key: bet.id },
                                                   [
-                                                    _c("v-list-tile-content", [
-                                                      _vm._v("Bet ID:")
-                                                    ]),
-                                                    _vm._v(" "),
                                                     _c(
-                                                      "v-list-tile-content",
-                                                      {
-                                                        staticClass: "align-end"
-                                                      },
+                                                      "v-list-tile",
                                                       [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            _vm.adjustId(bet.id)
-                                                          )
-                                                        )
-                                                      ]
-                                                    )
-                                                  ],
-                                                  1
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-list-tile",
-                                                  [
-                                                    _c("v-list-tile-content", [
-                                                      _vm._v("Bet Amount:")
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "v-list-tile-content",
-                                                      {
-                                                        staticClass: "align-end"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          "N " +
-                                                            _vm._s(bet.amount)
-                                                        )
-                                                      ]
-                                                    )
-                                                  ],
-                                                  1
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-list-tile",
-                                                  [
-                                                    _c("v-list-tile-content", [
-                                                      _vm._v("Placed By:")
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "v-list-tile-content",
-                                                      {
-                                                        staticClass: "align-end"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            _vm.adjustPlacedBy(
-                                                              bet.placed_by,
-                                                              bet.placed_for
-                                                            )
-                                                          )
-                                                        )
-                                                      ]
-                                                    )
-                                                  ],
-                                                  1
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-list-tile",
-                                                  [
-                                                    _c("v-list-tile-content", [
-                                                      _vm._v(
-                                                        " Present Win Amount:"
-                                                      )
-                                                    ]),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "v-list-tile-content",
-                                                      {
-                                                        staticClass: "align-end"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          "N " +
-                                                            _vm._s(
-                                                              _vm.adjustWinAmount(
-                                                                bet.amount,
-                                                                bet.category,
-                                                                bet.candidate
+                                                        _c(
+                                                          "v-list-tile-content",
+                                                          [_vm._v("Bet ID:")]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-list-tile-content",
+                                                          {
+                                                            staticClass:
+                                                              "align-end"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                _vm.adjustId(
+                                                                  bet.id
+                                                                )
                                                               )
                                                             )
+                                                          ]
                                                         )
-                                                      ]
-                                                    )
-                                                  ],
-                                                  1
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-list-tile",
-                                                  [
-                                                    _c("v-list-tile-content", [
-                                                      _vm._v(
-                                                        "Bet Candidate and Category:"
-                                                      )
-                                                    ]),
+                                                      ],
+                                                      1
+                                                    ),
                                                     _vm._v(" "),
                                                     _c(
-                                                      "v-list-tile-content",
-                                                      {
-                                                        staticClass: "align-end"
-                                                      },
+                                                      "v-list-tile",
                                                       [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            _vm.adjustCategory(
-                                                              bet.category,
-                                                              bet.candidate
+                                                        _c(
+                                                          "v-list-tile-content",
+                                                          [
+                                                            _vm._v(
+                                                              "Bet Amount:"
                                                             )
-                                                          )
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _vm.userData.bet.amount
+                                                          ? _c(
+                                                              "v-list-tile-content",
+                                                              {
+                                                                staticClass:
+                                                                  "align-end"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "N " +
+                                                                    _vm._s(
+                                                                      bet.amount
+                                                                    )
+                                                                )
+                                                              ]
+                                                            )
+                                                          : _vm._e()
+                                                      ],
+                                                      1
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-list-tile",
+                                                      [
+                                                        _c(
+                                                          "v-list-tile-content",
+                                                          [_vm._v("Placed By:")]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-list-tile-content",
+                                                          {
+                                                            staticClass:
+                                                              "align-end"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                _vm.adjustPlacedBy(
+                                                                  bet.placed_by,
+                                                                  bet.placed_for
+                                                                )
+                                                              )
+                                                            )
+                                                          ]
                                                         )
-                                                      ]
-                                                    )
+                                                      ],
+                                                      1
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-list-tile",
+                                                      [
+                                                        _c(
+                                                          "v-list-tile-content",
+                                                          [
+                                                            _vm._v(
+                                                              " Present Win Amount:"
+                                                            )
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _vm.userData.bet.amount
+                                                          ? _c(
+                                                              "v-list-tile-content",
+                                                              {
+                                                                staticClass:
+                                                                  "align-end"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "N " +
+                                                                    _vm._s(
+                                                                      _vm.adjustWinAmount(
+                                                                        bet.amount,
+                                                                        bet.category,
+                                                                        bet.candidate
+                                                                      )
+                                                                    )
+                                                                )
+                                                              ]
+                                                            )
+                                                          : _vm._e()
+                                                      ],
+                                                      1
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "v-list-tile",
+                                                      [
+                                                        _c(
+                                                          "v-list-tile-content",
+                                                          [
+                                                            _vm._v(
+                                                              "Bet Candidate and Category:"
+                                                            )
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "v-list-tile-content",
+                                                          {
+                                                            staticClass:
+                                                              "align-end"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                _vm.adjustCategory(
+                                                                  bet.category,
+                                                                  bet.candidate
+                                                                )
+                                                              )
+                                                            )
+                                                          ]
+                                                        )
+                                                      ],
+                                                      1
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c("v-divider")
                                                   ],
                                                   1
-                                                ),
-                                                _vm._v(" "),
-                                                _c("v-divider")
-                                              ],
-                                              1
-                                            )
+                                                )
+                                              : _vm._e()
                                           })
                                         ],
                                         2
@@ -52770,7 +52821,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("v-divider"),
                                       _vm._v(" "),
-                                      _vm.userData
+                                      _vm.userData.vote && _vm.userData.amount
                                         ? _c(
                                             "v-list",
                                             { attrs: { dense: "" } },
@@ -52967,7 +53018,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("v-divider"),
                                       _vm._v(" "),
-                                      _vm.userData
+                                      _vm.userData.vote && _vm.userData.amount
                                         ? _c(
                                             "v-list",
                                             { attrs: { dense: "" } },
@@ -53264,101 +53315,87 @@ var render = function() {
                           _c(
                             "v-card",
                             [
-                              _c("v-card-title", [
-                                _c("h4", [_vm._v("Referral Bonus")])
-                              ]),
-                              _vm._v(" "),
                               _vm.userData.referral_bonus != 0
-                                ? _c(
-                                    "v-list",
-                                    { attrs: { dense: "" } },
-                                    _vm._l(
-                                      _vm.userData.referral_bonus,
-                                      function(bonus) {
-                                        return _c(
-                                          "div",
-                                          { key: bonus.id },
-                                          [
-                                            _c(
-                                              "v-list-tile",
-                                              [
-                                                _c("v-list-tile-content", [
-                                                  _vm._v("Referred's Name:")
-                                                ]),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-list-tile-content",
-                                                  { staticClass: "align-end" },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(bonus.referred)
-                                                    )
-                                                  ]
-                                                )
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-list-tile",
-                                              [
-                                                _c("v-list-tile-content", [
-                                                  _vm._v("Amount:")
-                                                ]),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-list-tile-content",
-                                                  { staticClass: "align-end" },
-                                                  [
-                                                    _vm._v(
-                                                      "N " +
-                                                        _vm._s(bonus.amount)
-                                                    )
-                                                  ]
-                                                )
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "v-list-tile",
-                                              [
-                                                _c("v-list-tile-content", [
-                                                  _vm._v("Expires on:")
-                                                ]),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "v-list-tile-content",
-                                                  { staticClass: "align-end" },
-                                                  [
-                                                    _vm._v(
-                                                      " " +
-                                                        _vm._s(bonus.expires_at)
-                                                    )
-                                                  ]
-                                                )
-                                              ],
-                                              1
-                                            ),
-                                            _vm._v(" "),
-                                            _c("v-divider")
-                                          ],
-                                          1
-                                        )
-                                      }
-                                    )
-                                  )
-                                : _c(
-                                    "v-list",
-                                    [
-                                      _c(
-                                        "v-card-text",
-                                        { staticClass: "grey lighten-3" },
-                                        [_vm._v("No referrals yet")]
+                                ? _c("v-card-title", [
+                                    _c("h4", [_vm._v("Referral Bonus")])
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c(
+                                "v-list",
+                                { attrs: { dense: "" } },
+                                _vm._l(_vm.userData.referral_bonus, function(
+                                  bonus
+                                ) {
+                                  return _vm.userData.referral_bonus != 0
+                                    ? _c(
+                                        "div",
+                                        { key: bonus.id },
+                                        [
+                                          _c(
+                                            "v-list-tile",
+                                            [
+                                              _c("v-list-tile-content", [
+                                                _vm._v("Referred's Name:")
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-list-tile-content",
+                                                { staticClass: "align-end" },
+                                                [_vm._v(_vm._s(bonus.referred))]
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-list-tile",
+                                            [
+                                              _c("v-list-tile-content", [
+                                                _vm._v("Amount:")
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-list-tile-content",
+                                                { staticClass: "align-end" },
+                                                [
+                                                  _vm._v(
+                                                    "N " + _vm._s(bonus.amount)
+                                                  )
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "v-list-tile",
+                                            [
+                                              _c("v-list-tile-content", [
+                                                _vm._v("Expires on:")
+                                              ]),
+                                              _vm._v(" "),
+                                              _c(
+                                                "v-list-tile-content",
+                                                { staticClass: "align-end" },
+                                                [
+                                                  _vm._v(
+                                                    " " +
+                                                      _vm._s(bonus.expires_at)
+                                                  )
+                                                ]
+                                              )
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c("v-divider")
+                                        ],
+                                        1
                                       )
-                                    ],
-                                    1
-                                  )
+                                    : _vm._e()
+                                })
+                              )
                             ],
                             1
                           ),
@@ -53370,7 +53407,7 @@ var render = function() {
                                 _c("h4", [_vm._v("Account Balance")])
                               ]),
                               _vm._v(" "),
-                              _vm.userData
+                              _vm.userData.account
                                 ? _c(
                                     "v-list",
                                     { attrs: { dense: "" } },
@@ -53402,107 +53439,121 @@ var render = function() {
                                         1
                                       ),
                                       _vm._v(" "),
-                                      _vm.userData.funds
+                                      _vm.userData.funds != 0
                                         ? _c(
                                             "div",
                                             [
                                               _c("v-card-title", [
-                                                _vm._v("Fund Details")
+                                                _c("h4", [
+                                                  _vm._v("Fund Details")
+                                                ])
                                               ]),
                                               _vm._v(" "),
                                               _vm._l(
                                                 _vm.userData.funds,
                                                 function(fund) {
-                                                  return _c(
-                                                    "div",
-                                                    { key: fund.id },
-                                                    [
-                                                      _c(
-                                                        "v-list-tile",
+                                                  return _vm.userData.funds != 0
+                                                    ? _c(
+                                                        "div",
+                                                        { key: fund.id },
                                                         [
                                                           _c(
-                                                            "v-list-tile-content",
-                                                            [_vm._v("Fund ID:")]
-                                                          ),
-                                                          _vm._v(" "),
-                                                          _c(
-                                                            "v-list-tile-content",
-                                                            {
-                                                              staticClass:
-                                                                "align-end"
-                                                            },
+                                                            "v-list-tile",
                                                             [
-                                                              _vm._v(
-                                                                _vm._s(fund.id)
-                                                              )
-                                                            ]
-                                                          )
-                                                        ],
-                                                        1
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "v-list-tile",
-                                                        [
-                                                          _c(
-                                                            "v-list-tile-content",
-                                                            [_vm._v("Amount:")]
-                                                          ),
-                                                          _vm._v(" "),
-                                                          _c(
-                                                            "v-list-tile-content",
-                                                            {
-                                                              staticClass:
-                                                                "align-end"
-                                                            },
-                                                            [
-                                                              _vm._v(
-                                                                "N " +
-                                                                  _vm._s(
-                                                                    fund.amount
+                                                              _c(
+                                                                "v-list-tile-content",
+                                                                [
+                                                                  _vm._v(
+                                                                    "Fund ID:"
                                                                   )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "v-list-tile-content",
+                                                                {
+                                                                  staticClass:
+                                                                    "align-end"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    _vm._s(
+                                                                      fund.id
+                                                                    )
+                                                                  )
+                                                                ]
                                                               )
-                                                            ]
-                                                          )
-                                                        ],
-                                                        1
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "v-list-tile",
-                                                        [
-                                                          _c(
-                                                            "v-list-tile-content",
-                                                            [
-                                                              _vm._v(
-                                                                "Fund Date:"
-                                                              )
-                                                            ]
+                                                            ],
+                                                            1
                                                           ),
                                                           _vm._v(" "),
                                                           _c(
-                                                            "v-list-tile-content",
-                                                            {
-                                                              staticClass:
-                                                                "align-end"
-                                                            },
+                                                            "v-list-tile",
                                                             [
-                                                              _vm._v(
-                                                                " " +
-                                                                  _vm._s(
-                                                                    fund.created_at
+                                                              _c(
+                                                                "v-list-tile-content",
+                                                                [
+                                                                  _vm._v(
+                                                                    "Amount:"
                                                                   )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "v-list-tile-content",
+                                                                {
+                                                                  staticClass:
+                                                                    "align-end"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "N " +
+                                                                      _vm._s(
+                                                                        fund.amount
+                                                                      )
+                                                                  )
+                                                                ]
                                                               )
-                                                            ]
-                                                          )
+                                                            ],
+                                                            1
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "v-list-tile",
+                                                            [
+                                                              _c(
+                                                                "v-list-tile-content",
+                                                                [
+                                                                  _vm._v(
+                                                                    "Fund Date:"
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "v-list-tile-content",
+                                                                {
+                                                                  staticClass:
+                                                                    "align-end"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    " " +
+                                                                      _vm._s(
+                                                                        fund.created_at
+                                                                      )
+                                                                  )
+                                                                ]
+                                                              )
+                                                            ],
+                                                            1
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c("v-divider")
                                                         ],
                                                         1
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c("v-divider")
-                                                    ],
-                                                    1
-                                                  )
+                                                      )
+                                                    : _vm._e()
                                                 }
                                               )
                                             ],
@@ -53576,16 +53627,18 @@ var render = function() {
                                 ])
                               ]),
                               _vm._v(" "),
-                              _c(
-                                "v-card-text",
-                                { staticClass: "grey lighten-3" },
-                                [
-                                  _vm._v(
-                                    "http://polibet.site/?ref=" +
-                                      _vm._s(_vm.userData.user.refer_id)
+                              _vm.userData.user
+                                ? _c(
+                                    "v-card-text",
+                                    { staticClass: "grey lighten-3" },
+                                    [
+                                      _vm._v(
+                                        "https://polibet.ng/?ref=" +
+                                          _vm._s(_vm.userData.user.refer_id)
+                                      )
+                                    ]
                                   )
-                                ]
-                              )
+                                : _vm._e()
                             ],
                             1
                           )
@@ -53605,14 +53658,16 @@ var render = function() {
                           _c(
                             "v-card",
                             [
-                              _c("v-card-title", [
-                                _c("h4", [
-                                  _vm._v(
-                                    "Bet id : " +
-                                      _vm._s(_vm.userData.user.bet_id)
-                                  )
-                                ])
-                              ]),
+                              _vm.userData.user
+                                ? _c("v-card-title", [
+                                    _c("h4", [
+                                      _vm._v(
+                                        "Bet id : " +
+                                          _vm._s(_vm.userData.user.bet_id)
+                                      )
+                                    ])
+                                  ])
+                                : _vm._e(),
                               _vm._v(" "),
                               _c(
                                 "v-card-text",
@@ -53639,35 +53694,38 @@ var render = function() {
                             [_vm._v("Referrals")]
                           ),
                           _vm._v(" "),
-                          _vm.userData.referrals_name != 0
-                            ? _c(
-                                "v-card",
-                                _vm._l(_vm.userData.referrals_name, function(
-                                  referral
-                                ) {
-                                  return _c(
-                                    "v-card-text",
-                                    {
-                                      key: referral,
-                                      staticClass: "grey lighten-3"
-                                    },
-                                    [_vm._v(_vm._s(referral.full_name))]
-                                  )
-                                })
-                              )
-                            : _c(
-                                "v-card",
-                                [
-                                  _c(
-                                    "v-card-text",
-                                    { staticClass: "grey lighten-3" },
-                                    [_vm._v("No Valid Referrals Yet")]
-                                  )
-                                ],
-                                1
-                              )
+                          _vm._l(_vm.userData.referrals_name, function(
+                            referral
+                          ) {
+                            return _vm.userData.referrals_name != 0
+                              ? _c(
+                                  "v-card",
+                                  { key: referral },
+                                  [
+                                    _c(
+                                      "v-card-text",
+                                      { staticClass: "grey lighten-3" },
+                                      [_vm._v(_vm._s(referral.full_name))]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("v-divider")
+                                  ],
+                                  1
+                                )
+                              : _c(
+                                  "v-card",
+                                  [
+                                    _c(
+                                      "v-card-text",
+                                      { staticClass: "grey lighten-3" },
+                                      [_vm._v("No Valid Referrals Yet")]
+                                    )
+                                  ],
+                                  1
+                                )
+                          })
                         ],
-                        1
+                        2
                       ),
                       _vm._v(" "),
                       _c(
@@ -53679,125 +53737,120 @@ var render = function() {
                             [_vm._v("Placed bets for friends")]
                           ),
                           _vm._v(" "),
-                          _vm.userData.bet_friends != 0
-                            ? _c(
-                                "div",
-                                [
-                                  _c(
-                                    "v-list",
-                                    { attrs: { dense: "" } },
-                                    _vm._l(_vm.userData.bet_friends, function(
-                                      bet
-                                    ) {
-                                      return _c(
-                                        "div",
-                                        { key: bet.id },
-                                        [
-                                          _c(
-                                            "v-list-tile",
-                                            [
-                                              _c("v-list-tile-content", [
-                                                _vm._v("Bet ID:")
-                                              ]),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-list-tile-content",
-                                                { staticClass: "align-end" },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(_vm.adjustId(bet.id))
-                                                  )
-                                                ]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-list-tile",
-                                            [
-                                              _c("v-list-tile-content", [
-                                                _vm._v("Bet Amount:")
-                                              ]),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-list-tile-content",
-                                                { staticClass: "align-end" },
-                                                [
-                                                  _vm._v(
-                                                    "N " + _vm._s(bet.amount)
-                                                  )
-                                                ]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-list-tile",
-                                            [
-                                              _c("v-list-tile-content", [
-                                                _vm._v("Placed By:")
-                                              ]),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-list-tile-content",
-                                                { staticClass: "align-end" },
-                                                [_vm._v(_vm._s(bet.placed_by))]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "v-list-tile",
-                                            [
-                                              _c("v-list-tile-content", [
+                          _vm._l(_vm.userData.bet_friends, function(bet) {
+                            return _vm.userData.bet_friends != 0
+                              ? _c(
+                                  "div",
+                                  { key: bet.id },
+                                  [
+                                    _c(
+                                      "v-list",
+                                      { attrs: { dense: "" } },
+                                      [
+                                        _c(
+                                          "v-list-tile",
+                                          [
+                                            _c("v-list-tile-content", [
+                                              _vm._v("Bet ID:")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-list-tile-content",
+                                              { staticClass: "align-end" },
+                                              [
                                                 _vm._v(
-                                                  "Bet Candidate and Category:"
+                                                  _vm._s(_vm.adjustId(bet.id))
                                                 )
-                                              ]),
-                                              _vm._v(" "),
-                                              _c(
-                                                "v-list-tile-content",
-                                                { staticClass: "align-end" },
-                                                [
-                                                  _vm._v(
-                                                    _vm._s(
-                                                      _vm.adjustCategory(
-                                                        bet.category,
-                                                        bet.candidate
-                                                      )
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-list-tile",
+                                          [
+                                            _c("v-list-tile-content", [
+                                              _vm._v("Bet Amount:")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-list-tile-content",
+                                              { staticClass: "align-end" },
+                                              [
+                                                _vm._v(
+                                                  "N " + _vm._s(bet.amount)
+                                                )
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-list-tile",
+                                          [
+                                            _c("v-list-tile-content", [
+                                              _vm._v("Placed By:")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-list-tile-content",
+                                              { staticClass: "align-end" },
+                                              [_vm._v(_vm._s(bet.placed_by))]
+                                            )
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "v-list-tile",
+                                          [
+                                            _c("v-list-tile-content", [
+                                              _vm._v(
+                                                "Bet Candidate and Category:"
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c(
+                                              "v-list-tile-content",
+                                              { staticClass: "align-end" },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm.adjustCategory(
+                                                      bet.category,
+                                                      bet.candidate
                                                     )
                                                   )
-                                                ]
-                                              )
-                                            ],
-                                            1
-                                          ),
-                                          _vm._v(" "),
-                                          _c("v-divider")
-                                        ],
-                                        1
-                                      )
-                                    })
-                                  )
-                                ],
-                                1
-                              )
-                            : _c(
-                                "v-card",
-                                [
-                                  _c(
-                                    "v-card-text",
-                                    { staticClass: "grey lighten-3" },
-                                    [_vm._v("No bets for friends yet")]
-                                  )
-                                ],
-                                1
-                              )
+                                                )
+                                              ]
+                                            )
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c("v-divider")
+                                      ],
+                                      1
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _c(
+                                  "v-card",
+                                  [
+                                    _c(
+                                      "v-card-text",
+                                      { staticClass: "grey lighten-3" },
+                                      [_vm._v("No bets for friends yet")]
+                                    )
+                                  ],
+                                  1
+                                )
+                          })
                         ],
-                        1
+                        2
                       )
                     ],
                     1
