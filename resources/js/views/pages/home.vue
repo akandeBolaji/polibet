@@ -30,7 +30,7 @@
               class="white green--text darken-2 mt-5"
               dark
               large
-              href="/register"
+              @click="register"
             >
               Get Started
             </v-btn>

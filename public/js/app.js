@@ -51282,7 +51282,8 @@ var render = function() {
                         "v-btn",
                         {
                           staticClass: "white green--text darken-2 mt-5",
-                          attrs: { dark: "", large: "", href: "/register" }
+                          attrs: { dark: "", large: "" },
+                          on: { click: _vm.register }
                         },
                         [_vm._v("\n            Get Started\n          ")]
                       )

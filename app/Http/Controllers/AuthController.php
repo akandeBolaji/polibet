@@ -184,6 +184,7 @@ class AuthController extends Controller
 
         $user = \App\User::create([
             'phone' => request('phone'),
+            'ip' => request()->ip(),
             'email' => request('email'),
             'full_name' => request('full_name'),
             'status' => 'pending_activation',
@@ -262,6 +263,8 @@ class AuthController extends Controller
         $referrer_id =  $user->referrer_id;
         if ($referrer_id) {
            $referrer = \App\User::where('refer_id', $referrer_id)->first();
+           $countIP = \App\User::where('ip', $user->ip)->count();
+           if ($countIP == 1) {
           if ($referrer) {
               $referrer_bonus = new \App\referralBonus;
               $referrer_bonus->amount = 100;
@@ -269,6 +272,7 @@ class AuthController extends Controller
               $referrer_bonus->referred = $user->full_name;
               $referrer->referralBonus()->save($referrer_bonus);
           }
+        }
         }
         $user->notify(new Activated($user));
 
