@@ -55,6 +55,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany('App\Fund');
     }
 
+    public function withdrawals()
+    {
+        return $this->hasMany('App\Withdrawal');
+    }
+
     public function account()
     {
         return $this->hasOne('App\Account');

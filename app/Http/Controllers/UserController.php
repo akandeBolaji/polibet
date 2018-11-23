@@ -66,9 +66,38 @@ class UserController extends Controller
 
         return response()->json(['message' => 'Your profile has been updated!','user' => $user]);
     }
+    public function withdrawFund(Request $request){
+        $validation = Validator::make($request->all(),[
+            'amount' => 'required|numeric',
+        ],[
+          'required' => 'We seem to have a problem processing your Topup. Please contact support.'
+        ]
+    );
+
+       if($validation->fails())
+      return response()->json(['message' => $validation->messages()->first()],422);
+
+
+      $user = JWTAuth::parseToken()->authenticate();
+      $account = $user->Account;
+      $withdraw_total = \App\Withdrawal::where('user_id', $user->id)->sum('amount');
+      $win_total = \App\Bet::where('user_id', $user->id)->where('status', 'won')->sum('win_amount');
+      $withdrawable = $account->balance + $win_total - $withdraw_total;
+      $win_balance = $win_total - $withdraw_total;
+      if ($withdrawable < request('amount'))
+      return response()->json(['message' => 'Insufficient cleared funds to withdraw'], 422);
+
+      $newWithdrawal = new \App\Withdrawal;
+      $newWithdrawal->amount = request('amount');
+      $newWithdrawal->status = 'Processing';
+      $user->withdrawals()->save($newWithdrawal);
+
+      return response()->json(['message' => 'Your withdrawal request was sent successfully. You should receive within 2 working days.']);
+    }
+
     public function addFund(Request $request){
         $validation = Validator::make($request->all(),[
-            'amount' => 'required',
+            'amount' => 'required|numeric',
             'reference' => 'required',
             'transaction_id' => 'required',
         ],[
@@ -156,6 +185,7 @@ class UserController extends Controller
                        $newBet->placed_by = $user->full_name;
                        $newBet->placed_for = $friend->full_name;
                        $newBet->amount = request('amount');
+                       $newBet->status = 'pending';
                        $newBet->signup_bonus_used =  $signup_bonus;
                        $newBet->referral_bonus_used =  $referral_bonus;
                        $newBet->account_balance_used =  $account_balance_used;

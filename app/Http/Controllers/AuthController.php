@@ -78,11 +78,22 @@ class AuthController extends Controller
         $amount = ['candidate_one' => $candidate_one, 'candidate_two' => $candidate_two, 'candidate_three' => $candidate_three, 'candidate_four' => $candidate_four, 'category_one' => $category_one, 'category_two' => $category_two];
         $vote = ['candidate_one' => $votecandidate_one, 'candidate_two' => $votecandidate_two, 'candidate_three' => $votecandidate_three, 'candidate_four' => $votecandidate_four, 'category_one' => $votecategory_one, 'category_two' => $votecategory_two];
         $account = $user->Account;
+        //$win_total = \App\Bet::where('user_id', $user->id)->where('status', 'won')->sum('win_amount');
+        //if ($win_total){
+            //$withdraw = $win_total;
+        //}
+        //else {
+           // $withdraw = 0;
+        //}
         $referral_bonus = $user->ReferralBonus;
         $signup_bonus = $user->SignupBonus;
         $referral_total = \App\referralBonus::where('user_id', $user->id)->sum('amount');
-        $balance = $account->balance + $signup_bonus->amount + $referral_total;
+        $withdraw_total = \App\Withdrawal::where('user_id', $user->id)->sum('amount');
+        $win_total = \App\Bet::where('user_id', $user->id)->where('status', 'won')->sum('win_amount');
+        $balance = $account->balance + $signup_bonus->amount + $referral_total + $win_total - $withdraw_total;
+        $withdrawable = $account->balance + $win_total - $withdraw_total;
         $funds = $user->Funds;
+        $withdrawals = $user->withdrawals;
 
         $referrals = \App\User::where('referrer_id', $user->refer_id)->get();
 
@@ -93,7 +104,7 @@ class AuthController extends Controller
         $referrals_name =  \App\User::where('referrer_id', $user->refer_id)->get(['full_name', 'id']);
         }
 
-        return response()->json(compact('user','profile', 'bet', 'balance','funds', 'bet_friends', 'referrals_name', 'vote', 'amount', 'account', 'referral_bonus', 'signup_bonus'), 201);
+        return response()->json(compact('user','profile', 'withdrawals', 'bet', 'withdrawable', 'balance','funds', 'bet_friends', 'referrals_name', 'vote', 'amount', 'account', 'referral_bonus', 'signup_bonus'), 201);
     }
 
     public function getStats(){

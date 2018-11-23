@@ -57,7 +57,7 @@
           </v-list-tile-action>
 
           <v-list-tile-content>
-            <v-list-tile-title>Place Bet</v-list-tile-title>
+            <v-list-tile-title>Place Predicts</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
 
@@ -67,7 +67,7 @@
           </v-list-tile-action>
 
           <v-list-tile-content>
-            <v-list-tile-title>Bet for Friends</v-list-tile-title>
+            <v-list-tile-title>Predict for Friends</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
 
@@ -78,7 +78,7 @@
           </v-list-tile-action>
 
           <v-list-tile-content>
-            <v-list-tile-title>Withdraw Wins</v-list-tile-title>
+            <v-list-tile-title>Withdraw</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
 
@@ -102,11 +102,11 @@
       >
              <v-expansion-panel-content
       >
-        <div slot="header">Placed bets</div>
+        <div slot="header">Predicts</div>
         <div v-if="userData.bet != 0">
           <v-list dense v-if="userData.bet != 0">
             <v-list-tile class="grey lighten-3">
-              <v-list-tile-content>Total Placed bets Amount:</v-list-tile-content>
+              <v-list-tile-content>Total Predicts Amount:</v-list-tile-content>
               <v-list-tile-content v-if="userData.bet != 0" class="align-end">N {{computedTotal}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
@@ -116,12 +116,16 @@
             <v-divider></v-divider>
             <div v-if="userData.bet != 0" v-for="bet in userData.bet" :key="bet.id">
              <v-list-tile >
-              <v-list-tile-content>Bet ID:</v-list-tile-content>
+              <v-list-tile-content>Predict ID:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{adjustId(bet.id)}}</v-list-tile-content>
              </v-list-tile>
              <v-list-tile>
-              <v-list-tile-content>Bet Amount:</v-list-tile-content>
+              <v-list-tile-content>Predict Amount:</v-list-tile-content>
             <v-list-tile-content v-if="userData.bet.amount" class="align-end">N {{bet.amount}}</v-list-tile-content>
+            </v-list-tile>
+             <v-list-tile>
+              <v-list-tile-content>Status:</v-list-tile-content>
+            <v-list-tile-content v-if="userData.bet.status" class="align-end">N {{bet.status}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Placed By:</v-list-tile-content>
@@ -132,7 +136,7 @@
               <v-list-tile-content v-if="userData.bet.amount"  class="align-end">N {{adjustWinAmount(bet.amount, bet.category, bet.candidate)}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
-              <v-list-tile-content>Bet Candidate and Category:</v-list-tile-content>
+              <v-list-tile-content>Predict Candidate and Category:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{adjustCategory(bet.category, bet.candidate)}}</v-list-tile-content>
             </v-list-tile>
             <v-divider></v-divider>
@@ -140,7 +144,7 @@
           </v-list>
         </div>
         <v-card v-else>
-        <v-card-text class="grey lighten-3">No bets yet</v-card-text>
+        <v-card-text class="grey lighten-3">No predicts yet</v-card-text>
         </v-card>
       </v-expansion-panel-content>
 
@@ -155,19 +159,27 @@
           <v-divider></v-divider>
           <v-list dense v-if="userData.vote && userData.amount">
             <v-list-tile class="grey lighten-3">
-              <v-list-tile-content>Total Eligble Votes in Category:</v-list-tile-content>
+              <v-list-tile-content>Total Predicts in Category:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{ userData.vote.category_one }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Total Amount staked in Category:</v-list-tile-content>
               <v-list-tile-content class="align-end">N {{ userData.amount.category_one }}</v-list-tile-content>
             </v-list-tile>
+             <v-list-tile class="grey lighten-3">
+              <v-list-tile-content>Probability of Buhari Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end"> {{sanwoProb }}</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile >
+              <v-list-tile-content>Probability of Atiku Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end"> {{agbajeProb}}</v-list-tile-content>
+            </v-list-tile>
             <v-list-tile class="grey lighten-3">
-              <v-list-tile-content>Total Eligble Votes for Buhari:</v-list-tile-content>
+              <v-list-tile-content>Total Predicts for Buhari:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{ userData.vote.candidate_one }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
-              <v-list-tile-content>Total Eligble Votes for Atiku:</v-list-tile-content>
+              <v-list-tile-content>Total Predicts for Atiku:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{ userData.vote.candidate_two }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
@@ -186,19 +198,27 @@
           <v-divider></v-divider>
             <v-list dense v-if="userData.vote && userData.amount">
             <v-list-tile class="grey lighten-3">
-              <v-list-tile-content>Total Eligble Votes in Category:</v-list-tile-content>
+              <v-list-tile-content>Total Predicts in Category:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{ userData.vote.category_two }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Total Amount staked in Category:</v-list-tile-content>
               <v-list-tile-content class="align-end">N {{ userData.amount.category_two }}</v-list-tile-content>
             </v-list-tile>
+             <v-list-tile class="grey lighten-3">
+              <v-list-tile-content>Probability of Sanwo olu Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end"> {{sanwoProb }}</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile >
+              <v-list-tile-content>Probability of Agbaje Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end"> {{agbajeProb}}</v-list-tile-content>
+            </v-list-tile>
             <v-list-tile class="grey lighten-3">
-              <v-list-tile-content>Total Eligble Votes for Sanwo-Olu:</v-list-tile-content>
+              <v-list-tile-content>Total Predicts for Sanwo-Olu:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{ userData.vote.candidate_three }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
-              <v-list-tile-content>Total Eligble Votes for Agbaje:</v-list-tile-content>
+              <v-list-tile-content>Total Predicts for Agbaje:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{ userData.vote.candidate_four }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
@@ -262,7 +282,7 @@
             <v-list dense v-if="userData.account">
                 <v-list-tile class="grey lighten-3">
               <v-list-tile-content> <h4>Account Balance Left:</h4></v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{userData.account.balance}}.00</v-list-tile-content>
+              <v-list-tile-content class="align-end">N {{userData.withdrawable}}.00</v-list-tile-content>
             </v-list-tile>
             <div  v-if="userData.funds != 0">
             <v-card-title><h4>Fund Details</h4></v-card-title>
@@ -287,10 +307,30 @@
       </v-expansion-panel-content>
        <v-expansion-panel-content
       >
-        <div slot="header">Winning Statistics</div>
+        <div slot="header">Withdrawals</div>
         <v-card>
-          <v-card-text v-if="userData.bets" class="grey lighten-3">Current win amount is N{{ computedWinAmount }}.00</v-card-text>
-          <v-card-text v-else class="grey lighten-3">No bets placed yet</v-card-text>
+          <v-card-text v-if="userData.withdrawals != 0" class="grey lighten-3">
+            <div v-for="withdrawal in userData.withdrawals" :key="withdrawal.id">
+            <v-list-tile >
+              <v-list-tile-content>Withdrawal ID:</v-list-tile-content>
+              <v-list-tile-content class="align-end">{{withdrawal.id}}</v-list-tile-content>
+            </v-list-tile>
+              <v-list-tile >
+              <v-list-tile-content>Amount:</v-list-tile-content>
+              <v-list-tile-content class="align-end">N {{ withdrawal.amount }}</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile >
+              <v-list-tile-content>Status:</v-list-tile-content>
+              <v-list-tile-content class="align-end">N {{ withdrawal.status }}</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-content>Fund Date:</v-list-tile-content>
+              <v-list-tile-content class="align-end" > {{ withdrawal.created_at }}</v-list-tile-content>
+            </v-list-tile>
+            <v-divider></v-divider>
+            </div>
+          </v-card-text>
+          <v-card-text v-else class="grey lighten-3">No withdrawals yet</v-card-text>
         </v-card>
       </v-expansion-panel-content>
       <v-expansion-panel-content
@@ -303,34 +343,36 @@
       </v-expansion-panel-content>
        <v-expansion-panel-content
       >
-        <div slot="header">Check Bet id</div>
+        <div slot="header">Check Predict id</div>
         <v-card>
-         <v-card-title  v-if="userData.user"><h4>Bet id : {{userData.user.bet_id}}</h4></v-card-title>
-          <v-card-text class="grey lighten-3">Your Bet id allows your friends place bet for you. Please note that for Subsequent bets in a category, you are not allowed to stake for another candidate </v-card-text>
+         <v-card-title  v-if="userData.user"><h4>Predict id : {{userData.user.bet_id}}</h4></v-card-title>
+          <v-card-text class="grey lighten-3">Your Predict id allows your friends predict for you. Please note that for Subsequent predicts in a category, you are not allowed to stake for another candidate </v-card-text>
         </v-card>
       </v-expansion-panel-content>
        <v-expansion-panel-content
       >
         <div slot="header">Referrals</div>
-        <v-card v-if="userData.referrals_name != 0"  :key="referral.id" v-for="referral in userData.referrals_name">
+        <div  v-if="userData.referrals_name" >
+        <v-card  :key="referral.id" v-for="referral in userData.referrals_name">
           <v-card-text  class="grey lighten-3" >{{ referral.full_name }}</v-card-text>
           <v-divider></v-divider>
         </v-card>
-        <v-card v-else>
+        </div>
+        <v-card v-if="userData.referrals_name == 0">
             <v-card-text  class="grey lighten-3">No Valid Referrals Yet</v-card-text>
             </v-card>
       </v-expansion-panel-content>
        <v-expansion-panel-content
       >
-        <div slot="header">Placed bets for friends</div>
-        <div v-if="userData.bet_friends != 0" v-for="bet in userData.bet_friends" :key="bet.id">
+        <div slot="header">Placed predicts for friends</div>
+        <div v-if="userData.bet_friends != null" v-for="bet in userData.bet_friends" :key="bet.id">
           <v-list dense>
              <v-list-tile >
-              <v-list-tile-content>Bet ID:</v-list-tile-content>
+              <v-list-tile-content>Predict ID:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{adjustId(bet.id)}}</v-list-tile-content>
              </v-list-tile>
              <v-list-tile>
-              <v-list-tile-content>Bet Amount:</v-list-tile-content>
+              <v-list-tile-content>Predict Amount:</v-list-tile-content>
               <v-list-tile-content class="align-end">N {{bet.amount}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
@@ -338,14 +380,14 @@
               <v-list-tile-content class="align-end">{{bet.placed_by}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
-              <v-list-tile-content>Bet Candidate and Category:</v-list-tile-content>
+              <v-list-tile-content>Predict Candidate and Category:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{adjustCategory(bet.category, bet.candidate)}}</v-list-tile-content>
             </v-list-tile>
             <v-divider></v-divider>
           </v-list>
         </div>
-        <v-card v-else>
-        <v-card-text class="grey lighten-3">No bets for friends yet</v-card-text>
+        <v-card v-if="userData.bet_friends == 0">
+        <v-card-text class="grey lighten-3">No predicts for friends yet</v-card-text>
         </v-card>
       </v-expansion-panel-content>
     </v-expansion-panel>
@@ -398,9 +440,9 @@
           <v-container grid-list-md>
             <v-layout wrap>
                 <v-text-field prepend-icon="person_add" data-vv-scope="addfriendbet" v-model="betfriend.friend_id" v-validate="'required|min:4'" name="Friends id" label="Friend's Bet id" type="text"></v-text-field>
-                <v-alert :value="errors.has('addfriendbet.Friends id')" type="error">{{ errors.first('addfriendbet.Friends id') }}</v-alert>
+                <span :value="errors.has('addfriendbet.Friends id')" style="color:red">{{ errors.first('addfriendbet.Friends id') }}</span>
                 <v-text-field label="Stake Amount" data-vv-scope="addfriendbet" v-model="betfriend.amount"  name="amount" v-validate="'required|numeric|min_value:5000'"  hint="Minimum stake amount is N5000"></v-text-field>
-                <v-alert :value="errors.has('addfriendbet.amount')" type="error">{{ errors.first('addfriendbet.amount') }}</v-alert>
+                <span :value="errors.has('addfriendbet.amount')" style="color:red">{{ errors.first('addfriendbet.amount') }}</span>
                 <v-select
                 :items="options.category"
                 name="category"
@@ -409,7 +451,7 @@
                 v-model="betfriend.category"
                 label="Category"
                  ></v-select>
-                 <v-alert :value="errors.has('addfriendbet.category')" type="error">{{ errors.first('addfriendbet.category') }}</v-alert>
+                 <span :value="errors.has('addfriendbet.category')" style="color:red">{{ errors.first('addfriendbet.category') }}</span>
                 <v-select
                 v-if="betfriend.category"
                 :items="filteredFriendCandidate"
@@ -420,12 +462,12 @@
                 v-model="betfriend.candidate"
                 hint="Be sure that your friend is aware that subsequent/previous bets in selected category has to be for same candidate"
                 ></v-select>
-                <v-alert :value="errors.has('addfriendbet.candidate')" type="error">{{ errors.first('addfriendbet.candidate') }}</v-alert>
+                <span :value="errors.has('addfriendbet.candidate')" style="color:red">{{ errors.first('addfriendbet.candidate') }}</span>
             </v-layout>
           </v-container>
           <small>*Note that placing a bet on behalf of a friend implies that such a person has specifically asked you to do so. You hereby certify that you do not have an ulterior motive (e.g vote buying/selling) </small>
           <v-checkbox v-validate="'required:true'" v-model="betfriend.check" data-vv-scope="addfriendbet" name="terms and condition" label="Do you agree with the statement above?"></v-checkbox>
-          <v-alert :value="errors.has('addfriendbet.terms and condition')" type="error">{{ errors.first('addfriendbet.terms and condition') }}</v-alert>
+          <span :value="errors.has('addfriendbet.terms and condition')" style="color:red">{{ errors.first('addfriendbet.terms and condition') }}</span>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -447,7 +489,7 @@
           <v-container grid-list-md>
             <v-layout wrap>
                 <v-text-field label="Amount" v-model="fund.real_amount" data-vv-scope="fund" name="Amount" v-validate="'required|numeric'"></v-text-field>
-                <v-alert :value="errors.has('fund.Amount')" type="error">{{ errors.first('fund.Amount') }}</v-alert>
+                <span :value="errors.has('fund.Amount')" style="color:red">{{ errors.first('fund.Amount') }}</span>
             </v-layout>
           </v-container>
         </v-card-text>
@@ -471,6 +513,33 @@
       </v-card>
     </v-dialog>
 
+          <v-dialog
+        v-model="withdrawWins_dialog"
+        persistent
+        max-width="500px">
+      <v-card>
+        <v-card-title>
+          <span class="headline">Withdrawal Request</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container grid-list-md>
+            <v-layout wrap>
+                <v-text-field label="Amount" v-model="withdraw.amount" data-vv-scope="withdraw" name="Amount" v-validate="'required|numeric|min_value:5000|max_value:200000'" hint="You cannot withdraw your bonuses"></v-text-field>
+                <span :value="errors.has('withdraw.Amount')" style="color:red">{{ errors.first('withdraw.Amount') }}</span>
+            </v-layout>
+          </v-container>
+          <span v-if="userData.withdrawable != null">Available for withdraw - N{{userData.withdrawable}}.00</span>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn flat @click.native="withdrawWins_dialog = false">Close</v-btn>
+          <v-spacer></v-spacer>
+          <v-btn color="green" class="white--text" @click="withdrawConfirmed">Withdraw</v-btn>
+
+
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
        <v-dialog
         v-model="addBet_dialog"
         persistent
@@ -483,7 +552,7 @@
           <v-container grid-list-md>
             <v-layout wrap>
                 <v-text-field label="Stake Amount" v-model="bet.amount" data-vv-scope="addbet" name="Amount" v-validate="'required|numeric|min_value:5000'"  hint="Minimum stake amount is N5000"></v-text-field>
-                <v-alert :value="errors.has('addbet.Amount')" type="error">{{ errors.first('addbet.Amount') }}</v-alert>
+                <span :value="errors.has('addbet.Amount')" style="color:red">{{ errors.first('addbet.Amount') }}</span>
                 <v-select
                 :items="options.category"
                 name="Category"
@@ -492,7 +561,7 @@
                 v-model="bet.category"
                 label="Category"
                  ></v-select>
-                 <v-alert :value="errors.has('addbet.Category')" type="error">{{ errors.first('addbet.Category') }}</v-alert>
+                 <span :value="errors.has('addbet.Category')" style="color:red">{{ errors.first('addbet.Category') }}</span>
                 <v-select
                 v-if="bet.category"
                 :items="filteredCandidate"
@@ -503,12 +572,12 @@
                 v-model="bet.candidate"
                 hint="Note that subsequent/previous bets in selected category has to be for same candidate"
                 ></v-select>
-                <v-alert :value="errors.has('addbet.Candidate')" type="error">{{ errors.first('addbet.Candidate') }}</v-alert>
+                <span :value="errors.has('addbet.Candidate')" style="color:red">{{ errors.first('addbet.Candidate') }}</span>
             </v-layout>
           </v-container>
           <small>*Note that placing a bet for your preferred candidate is just to encourage you to go out and vote. Going out to vote increases your chance of winning with your preferred candidate </small>
           <v-checkbox v-validate="'required:true'" v-model="bet.check" data-vv-scope="addbet" name="terms and conditions" type="checkbox" label="Do you agree not to have an ulterior motive other than the statement made above as a reason for placing a bet?"></v-checkbox>
-          <v-alert :value="errors.has('addbet.terms and conditions')" type="error">{{ errors.first('addbet.terms and conditions') }}</v-alert>
+          <span :value="errors.has('addbet.terms and conditions')" style="color:red">{{ errors.first('addbet.terms and conditions') }}</span>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -517,7 +586,33 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-      <v-footer absolute color="green"></v-footer>
+      <v-footer height="auto" absolute color="green">
+           <v-layout
+      justify-center
+      row
+      wrap
+    >
+           <v-flex
+        white
+        lighten-2
+        py-3
+        text-xs-center
+        green--text
+        xs12
+      >
+        &copy;2018 — <strong>Polibet</strong>
+      </v-flex>
+      </v-layout>
+          <v-layout row wrap align-center>
+          <v-flex xs12>
+            <div class="white--text ml-3 text-xs-center">
+              Made with
+              <v-icon class="red--text">favorite</v-icon>
+              by <a class="white--text" href="https://codebators.com" target="_blank">CodeBators</a>
+            </div>
+          </v-flex>
+        </v-layout>
+      </v-footer>
     </v-content>
   </v-app>
 </template>
@@ -537,6 +632,9 @@ import paystack from 'vue-paystack';
             //amount: real_amount * 100,  // in kobo
             },
             panel:[],
+            withdraw: {
+                amount: '',
+            },
             bet: {
              check: '',
              candidate: '',
@@ -573,6 +671,7 @@ import paystack from 'vue-paystack';
            }]
       },
       addBet_dialog: false,
+      withdrawWins_dialog: false,
       betFriends_dialog: false,
       fundAccount_dialog: false,
       info: false,
@@ -580,14 +679,12 @@ import paystack from 'vue-paystack';
       dialog: false,
       disable: false,
       drawer: null,
-      infostatus: this.$route.query.info
      }
     },
     props: {},
 
     created() {
      this.fetchData();
-     this.checkInfo();
     },
 
     watch: {
@@ -658,6 +755,29 @@ import paystack from 'vue-paystack';
            this.dialog = true;
          }
        },
+
+         'withdrawFundStatus': function(){
+         if(this.withdrawFundStatus == 2){
+             this.withdrawWins_dialog = false;
+             this.dialog = false;
+             this.infotext = this.$store.getters.getwithdrawFundMessage;
+             this.info = true;
+         }
+         else if (this.withdrawFundStatus == 3){
+           this.dialog = false;
+           if (this.$store.getters.getAddFundMessage) {
+           this.infotext = this.$store.getters.getwithdrawFundMessage
+           this.info = true;
+           }
+           else {
+             this.infotext = 'A network error has occured . Please Contact Support';
+             this.info = true;
+           };
+         }
+         else if (this.withdrawFundStatus == 1){
+           this.dialog = true;
+         }
+       },
        'logoutLoadStatus': function(){
          if(this.logoutLoadStatus == 2){
             this.$router.push("/login");
@@ -695,6 +815,46 @@ import paystack from 'vue-paystack';
    },
 
     computed: {
+        buhariProb(){
+        let data = this.$store.getters.getUserData;
+        if (data.vote.category_one != 0 && data.vote.candidate_one != 0){
+        let answer = data.vote.candidate_one/data.vote.category_one * 100;
+        return answer + '%';
+        }
+         else {
+            return '100%' ;
+        }
+       },
+        atikuProb(){
+        let data = this.$store.getters.getUserData;
+        if (data.vote.category_one != 0 && data.vote.candidate_two != 0){
+        let answer = (data.vote.candidate_two/data.vote.category_one) * 100;
+        return answer + '%';
+        }
+        else {
+            return '100%' ;
+        }
+       },
+        sanwoProb(){
+        let data = this.$store.getters.getUserData;
+        if (data.vote.category_two != 0 && data.vote.candidate_three != 0){
+        let answer = (data.vote.candidate_three/data.vote.category_two) * 100;
+        return answer + '%';
+        }
+        else {
+            return '100%' ;
+        }
+       },
+       agbajeProb(){
+        let data = this.$store.getters.getUserData;
+        if (data.vote.category_two != 0 && data.vote.candidate_four != 0){
+        let answer = (data.vote.candidate_four/data.vote.category_two) * 100;
+        return answer + '%';
+        }
+        else {
+            return '100%' ;
+        }
+       },
         amount(){
           let kobo = 100;
           return this.fund.real_amount * kobo ;
@@ -779,6 +939,9 @@ import paystack from 'vue-paystack';
      },
        addFundStatus(){
        return this.$store.getters.getAddFundStatus;
+     },
+     withdrawFundStatus(){
+       return this.$store.getters.getWithdrawFundStatus;
      },
       userData(){
        return this.$store.getters.getUserData;
@@ -875,12 +1038,33 @@ import paystack from 'vue-paystack';
           console.log('add bet');
         },
 
+        withdrawConfirmed(){
+          this.$validator.validateAll('withdraw').then(result => {
+        if (result) {
+            let userData = this.$store.getters.getUserData;
+             if (userData.withdrawable != null) {
+            if (userData.withdrawable >= this.withdraw.amount) {
+            let withdrawData = this.withdraw;
+             this.$store.dispatch( 'withdrawFund',
+               {
+               withdrawData
+               }
+               );
+            } else {
+             this.infotext = 'Insufficient cleared Funds to withdraw';
+             this.info = true;
+        }
+         }
+        }
+         })
+        },
+
         submitBet() {
         this.$validator.validateAll('addbet').then(result => {
         if (result) {
             let userData = this.$store.getters.getUserData;
             if (userData.balance != null) {
-            if (userData.balance >= 5000) {
+            if (userData.balance >= this.bet.amount) {
               let betData;
               betData = this.bet;
                this.$store.dispatch( 'addBet',
@@ -903,7 +1087,7 @@ import paystack from 'vue-paystack';
          if (result) {
              let userData = this.$store.getters.getUserData;
              if (userData.balance != null) {
-            if (userData.balance >= 5000) {
+            if (userData.balance >= this.betfriend.amount) {
               let betData;
               betData = this.betfriend;
                this.$store.dispatch( 'addBetFriend',
@@ -923,6 +1107,7 @@ import paystack from 'vue-paystack';
 
 
         withdrawWins() {
+          this.withdrawWins_dialog = true;
           console.log(' withdraw wins');
         },
 
@@ -935,13 +1120,6 @@ import paystack from 'vue-paystack';
             this.fundAccount_dialog = true;
           console.log('fund account');
         },
-
-        checkInfo(){
-            if (this.$store.getters.getLoginLoadStatus == 2 && this.infostatus == 0 ){
-                this.infotext = this.$store.getters.getLoginMessage;
-                this.info = true;
-            };
-         },
        fetchData() {
          this.$store.dispatch( 'getUser');
        },

@@ -61,11 +61,11 @@
               <v-card-text>
                 <v-form>
                   <v-text-field prepend-icon="person" v-validate="'required|email'" v-model="resetForm.email" name="Email" label="Email" type="text"></v-text-field>
-                  <v-alert :value="errors.has('Email')" type="error">{{ errors.first('Email') }}</v-alert>
+                  <span :value="errors.has('Email')" style="color:red">{{ errors.first('Email') }}</span>
                   <v-text-field id="password"  v-validate="'required|min:6'" prepend-icon="lock" v-model="resetForm.password" name="password" label="Password" type="password" ref="password"></v-text-field>
-                  <v-alert :value="errors.has('password')" type="error">{{ errors.first('password') }}</v-alert>
+                  <span :value="errors.has('password')" style="color:red">{{ errors.first('password') }}</span>
                   <v-text-field id="password_confirmation" v-validate="'required|confirmed:password'" prepend-icon="lock" v-model="resetForm.password_confirmation" name="password_confirmation" data-vv-as="password" label="Password Again" type="password"></v-text-field>
-                  <v-alert :value="errors.has('password_confirmation')" type="error">{{ errors.first('password_confirmation') }}</v-alert>
+                  <span :value="errors.has('password_confirmation')" style="color:red">{{ errors.first('password_confirmation') }}</span>
                 </v-form>
               </v-card-text>
               <v-card-actions>
@@ -80,7 +80,33 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <v-footer fixed color="green"></v-footer>
+      <v-footer height="auto" color="green">
+           <v-layout
+      justify-center
+      row
+      wrap
+    >
+           <v-flex
+        white
+        lighten-2
+        py-3
+        text-xs-center
+        green--text
+        xs12
+      >
+        &copy;2018 — <strong>Polibet</strong>
+      </v-flex>
+      </v-layout>
+          <v-layout row wrap align-center>
+          <v-flex xs12>
+            <div class="white--text ml-3 text-xs-center">
+              Made with
+              <v-icon class="red--text">favorite</v-icon>
+              by <a class="white--text" href="https://codebators.com" target="_blank">CodeBators</a>
+            </div>
+          </v-flex>
+        </v-layout>
+      </v-footer>
       <v-dialog
       v-model="dialog"
       hide-overlay
@@ -163,15 +189,15 @@
                  );
             },
                login() {
-                this.dialog= true;
+                //this.dialog= true;
                 this.$router.push('/login');
                 },
                 register() {
-                this.dialog= true;
+                //this.dialog= true;
                 this.$router.push('/register');
                 },
                 home() {
-                this.dialog= true;
+                //this.dialog= true;
                 this.$router.push('/');
                 }
         },

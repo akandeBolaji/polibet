@@ -23,6 +23,8 @@ state: {
   addBetMessage: '',
   addFundStatus: 0,
   addFundMessage: '',
+  withdrawFundStatus: 0,
+  withdrawFundMessage: '',
   addBetFriendStatus: 0,
   addBetFriendMessage: '',
 },
@@ -35,7 +37,22 @@ actions: {
 /*
   Adds a post
 */
-addFund( { commit, state, dispatch }, data ){
+withdrawFund( { commit, state, dispatch }, data ){
+    commit( 'setWithdrawFundStatus', 1 );
+
+    userAPI.withdrawFund( data.withdrawData )
+        .then( function( response ){
+          commit( 'setWithdrawFundStatus', 2 );
+          commit( 'setAddFundMessage', response.data.message);
+          dispatch('getUser');
+        })
+        .catch( function( error ){
+          commit( 'setWithdrawFundStatus', 3 );
+          commit( 'setwithdrawFundMessage', error.response.data.message );
+        });
+  },
+
+  addFund( { commit, state, dispatch }, data ){
     commit( 'setAddFundStatus', 1 );
 
     userAPI.addFund( data.fundData )
@@ -150,6 +167,14 @@ setAddFundMessage( state, message ){
     state.addFundMessage = message;
   },
 
+setWithdrawFundStatus( state, status ){
+    state.withdrawFundStatus = status;
+  },
+
+setwithdrawFundMessage( state, message ){
+    state.withdrawFundMessage = message;
+  },
+
 setAddBetFriendStatus( state, status ){
     state.addBetFriendStatus = status;
   },
@@ -197,6 +222,14 @@ setAddBetFriendMessage( state, message ){
 
   getAddFundMessage( state ){
     return state.addFundMessage;
+  },
+
+  getWithdrawFundStatus( state ){
+    return state.withdrawFundStatus;
+  },
+
+  getWithdrawFundMessage( state ){
+    return state.withdrawFundMessage;
   },
 
   getAddBetFriendStatus( state ){

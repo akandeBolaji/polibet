@@ -13,7 +13,6 @@ let routes = [
 
     {
         path: '/dashboard',
-        query: {info: ''},
         component: require('./views/pages/dashboard'),
         meta: { requiresAuth: true },
     },
@@ -48,10 +47,9 @@ let routes = [
         meta: { requiresGuest: true },
     },
 
-
     {
-        path: '/sample',
-        component: require('./views/pages/sample'),
+        path: '/about-us',
+        component: require('./views/pages/about'),
     },
 
 

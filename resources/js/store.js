@@ -9,7 +9,6 @@ import Vuex from 'Vuex'
 */
 Vue.use( Vuex )
 
-import { feeds } from './modules/feeds.js'
 import { auth } from './modules/auth.js'
 import { user } from './modules/user.js'
 
@@ -18,7 +17,6 @@ import { user } from './modules/user.js'
 */
 export default new Vuex.Store({
   modules: {
-   feeds,
    auth,
    user
   }
