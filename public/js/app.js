@@ -50350,86 +50350,11 @@ if (inBrowser && window.Vue) {
 
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = ({
-    logout: function logout() {
-        return axios.post('/api/auth/logout').then(function (response) {
-            localStorage.removeItem('auth_token');
-            axios.defaults.headers.common['Authorization'] = null;
-            toastr['success'](response.data.message);
-        }).catch(function (error) {
-            console.log(error);
-        });
-    },
-    authUser: function authUser() {
-        return axios.get('/api/auth/user').then(function (response) {
-            return response.data;
-        }).catch(function (error) {
-            return error.response.data;
-        });
-    },
     check: function check() {
         return axios.post('/api/auth/check').then(function (response) {
             return !!response.data.authenticated;
         }).catch(function (error) {
             return response.data.authenticated;
-        });
-    },
-    getFilterURL: function getFilterURL(data) {
-        var url = '';
-        $.each(data, function (key, value) {
-            url += value ? '&' + key + '=' + encodeURI(value) : '';
-        });
-        return url;
-    },
-    formAssign: function formAssign(form, data) {
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
-
-        try {
-            for (var _iterator = Object.keys(form)[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var key = _step.value;
-
-                if (key !== "originalData" && key !== "errors" && key !== "autoReset") {
-                    form[key] = data[key];
-                }
-            }
-        } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-        } finally {
-            try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                    _iterator.return();
-                }
-            } finally {
-                if (_didIteratorError) {
-                    throw _iteratorError;
-                }
-            }
-        }
-
-        return form;
-    },
-    taskColor: function taskColor(value) {
-        var classes = ['progress-bar', 'progress-bar-striped'];
-        if (value < 20) classes.push('bg-danger');else if (value < 50) classes.push('bg-warning');else if (value < 80) classes.push('bg-info');else classes.push('bg-success');
-        return classes;
-    },
-    formatDate: function formatDate(date) {
-        if (!date) return;
-
-        return moment(date).format('MMMM Do YYYY');
-    },
-    formatDateTime: function formatDateTime(date) {
-        if (!date) return;
-
-        return moment(date).format('MMMM Do YYYY h:mm a');
-    },
-    ucword: function ucword(value) {
-        if (!value) return;
-
-        return value.toLowerCase().replace(/\b[a-z]/g, function (value) {
-            return value.toUpperCase();
         });
     }
 });
