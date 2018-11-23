@@ -274,7 +274,7 @@ class AuthController extends Controller
           }
         }
         }
-        $user->notify(new Activated($user));
+        //$user->notify(new Activated($user));
 
         return response()->json(['message' => 'Your account has been activated!']);
     }
@@ -355,7 +355,7 @@ class AuthController extends Controller
         $user->password = bcrypt(request('password'));
         $user->save();
 
-        $user->notify(new PasswordResetted($user));
+        //$user->notify(new PasswordResetted($user));
 
         return response()->json(['message' => 'Your password has been reset. Please login again!']);
     }

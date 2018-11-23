@@ -11887,7 +11887,7 @@ Vue.compile = compileToFunctions;
 
 module.exports = Vue;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(21).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(21).setImmediate))
 
 /***/ }),
 /* 5 */
@@ -11913,137 +11913,6 @@ module.exports = function escape(url) {
 
 /***/ }),
 /* 6 */
-/***/ (function(module, exports) {
-
-var g;
-
-// This works in non-strict mode
-g = (function() {
-	return this;
-})();
-
-try {
-	// This works if eval is allowed (see CSP)
-	g = g || Function("return this")() || (1,eval)("this");
-} catch(e) {
-	// This works if the window reference is available
-	if(typeof window === "object")
-		g = window;
-}
-
-// g can still be undefined, but nothing to do about it...
-// We return undefined, instead of nothing here, so it's
-// easier to handle this case. if(!global) { ...}
-
-module.exports = g;
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(27);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(11);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(11);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  /**
-   * A timeout in milliseconds to abort a request. If set to 0 (default) a
-   * timeout is not created.
-   */
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
-
-/***/ }),
-/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -12062,7 +11931,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(104)
+var listToStyles = __webpack_require__(102)
 
 /*
 type StyleObject = {
@@ -12269,6 +12138,137 @@ function applyToTag (styleElement, obj) {
   }
 }
 
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+var g;
+
+// This works in non-strict mode
+g = (function() {
+	return this;
+})();
+
+try {
+	// This works if eval is allowed (see CSP)
+	g = g || Function("return this")() || (1,eval)("this");
+} catch(e) {
+	// This works if the window reference is available
+	if(typeof window === "object")
+		g = window;
+}
+
+// g can still be undefined, but nothing to do about it...
+// We return undefined, instead of nothing here, so it's
+// easier to handle this case. if(!global) { ...}
+
+module.exports = g;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(27);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(11);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(11);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  /**
+   * A timeout in milliseconds to abort a request. If set to 0 (default) a
+   * timeout is not created.
+   */
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(9)))
 
 /***/ }),
 /* 9 */
@@ -12761,7 +12761,7 @@ module.exports = __webpack_require__(135);
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store__ = __webpack_require__(83);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__routes__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__routes__ = __webpack_require__(89);
 /*
 
  * First we will load all of this project's JavaScript dependencies which
@@ -12956,7 +12956,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
                          (typeof global !== "undefined" && global.clearImmediate) ||
                          (this && this.clearImmediate);
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
 /***/ }),
 /* 22 */
@@ -13149,7 +13149,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(9)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7), __webpack_require__(9)))
 
 /***/ }),
 /* 23 */
@@ -13167,7 +13167,7 @@ module.exports = __webpack_require__(24);
 var utils = __webpack_require__(0);
 var bind = __webpack_require__(10);
 var Axios = __webpack_require__(26);
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(8);
 
 /**
  * Create an instance of Axios
@@ -13250,7 +13250,7 @@ function isSlowBuffer (obj) {
 "use strict";
 
 
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(8);
 var utils = __webpack_require__(0);
 var InterceptorManager = __webpack_require__(35);
 var dispatchRequest = __webpack_require__(36);
@@ -13789,7 +13789,7 @@ module.exports = InterceptorManager;
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(37);
 var isCancel = __webpack_require__(13);
-var defaults = __webpack_require__(7);
+var defaults = __webpack_require__(8);
 var isAbsoluteURL = __webpack_require__(38);
 var combineURLs = __webpack_require__(39);
 
@@ -45984,8 +45984,8 @@ module.exports = "/fonts/vendor/font-awesome/fontawesome-webfont.svg?912ec66d757
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_Vuex__ = __webpack_require__(84);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_auth_js__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_user_js__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_auth_js__ = __webpack_require__(85);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_user_js__ = __webpack_require__(87);
 /*
     Imports Vue and Vuex
 */
@@ -46956,14 +46956,12 @@ var index_esm = {
 
 
 /***/ }),
-/* 85 */,
-/* 86 */,
-/* 87 */
+/* 85 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return auth; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_api_auth_js__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_api_auth_js__ = __webpack_require__(86);
 /*
 |-------------------------------------------------------------------------------
 | VUEX modules/auth.js
@@ -47280,7 +47278,7 @@ var auth = {
 };
 
 /***/ }),
-/* 88 */
+/* 86 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47321,12 +47319,12 @@ var auth = {
 });
 
 /***/ }),
-/* 89 */
+/* 87 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return user; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_api_user_js__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__services_api_user_js__ = __webpack_require__(88);
 /*
 |-------------------------------------------------------------------------------
 | VUEX modules/auth.js
@@ -47554,7 +47552,7 @@ var user = {
 };
 
 /***/ }),
-/* 90 */
+/* 88 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47615,14 +47613,14 @@ var user = {
 });
 
 /***/ }),
-/* 91 */
+/* 89 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_helper__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_helper__ = __webpack_require__(91);
 
 
 
@@ -47632,45 +47630,45 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 var routes = [{
     path: '/',
     query: { ref: '' },
-    component: __webpack_require__(94)
+    component: __webpack_require__(92)
 }, {
     path: '/dashboard',
-    component: __webpack_require__(97),
+    component: __webpack_require__(95),
     meta: { requiresAuth: true }
 }, {
     path: '/user',
-    component: __webpack_require__(101),
+    component: __webpack_require__(99),
     meta: { requiresAuth: true }
 }, {
     path: '/profile',
-    component: __webpack_require__(107),
+    component: __webpack_require__(105),
     meta: { requiresAuth: true }
 }, {
     path: '/login/',
-    component: __webpack_require__(112),
+    component: __webpack_require__(110),
     meta: { requiresGuest: true }
 }, {
     path: '/password',
-    component: __webpack_require__(115),
+    component: __webpack_require__(113),
     meta: { requiresGuest: true }
 }, {
     path: '/register',
-    component: __webpack_require__(118),
+    component: __webpack_require__(116),
     meta: { requiresGuest: true }
 }, {
     path: '/about-us',
-    component: __webpack_require__(140)
+    component: __webpack_require__(119)
 }, {
     path: '/auth/:token/activate',
-    component: __webpack_require__(124),
+    component: __webpack_require__(122),
     meta: { requiresGuest: true }
 }, {
     path: '/password/reset/:token',
-    component: __webpack_require__(129),
+    component: __webpack_require__(127),
     meta: { requiresGuest: true }
 }, {
     path: '*',
-    component: __webpack_require__(132)
+    component: __webpack_require__(130)
 }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["a" /* default */]({
@@ -47715,7 +47713,7 @@ router.beforeEach(function (to, from, next) {
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
-/* 92 */
+/* 90 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50345,7 +50343,7 @@ if (inBrowser && window.Vue) {
 
 
 /***/ }),
-/* 93 */
+/* 91 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50360,15 +50358,15 @@ if (inBrowser && window.Vue) {
 });
 
 /***/ }),
-/* 94 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(95)
+var __vue_script__ = __webpack_require__(93)
 /* template */
-var __vue_template__ = __webpack_require__(96)
+var __vue_template__ = __webpack_require__(94)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -50407,7 +50405,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 95 */
+/* 93 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -51061,7 +51059,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 96 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -52587,15 +52585,15 @@ if (false) {
 }
 
 /***/ }),
-/* 97 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(98)
+var __vue_script__ = __webpack_require__(96)
 /* template */
-var __vue_template__ = __webpack_require__(100)
+var __vue_template__ = __webpack_require__(98)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52634,12 +52632,12 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 98 */
+/* 96 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_paystack__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_paystack__ = __webpack_require__(97);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_paystack___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_paystack__);
 //
 //
@@ -53760,13 +53758,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 99 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 !function(e,t){ true?module.exports=t():"function"==typeof define&&define.amd?define("VuePaystack",[],t):"object"==typeof exports?exports.VuePaystack=t():e.VuePaystack=t()}(window,function(){return function(n){function a(e){if(r[e])return r[e].exports;var t=r[e]={i:e,l:!1,exports:{}};return n[e].call(t.exports,t,t.exports,a),t.l=!0,t.exports}var r={};return a.m=n,a.c=r,a.d=function(e,t,n){a.o(e,t)||Object.defineProperty(e,t,{enumerable:!0,get:n})},a.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},a.t=function(t,e){if(1&e&&(t=a(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var n=Object.create(null);if(a.r(n),Object.defineProperty(n,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var r in t)a.d(n,r,function(e){return t[e]}.bind(null,r));return n},a.n=function(e){var t=e&&e.__esModule?function(){return e.default}:function(){return e};return a.d(t,"a",t),t},a.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},a.p="/dist/",a(a.s=0)}([function(e,t,n){"use strict";n.r(t);var r=function(e,t,n,r,a,o,i,c){var u,s="function"==typeof e?e.options:e;if(t&&(s.render=t,s.staticRenderFns=n,s._compiled=!0),r&&(s.functional=!0),o&&(s._scopeId="data-v-"+o),i?s._ssrRegister=u=function(e){(e=e||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext)||"undefined"==typeof __VUE_SSR_CONTEXT__||(e=__VUE_SSR_CONTEXT__),a&&a.call(this,e),e&&e._registeredComponents&&e._registeredComponents.add(i)}:a&&(u=c?function(){a.call(this,this.$root.$options.shadowRoot)}:a),u)if(s.functional){s._injectStyles=u;var d=s.render;s.render=function(e,t){return u.call(t),d(e,t)}}else{var l=s.beforeCreate;s.beforeCreate=l?[].concat(l,u):[u]}return{exports:e,options:s}}({props:{embed:{type:Boolean,default:!1},paystackkey:{type:String,required:!0},email:{type:String,required:!0},amount:{type:Number,required:!0},reference:{type:String,required:!0},callback:{type:Function,required:!0,default:function(){}},close:{type:Function,required:!0,default:function(){}},metadata:{type:Object,default:function(){return{}}},currency:{type:String,default:"NGN"},plan:{type:String,default:""},quantity:{type:String,default:""},subaccount:{type:String,default:""},transaction_charge:{type:Number,default:0},bearer:{type:String,default:""}},computed:{scriptLoaded:function(){var t=this;return new Promise(function(e){t.loadScript(function(){e()})})}},mounted:function(){this.embed&&this.payWithPaystack()},methods:{loadScript:function(e){var t=document.createElement("script");t.src="https://js.paystack.co/v1/inline.js",document.getElementsByTagName("head")[0].appendChild(t),t.readyState?t.onreadystatechange=function(){"loaded"!==t.readyState&&"complete"!==t.readyState||(t.onreadystatechange=null,e())}:t.onload=function(){e()}},payWithPaystack:function(){var n=this;this.scriptLoaded.then(function(){var e={key:n.paystackkey,email:n.email,amount:n.amount,ref:n.reference,callback:function(e){n.callback(e)},onClose:function(){n.close()},metadata:n.metadata,currency:n.currency,plan:n.plan,quantity:n.quantity,subaccount:n.subaccount,transaction_charge:n.transaction_charge,bearer:n.bearer};n.embed&&(e.container="paystackEmbedContainer");var t=window.PaystackPop.setup(e);n.embed||t.openIframe()})}}},function(){var e=this,t=e._self._c||e.$createElement;return e.embed?t("div",{attrs:{id:"paystackEmbedContainer"}}):t("button",{staticClass:"payButton",on:{click:e.payWithPaystack}},[e._t("default",[e._v("Make Payment")])],2)},[],!1,null,null,null);r.options.__file="paystack.vue";t.default=r.exports}])});
 
 /***/ }),
-/* 100 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -56605,19 +56603,19 @@ if (false) {
 }
 
 /***/ }),
-/* 101 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(102)
+  __webpack_require__(100)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(105)
+var __vue_script__ = __webpack_require__(103)
 /* template */
-var __vue_template__ = __webpack_require__(106)
+var __vue_template__ = __webpack_require__(104)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -56656,17 +56654,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 102 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(103);
+var content = __webpack_require__(101);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(8)("23bba070", content, false, {});
+var update = __webpack_require__(6)("23bba070", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -56682,7 +56680,7 @@ if(false) {
 }
 
 /***/ }),
-/* 103 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -56696,7 +56694,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 
 /***/ }),
-/* 104 */
+/* 102 */
 /***/ (function(module, exports) {
 
 /**
@@ -56729,7 +56727,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 105 */
+/* 103 */
 /***/ (function(module, exports) {
 
 //
@@ -56740,7 +56738,7 @@ module.exports = function listToStyles (parentId, list) {
 //
 
 /***/ }),
-/* 106 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -56760,19 +56758,19 @@ if (false) {
 }
 
 /***/ }),
-/* 107 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(108)
+  __webpack_require__(106)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(110)
+var __vue_script__ = __webpack_require__(108)
 /* template */
-var __vue_template__ = __webpack_require__(111)
+var __vue_template__ = __webpack_require__(109)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -56811,17 +56809,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 108 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(109);
+var content = __webpack_require__(107);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(8)("15cad64b", content, false, {});
+var update = __webpack_require__(6)("15cad64b", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -56837,7 +56835,7 @@ if(false) {
 }
 
 /***/ }),
-/* 109 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -56851,7 +56849,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 
 /***/ }),
-/* 110 */
+/* 108 */
 /***/ (function(module, exports) {
 
 //
@@ -56862,7 +56860,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n", ""]);
 //
 
 /***/ }),
-/* 111 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -56882,15 +56880,15 @@ if (false) {
 }
 
 /***/ }),
-/* 112 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(113)
+var __vue_script__ = __webpack_require__(111)
 /* template */
-var __vue_template__ = __webpack_require__(114)
+var __vue_template__ = __webpack_require__(112)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -56929,7 +56927,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 113 */
+/* 111 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57181,7 +57179,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 114 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -57638,15 +57636,15 @@ if (false) {
 }
 
 /***/ }),
-/* 115 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(116)
+var __vue_script__ = __webpack_require__(114)
 /* template */
-var __vue_template__ = __webpack_require__(117)
+var __vue_template__ = __webpack_require__(115)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -57685,7 +57683,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 116 */
+/* 114 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -57901,7 +57899,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 117 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -58347,15 +58345,15 @@ if (false) {
 }
 
 /***/ }),
-/* 118 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(119)
+var __vue_script__ = __webpack_require__(117)
 /* template */
-var __vue_template__ = __webpack_require__(120)
+var __vue_template__ = __webpack_require__(118)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -58394,7 +58392,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 119 */
+/* 117 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -58670,7 +58668,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 120 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -59564,22 +59562,694 @@ if (false) {
 }
 
 /***/ }),
-/* 121 */,
-/* 122 */,
-/* 123 */,
-/* 124 */
+/* 119 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(120)
+/* template */
+var __vue_template__ = __webpack_require__(121)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/views/pages/about.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-29d6cc53", Component.options)
+  } else {
+    hotAPI.reload("data-v-29d6cc53", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 120 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            panel: []
+        };
+    }
+});
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "v-app",
+    { attrs: { id: "inspire" } },
+    [
+      _c(
+        "v-content",
+        [
+          _c(
+            "v-toolbar",
+            [
+              _c("v-toolbar-title", { staticClass: "green--text darken-1" }, [
+                _vm._v("Polibet")
+              ]),
+              _vm._v(" "),
+              _c("v-spacer"),
+              _vm._v(" "),
+              _c(
+                "div",
+                [
+                  _c(
+                    "router-link",
+                    { staticClass: "white--text", attrs: { to: "/" } },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          staticClass: "white--text",
+                          attrs: { color: "green darken-2" }
+                        },
+                        [_vm._v("Go Home")]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-container",
+            { attrs: { fluid: "" } },
+            [
+              _c(
+                "v-expansion-panel",
+                {
+                  attrs: { expand: "" },
+                  model: {
+                    value: _vm.panel,
+                    callback: function($$v) {
+                      _vm.panel = $$v
+                    },
+                    expression: "panel"
+                  }
+                },
+                [
+                  _c("v-expansion-panel-content", [
+                    _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+                      _vm._v("About us")
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "v-expansion-panel-content",
+                    [
+                      _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+                        _vm._v("Terms of Service")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-card",
+                        [
+                          _c(
+                            "v-container",
+                            { attrs: { fluid: "" } },
+                            [
+                              _c("v-card-title", [
+                                _c("b", [_vm._v("User Agreement")])
+                              ]),
+                              _vm._v(" "),
+                              _c("v-card-text", [_vm._v("1 GENERAL")]),
+                              _vm._v(
+                                '\n                 1.1. Polibet (herein after referred to as the "the Company"), a company registered under the laws of Nigeria'
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                1.2. This agreement establishes the Terms and Conditions for the contractual relationship between the Company and you.\n                     The Terms shall apply to predicting via this mobile platform.\n                     You are required to accept these Terms and Conditions when registering for an account with the Company and you are\n                     bound by these Terms and Conditions throughout the existence of the relationship.\n                     The company reserves the right to decline your registration/participation without being bound to provide any reasons whatsoever."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                '\n                     1.3. These Terms and Conditions and Rules are categorized for ease of reference and understanding.\n                   Reference to "you", "your" or the "users", "user" "customers", or "subscriber" is reference to any person using the Company prediction Platform\n                    or the services to and/ or any registered customer of the Company thereof. Reference to Polibet.'
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                 1.4. The Company reserves the right to change these Terms and Conditions at any time and without prior notice.\n                     The Company will endeavor to inform you about major modifications to the Terms and Conditions. Nevertheless,\n                     it is your responsibility to regularly check for any changes. Should you, due to any possible changes,\n                    not wish to continue using the services of the Company, you can withdraw uncommitted funds without penalty and close the account\n                    by sending email to: support@polibet.ng, to that effect. A response will be sent to you confirming receipt of your decision to discontinue\n                    your participation in the Company.\n                     Failure by you to receive a message for any reason whatsoever shall not be taken to mean that the Company has any obligation towards you"
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                 1.5. The Company will respect your privacy in line with the Company's privacy policy and will endeavor to at all\n                    times preserve your information in the strictest confidence as it possibly can. The Company shall not be liable\n                    for any loss of data by itself or by other contracted independent\n                    service providers on whom the Company will wholly or partially be reliant on to deliver the services."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                 1.6. The Company will not disclose your personal information to third parties unless such disclosure:"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                    (a) is required for the processing of your requests;"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                    (b) is a duty and /or legal obligation of the company;"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                    (c) is required to enforce / apply the Terms and Conditions and other agreements;"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                    (d) is required to adequately protect our rights or property,\n                     including via the exchange of information with other companies and organizations for\n                     the purposes of information verification, fraud protection and credit risk reduction.\n                     Personal information that you provide may be disclosed to a credit reference agency, which may keep a record of the information"
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                1.7. By agreeing to these Terms and Conditions, and when you place predictions, you accept and agree to be bound by,\n                     these terms and conditions and any amendment or variation thereto and the Rules which apply to the\n                     applicable products available on the Company from time to time and you are acknowledging that the company shall\n                     retain the right to use from time to time, all data collected to carry out market survey/ campaign /research, send customer satisfaction questioners,\n                     market and promote its services and those of its affiliated companies."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                 1.8. The Company is not responsible for any consequences resulting from major incidents\n                     such as any strike, terrorist activities, political crisis, war, natural catastrophe and\n                     saturation of the telecommunication networks, cyber-attacks, hacking etc., which could lead to a\n                     total or partial access reduction to its services, loss of data by itself or by other contracted independent service providers on whom\n                     the Company will wholly or partially be reliant on to deliver the services."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("v-card-text", [
+                                _vm._v(
+                                  "2 OPENING ACCOUNT & REGISTRATION ACCOUNT RULES"
+                                )
+                              ]),
+                              _vm._v(
+                                "\n\n              2.1. To apply for an account you must register personally and you must be of legal age.\n                      You must provide your age in the registration field. By so doing, the subscribers\n                      affirm that they are of a mature/legal voting age at the very minimum of 18 years.\n                      The Company reserves the right to ask for proof of age from any customer and suspend\n                      their account until satisfactory documentation is provided.The name on the bank account\n                       information provided MUST be the same with the subscriber's name. The name of the player MUST also be the same as the name used\n                      when registering with the company and must correspond with the registered mobile no.\n                      Where this is not the case, the relevant account will be suspended. Where an account is suspended,\n                      the relevant customer should Contact Us. Should any underage account owner be discovered at any point during the\n                      lifetime of the account, the account will immediately be closed indefinitely, and all funds deposited to the account will be forfeited.\n                      In any such suspected circumstance, the Company will report the activity to the appropriate authority and the player may suffer\n                      the consequences thereto. You agree to provide all such information as we require in connection with such verification checks.\n                      We shall be entitled to suspend or restrict your account in any manner that we may deem in our absolute discretion to be appropriate,\n                      until such time as the relevant checks are completed to our satisfaction."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                '\n                  2.2. You agree to abide by these "Terms and Conditions" at all times, and:'
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                      (a) not to be acting in the interests of any third party;"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                      (b) not to utilize monies obtained from ill-gotten means;"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                      (c) not to credit accounts with bank/credit card/s you are not authorized to use;"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                      (d) not to try to hack the Company Website and all other media/electronic platforms,\n                       or to alter its code in any way in an attempt to cheat, override or manipulate the system or in any way commit fraud / crime;"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                       (e) not to adopt any criminal behavior against the Company, its affiliates, its players, the country or any third party"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                       (f) not to mislead the Company by intentionally providing false information which may be in the form of but not limited\n                        to invalid account details, forged documentation, concealing one's identity, untruthful behavior or hiding one's true location and /or age."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  2.3. In the event that you breach one or more of the Account rules as mentioned in 2.1 and 2.2,\n                       the Company reserves the right to close your account and seize any available funds.\n                       In any such suspected circumstance, the Company will report the activity to the appropriate authority and\n                       the player may suffer the consequences thereto. Contractual obligations will be honored unless there is any breach\n                       of any of the terms and conditions on your part or breach of any international law and laws of Nigeria.\n                       The specific predicts shall be strictly guided by these rules & guidelines herein and all other Rules &\n                       guidelines that shall be issued from time to time by the Company.\n                       The waging products, guidelines and Rules shall remain at all times the product of the Company."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  2.4 It is your responsibility to ensure that you are not infringing on any laws in your jurisdiction when\n                      opening an account and conducting business with the Company at all times during the subsistence of your subscription/ participation."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  2.5 You must submit the correct information during your registration. You also agree to update this information should there be any changes to your registration data."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  2.6 The Company will accept no liability from third parties whatsoever, resulting from you providing incorrect or false data."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  2.7 One customer may open only one account. Should we identify any customer with more than one account, we reserve the right to close these accounts."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  2.8 If the Company detects multiple accounts which have been setup deliberately with misleading information."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  have displayed criminal behavior, or if the Company concludes that the account-owner has fraudulent intentions,\n                  the Company shall be entitled to close the accounts and confiscate all funds."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  In any such suspected circumstance, the Company will report the activity to the appropriate authority and the\n                  player may suffer the consequences thereto. If you place predicts on behalf of a person,\n                  you shall be responsible for all transactions made using the relevant account details.\n                  Should you lose your account details or feel that someone else may have your account details, please Contact Us. The\n                  Company will however not be responsible for any loss or damage that you may suffer as a result of transaction made\n                  by that other person. Please note that personal registration details and any other sensitive data should never be sent to us by any unencrypted form."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  2.9 The Company manages users' accounts and calculates available funds,\n                  as well as the amount of the winnings. Unless proven otherwise, these amounts are not subject to dispute."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  2.10 All account transactions are performed in Nigeria Naira. No interest is paid on any funds, irrespective\n                  of the amount held in your account or any delay in remitting funds in your account for any reason."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  2.11 You agree to not in any way treat the Company as a financial institution.\n                  This includes using the Company as an intermediary to transfer funds, unused or used,\n                  from one source to another one with or without ill intentions as well as using the Company as a currency exchange bureau.\n                  Should you conduct account activities for these purposes, the Company reserves the right to close your account and/or\n                  seize any available funds available in the account. Contractual obligations will be honored unless there is a breach\n                  of any of the terms and conditions. No credit will be offered by the Company or from any employee of the Company,\n                  and all bets must be supported by sufficient funds in the customer's account. The Company reserves the right to void any\n                  predicts which may have inadvertently been accepted when the account did not have sufficient funds to cover the predict.\n                  Should funds be credited to a customer's account in error, it is the customer's responsibility to inform the Company without delay.\n                  The Company will recover such funds by account adjustment."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  2.12 The Company does not tolerate abusive, aggressive or obscene language/ behavior towards representatives of the\n                  Company across any of our support platforms (chat, email, telephone, outlets).\n                  Should you decide to communicate with us in this manner, you will be denied access to any and all\n                  of our support platforms and any such acts will be reported to the relevant authority for action.\n                  2.13 You must keep your password secret at all times."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  It is your sole responsibility to ensure that your login information is kept secure.\n                  Should you suspect that your login information is no longer secure you are required to\n                  immediately contact the company as well as change your security details immediately.\n                  If at any time should your account be accessed and used by a third-party without your prior consent,\n                  the Company is not liable for any consequences that may occur."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  2.15 Selling and/or transferring and/or, acquiring of accounts to/from other users, is prohibited.\n                  Any such action will lead to close of account and forfeiture of the funds in such account. T\n                  he company may in its sole discretion reopen an account if there is\n                  sufficient proof to the satisfaction of the company that a transfer was done in error."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                '\n                  2.18 In addition, the Company shall be entitled to withhold and/or retain any and all amounts earned or received by\n                  you as a result of or in connection with your "unauthorized" use of the services/products/ platforms including activities\n                  which are not for an authorized purpose.'
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  2.19 Where it is proved that these Terms and Conditions have not been breached,\n                  any funds available on the account will be returned to the user should the relationship be terminated by the Company.\n                  At all times, any funds deposited by a user, do not accrue any interest and as such any refunds made shall not incorporate any interest calculations."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("v-card-text", [
+                                _vm._v("3 BONUSES, DEPOSITS AND WITHDRAWALS.")
+                              ]),
+                              _vm._v(
+                                "\n\n                  3.1 You should only deposit money in your account for the purposes of you using such money to predict election events on the platform.\n                    We shall be entitled to suspend or close your account if we reasonably consider or have reason to believe that you are\n                    depositing money without any intention to place predicts. You may only predict with the amount of cleared funds held in your account."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                    3.2 You can at any time log in to your account and view a statement which would show all transactions made, namely deposits, unexpired bonuses, winnings, predicts and withdrawals\n                    Should you notice any mistakes you should immediately notify the Company via electronic notice. Such anomaly once confirmed, will be rectified by the company in the shortest time possible at no cost to you."
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                    3.3 You can withdraw your cleared funds at any time and a 5% transaction fee is deducted on each withdrawals. You are not allowed to withdraw bonuses. Please also note that additional charges may occur depending on third party providers in charge of the transfers"
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                    3.4 All withdrawals will be processed to the payment account supplied during registration . You would get an email. There is no set maximum withdrawal amount per day but mininum withdrawal request per day is 5000 naira and may not exceed 200,000 naira a day"
+                              ),
+                              _c("br"),
+                              _c("br"),
+                              _vm._v(
+                                "\n                    3.5 Should you be able to access and use the services of this company from your location which may be outside Nigeria, you shall be responsible for reporting your winnings and losses to the tax and/or other authorities as per the existing regulations within in your jurisdiction."
+                              ),
+                              _c("br"),
+                              _c("br")
+                            ],
+                            1
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-expansion-panel-content",
+                    [
+                      _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+                        _vm._v("Privacy Policy")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "v-container",
+                        [
+                          _c("v-card-text", [_vm._v(" I. PRIVACY")]),
+                          _vm._v(
+                            "\n                Polibet will treat the data that you provide us with as strictly private and it shall only be used in accordance with this privacy statement by us,\n                by a member of our Group and/or by a selected third party who complies with our high standards of data protection in order to manage the personal account\n                which you open with us (“Account”), to create customer profiles, to ensure the security of the app and to enable you to use our services.\n                "
+                          ),
+                          _c("v-card-text", [_vm._v(" II. PERSONAL DATA")]),
+                          _vm._v(
+                            "\n                All references to ‘Personal Data’ in this Privacy Policy refer to any personal information about a natural person which enables that individual to be\n                identified directly or indirectly by reference to the data provided.\n                You will also be required to provide login details of your choice, namely an email, password which will be kept by us.\n                We require the above information in order to ensure that you can identify yourself when using the app, to ensure that you are of legal age to use our services,\n                to improve our services to you and to keep you informed regarding any of our services which may be of interest to you.\n                You also have the right to access your personal data at any time in order to make alterations to any personal information that may have changed or become obsolete.\n                Should you believe that any personal information we hold for you is incorrect, please email our customer services on support@polibet.ng and we will amend any information\n                found to be incorrect.\n                "
+                          ),
+                          _c("v-card-text", [
+                            _vm._v("III. USE OF PERSONAL DATA ")
+                          ]),
+                          _vm._v(
+                            "\n                Once your personal data is submitted to us, it shall be kept securely on our database.\n                As part of our partnership with companies in charge of electronic payment processing data, your details are at the disposal of these establishments.\n                However, these establishments are only entitled to use such information for legal investigation purposes.\n                We may also enter into partnerships with data processors and companies which provide security, age verification and identification verification services\n                (including, without limitation, financial institutions, age verification, and credit reference agencies) in order to improve the efficiency and security\n                of the app and/or to comply with relevant regulations.\n                These companies may have access to your personal data and may keep record in order that they can process necessary information data and maintain the security of the app.\n                The companies that we choose to carry out these functions have strict policies regarding privacy of personal data, although we accept no\n                responsibility for the privacy policies of those companies.\n                We will not disclose the amount of your winnings or losses to any person or third party other than to you unless we are required by law to disclose\n                such information to competent authorities or for legal purposes.\n                We reserve the right to pass on to public or other relevant authorities, customers’ personal data if necessary or required in the course of any legal investigation.\n                The personal data submitted by our customers may be stored and/or processed for the purposes set forth above in this Privacy Statement in any country in which we or our affiliates,\n                suppliers, subsidiaries or agents maintain facilities.\n                By accepting this Privacy Policy, you give your consent to the transfer of your personal data outside of your country.\n                Polibet is committed to taking all necessary steps to ensure that whenever personal data is transmitted, such transmission takes place solely within the Group and the Group's\n                select partners in which companies the standards of privacy and confidentiality should be of an acceptable standard, irrelevant of location.\n                Polibet shall in no manner whatsoever be held responsible for the manner in which third parties process and/or store the personal data of our customers.\n                Polibet shall only be responsible for its own Privacy Policy and it does not warrant the standard of the privacy policies of any of the third parties who\n                may have links placed on our app.\n                "
+                          ),
+                          _c("v-card-text", [
+                            _vm._v("IV. RETENTION OF YOUR PERSONAL DATA")
+                          ]),
+                          _vm._v(
+                            "\n                As our customer, you or we can close your Account with us at any time. Following\n                closure of your Account, we will retain your personal data on record for as long as required by law.\n                We will only use your data should such use be required by competent authorities in cases of fraud or investigation into any other illegal activity.\n                This will be the sole exception to use of your personal data until its complete deletion from our records.\n                "
+                          ),
+                          _c("v-card-text", [
+                            _vm._v("V. PROTECTION OF MINORS")
+                          ]),
+                          _vm._v(
+                            "\n                The online prediction services that we offer are strictly prohibited for persons less than 18 years of age or under the age of legal consent\n                for using online prediction services under the laws of the jurisdiction in which the person is located.\n                Consequently, minors may not register and predict on our app. We collect proof of identification from our customers as part of our age verification process.\n                Any minor who is found to be predicting on Polibet shall have his/her Account immediately blocked.\n                Polibet reserves the right to conduct a security review to validate your identity and age.\n                Acceptance of our Privacy Policy authorizes us to conduct such security reviews supplied by you against third party databases.\n                "
+                          ),
+                          _c("v-card-text", [_vm._v("VI. SECURITY")]),
+                          _vm._v(
+                            "\n                Polibet uses its best endeavors to protect the confidentiality of your personal data and to prevent any unauthorized external or internal users from accessing such information\n                without your consent.\n                However, Polibet shall take no responsibility whatsoever for events beyond its control inclusive of, but not limited to, acts of God or natural disasters and including power\n                cuts and strikes.\n                We are sure that, as our customer, you understand the evolving nature of our business due to continuous technological innovation and,\n                although we endeavor to do our best to ensure the protection and privacy of your personal data at all times,\n                we cannot guarantee that the performance of our service will be free from error at all times. Should any such error have an effect or consequence on the privacy\n                of your personal data, we shall not be liable in any manner whatsoever in damages or otherwise.\n                We strongly recommend that you do not divulge your personal data to strangers or third parties during live chat.\n                Remember that your personal data is sensitive and it’s important to stop and think\n                before passing on personal information.\n                "
+                          ),
+                          _c("v-card-text", [_vm._v("VII. MODIFICATIONS")]),
+                          _vm._v(
+                            "\n                It may become necessary, at any time, for us to make modifications to the app or to the Terms and Conditions or Privacy Policy governing its services.\n                The purpose of such modifications may be to further simplify user processes or to further reinforce security measures in order to upgrade to future technological innovations.\n                In such cases, customers previously registered on our app will keep their user name no modifications will be required on their part.\n                Continued use of our app by the members after any modifications to the app, the Terms and Conditions or Privacy Policy will be considered as their acceptance thereof.\n                It is the responsibility of each customer to regularly check the, Terms and Conditions and Privacy Policy for updates.\n          "
+                          )
+                        ],
+                        1
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-29d6cc53", module.exports)
+  }
+}
+
+/***/ }),
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(125)
+  __webpack_require__(123)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(127)
+var __vue_script__ = __webpack_require__(125)
 /* template */
-var __vue_template__ = __webpack_require__(128)
+var __vue_template__ = __webpack_require__(126)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -59618,17 +60288,17 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 125 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(126);
+var content = __webpack_require__(124);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(8)("80e4dd6c", content, false, {});
+var update = __webpack_require__(6)("80e4dd6c", content, false, {});
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
@@ -59644,7 +60314,7 @@ if(false) {
 }
 
 /***/ }),
-/* 126 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(false);
@@ -59658,7 +60328,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 127 */
+/* 125 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -59796,7 +60466,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 128 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -60015,15 +60685,15 @@ if (false) {
 }
 
 /***/ }),
-/* 129 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(130)
+var __vue_script__ = __webpack_require__(128)
 /* template */
-var __vue_template__ = __webpack_require__(131)
+var __vue_template__ = __webpack_require__(129)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -60062,7 +60732,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 130 */
+/* 128 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -60311,7 +60981,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 131 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -60856,19 +61526,19 @@ if (false) {
 }
 
 /***/ }),
-/* 132 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(137)
+  __webpack_require__(131)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
 var __vue_script__ = __webpack_require__(133)
 /* template */
-var __vue_template__ = __webpack_require__(139)
+var __vue_template__ = __webpack_require__(134)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -60904,6 +61574,46 @@ if (false) {(function () {
 })()}
 
 module.exports = Component.exports
+
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(132);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(6)("7c19b038", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ce387202\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./page-not-found.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ce387202\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./page-not-found.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nbody[data-v-ce387202] {\n  background-image: url(\"http://polibet.site/images/background/polibet/new.jpg\");\n}\n", ""]);
+
+// exports
 
 
 /***/ }),
@@ -60948,55 +61658,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 134 */,
-/* 135 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 136 */,
-/* 137 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(138);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(8)("7c19b038", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ce387202\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./page-not-found.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-ce387202\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./page-not-found.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 138 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\nbody[data-v-ce387202] {\n  background-image: url(\"http://polibet.site/images/background/polibet/new.jpg\");\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 139 */
+/* 134 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -61084,679 +61746,10 @@ if (false) {
 }
 
 /***/ }),
-/* 140 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 135 */
+/***/ (function(module, exports) {
 
-var disposed = false
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(141)
-/* template */
-var __vue_template__ = __webpack_require__(142)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/views/pages/about.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-29d6cc53", Component.options)
-  } else {
-    hotAPI.reload("data-v-29d6cc53", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 141 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            panel: []
-        };
-    }
-});
-
-/***/ }),
-/* 142 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "v-app",
-    { attrs: { id: "inspire" } },
-    [
-      _c(
-        "v-content",
-        [
-          _c(
-            "v-toolbar",
-            [
-              _c("v-toolbar-title", { staticClass: "green--text darken-1" }, [
-                _vm._v("Polibet")
-              ]),
-              _vm._v(" "),
-              _c("v-spacer"),
-              _vm._v(" "),
-              _c(
-                "div",
-                [
-                  _c(
-                    "router-link",
-                    { staticClass: "white--text", attrs: { to: "/" } },
-                    [
-                      _c(
-                        "v-btn",
-                        {
-                          staticClass: "white--text",
-                          attrs: { color: "green darken-2" }
-                        },
-                        [_vm._v("Go Home")]
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "v-container",
-            { attrs: { fluid: "" } },
-            [
-              _c(
-                "v-expansion-panel",
-                {
-                  attrs: { expand: "" },
-                  model: {
-                    value: _vm.panel,
-                    callback: function($$v) {
-                      _vm.panel = $$v
-                    },
-                    expression: "panel"
-                  }
-                },
-                [
-                  _c("v-expansion-panel-content", [
-                    _c("div", { attrs: { slot: "header" }, slot: "header" }, [
-                      _vm._v("About us")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "v-expansion-panel-content",
-                    [
-                      _c("div", { attrs: { slot: "header" }, slot: "header" }, [
-                        _vm._v("Terms of Service")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "v-card",
-                        [
-                          _c(
-                            "v-container",
-                            { attrs: { fluid: "" } },
-                            [
-                              _c("v-card-title", [
-                                _c("b", [_vm._v("User Agreement")])
-                              ]),
-                              _vm._v(" "),
-                              _c("v-card-text", [_vm._v("1 GENERAL")]),
-                              _vm._v(
-                                '\n                 1.1. Polibet (herein after referred to as the "the Company"), a company registered under the laws of Nigeria'
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                1.2. This agreement establishes the Terms and Conditions for the contractual relationship between the Company and you.\n                     The Terms shall apply to predicting via this mobile platform.\n                     You are required to accept these Terms and Conditions when registering for an account with the Company and you are\n                     bound by these Terms and Conditions throughout the existence of the relationship.\n                     The company reserves the right to decline your registration/participation without being bound to provide any reasons whatsoever."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                '\n                     1.3. These Terms and Conditions and Rules are categorized for ease of reference and understanding.\n                   Reference to "you", "your" or the "users", "user" "customers", or "subscriber" is reference to any person using the Company prediction Platform\n                    or the services to and/ or any registered customer of the Company thereof. Reference to Polibet.'
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                 1.4. The Company reserves the right to change these Terms and Conditions at any time and without prior notice.\n                     The Company will endeavor to inform you about major modifications to the Terms and Conditions. Nevertheless,\n                     it is your responsibility to regularly check for any changes. Should you, due to any possible changes,\n                    not wish to continue using the services of the Company, you can withdraw uncommitted funds without penalty and close the account\n                    by sending email to: support@polibet.ng, to that effect. A response will be sent to you confirming receipt of your decision to discontinue\n                    your participation in the Company.\n                     Failure by you to receive a message for any reason whatsoever shall not be taken to mean that the Company has any obligation towards you"
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                 1.5. The Company will respect your privacy in line with the Company's privacy policy and will endeavor to at all\n                    times preserve your information in the strictest confidence as it possibly can. The Company shall not be liable\n                    for any loss of data by itself or by other contracted independent\n                    service providers on whom the Company will wholly or partially be reliant on to deliver the services."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                 1.6. The Company will not disclose your personal information to third parties unless such disclosure:"
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                    (a) is required for the processing of your requests;"
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                    (b) is a duty and /or legal obligation of the company;"
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                    (c) is required to enforce / apply the Terms and Conditions and other agreements;"
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                    (d) is required to adequately protect our rights or property,\n                     including via the exchange of information with other companies and organizations for\n                     the purposes of information verification, fraud protection and credit risk reduction.\n                     Personal information that you provide may be disclosed to a credit reference agency, which may keep a record of the information"
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                1.7. By agreeing to these Terms and Conditions, and when you place predictions, you accept and agree to be bound by,\n                     these terms and conditions and any amendment or variation thereto and the Rules which apply to the\n                     applicable products available on the Company from time to time and you are acknowledging that the company shall\n                     retain the right to use from time to time, all data collected to carry out market survey/ campaign /research, send customer satisfaction questioners,\n                     market and promote its services and those of its affiliated companies."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                 1.8. The Company is not responsible for any consequences resulting from major incidents\n                     such as any strike, terrorist activities, political crisis, war, natural catastrophe and\n                     saturation of the telecommunication networks, cyber-attacks, hacking etc., which could lead to a\n                     total or partial access reduction to its services, loss of data by itself or by other contracted independent service providers on whom\n                     the Company will wholly or partially be reliant on to deliver the services."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c("v-card-text", [
-                                _vm._v(
-                                  "2 OPENING ACCOUNT & REGISTRATION ACCOUNT RULES"
-                                )
-                              ]),
-                              _vm._v(
-                                "\n\n              2.1. To apply for an account you must register personally and you must be of legal age.\n                      You must provide your age in the registration field. By so doing, the subscribers\n                      affirm that they are of a mature/legal voting age at the very minimum of 18 years.\n                      The Company reserves the right to ask for proof of age from any customer and suspend\n                      their account until satisfactory documentation is provided.The name on the bank account\n                       information provided MUST be the same with the subscriber's name. The name of the player MUST also be the same as the name used\n                      when registering with the company and must correspond with the registered mobile no.\n                      Where this is not the case, the relevant account will be suspended. Where an account is suspended,\n                      the relevant customer should Contact Us. Should any underage account owner be discovered at any point during the\n                      lifetime of the account, the account will immediately be closed indefinitely, and all funds deposited to the account will be forfeited.\n                      In any such suspected circumstance, the Company will report the activity to the appropriate authority and the player may suffer\n                      the consequences thereto. You agree to provide all such information as we require in connection with such verification checks.\n                      We shall be entitled to suspend or restrict your account in any manner that we may deem in our absolute discretion to be appropriate,\n                      until such time as the relevant checks are completed to our satisfaction."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                '\n                  2.2. You agree to abide by these "Terms and Conditions" at all times, and:'
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                      (a) not to be acting in the interests of any third party;"
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                      (b) not to utilize monies obtained from ill-gotten means;"
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                      (c) not to credit accounts with bank/credit card/s you are not authorized to use;"
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                      (d) not to try to hack the Company Website and all other media/electronic platforms,\n                       or to alter its code in any way in an attempt to cheat, override or manipulate the system or in any way commit fraud / crime;"
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                       (e) not to adopt any criminal behavior against the Company, its affiliates, its players, the country or any third party"
-                              ),
-                              _c("br"),
-                              _vm._v(
-                                "\n                       (f) not to mislead the Company by intentionally providing false information which may be in the form of but not limited\n                        to invalid account details, forged documentation, concealing one's identity, untruthful behavior or hiding one's true location and /or age."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  2.3. In the event that you breach one or more of the Account rules as mentioned in 2.1 and 2.2,\n                       the Company reserves the right to close your account and seize any available funds.\n                       In any such suspected circumstance, the Company will report the activity to the appropriate authority and\n                       the player may suffer the consequences thereto. Contractual obligations will be honored unless there is any breach\n                       of any of the terms and conditions on your part or breach of any international law and laws of Nigeria.\n                       The specific predicts shall be strictly guided by these rules & guidelines herein and all other Rules &\n                       guidelines that shall be issued from time to time by the Company.\n                       The waging products, guidelines and Rules shall remain at all times the product of the Company."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  2.4 It is your responsibility to ensure that you are not infringing on any laws in your jurisdiction when\n                      opening an account and conducting business with the Company at all times during the subsistence of your subscription/ participation."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  2.5 You must submit the correct information during your registration. You also agree to update this information should there be any changes to your registration data."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  2.6 The Company will accept no liability from third parties whatsoever, resulting from you providing incorrect or false data."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  2.7 One customer may open only one account. Should we identify any customer with more than one account, we reserve the right to close these accounts."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  2.8 If the Company detects multiple accounts which have been setup deliberately with misleading information."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  have displayed criminal behavior, or if the Company concludes that the account-owner has fraudulent intentions,\n                  the Company shall be entitled to close the accounts and confiscate all funds."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  In any such suspected circumstance, the Company will report the activity to the appropriate authority and the\n                  player may suffer the consequences thereto. If you place predicts on behalf of a person,\n                  you shall be responsible for all transactions made using the relevant account details.\n                  Should you lose your account details or feel that someone else may have your account details, please Contact Us. The\n                  Company will however not be responsible for any loss or damage that you may suffer as a result of transaction made\n                  by that other person. Please note that personal registration details and any other sensitive data should never be sent to us by any unencrypted form."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  2.9 The Company manages users' accounts and calculates available funds,\n                  as well as the amount of the winnings. Unless proven otherwise, these amounts are not subject to dispute."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  2.10 All account transactions are performed in Nigeria Naira. No interest is paid on any funds, irrespective\n                  of the amount held in your account or any delay in remitting funds in your account for any reason."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  2.11 You agree to not in any way treat the Company as a financial institution.\n                  This includes using the Company as an intermediary to transfer funds, unused or used,\n                  from one source to another one with or without ill intentions as well as using the Company as a currency exchange bureau.\n                  Should you conduct account activities for these purposes, the Company reserves the right to close your account and/or\n                  seize any available funds available in the account. Contractual obligations will be honored unless there is a breach\n                  of any of the terms and conditions. No credit will be offered by the Company or from any employee of the Company,\n                  and all bets must be supported by sufficient funds in the customer's account. The Company reserves the right to void any\n                  predicts which may have inadvertently been accepted when the account did not have sufficient funds to cover the predict.\n                  Should funds be credited to a customer's account in error, it is the customer's responsibility to inform the Company without delay.\n                  The Company will recover such funds by account adjustment."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  2.12 The Company does not tolerate abusive, aggressive or obscene language/ behavior towards representatives of the\n                  Company across any of our support platforms (chat, email, telephone, outlets).\n                  Should you decide to communicate with us in this manner, you will be denied access to any and all\n                  of our support platforms and any such acts will be reported to the relevant authority for action.\n                  2.13 You must keep your password secret at all times."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  It is your sole responsibility to ensure that your login information is kept secure.\n                  Should you suspect that your login information is no longer secure you are required to\n                  immediately contact the company as well as change your security details immediately.\n                  If at any time should your account be accessed and used by a third-party without your prior consent,\n                  the Company is not liable for any consequences that may occur."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  2.15 Selling and/or transferring and/or, acquiring of accounts to/from other users, is prohibited.\n                  Any such action will lead to close of account and forfeiture of the funds in such account. T\n                  he company may in its sole discretion reopen an account if there is\n                  sufficient proof to the satisfaction of the company that a transfer was done in error."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                '\n                  2.18 In addition, the Company shall be entitled to withhold and/or retain any and all amounts earned or received by\n                  you as a result of or in connection with your "unauthorized" use of the services/products/ platforms including activities\n                  which are not for an authorized purpose.'
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                  2.19 Where it is proved that these Terms and Conditions have not been breached,\n                  any funds available on the account will be returned to the user should the relationship be terminated by the Company.\n                  At all times, any funds deposited by a user, do not accrue any interest and as such any refunds made shall not incorporate any interest calculations."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(" "),
-                              _c("v-card-text", [
-                                _vm._v("3 BONUSES, DEPOSITS AND WITHDRAWALS.")
-                              ]),
-                              _vm._v(
-                                "\n\n                  3.1 You should only deposit money in your account for the purposes of you using such money to predict election events on the platform.\n                    We shall be entitled to suspend or close your account if we reasonably consider or have reason to believe that you are\n                    depositing money without any intention to place predicts. You may only predict with the amount of cleared funds held in your account."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                    3.2 You can at any time log in to your account and view a statement which would show all transactions made, namely deposits, unexpired bonuses, winnings, predicts and withdrawals\n                    Should you notice any mistakes you should immediately notify the Company via electronic notice. Such anomaly once confirmed, will be rectified by the company in the shortest time possible at no cost to you."
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                    3.3 You can withdraw your cleared funds at any time and a 5% transaction fee is deducted on each withdrawals. You are not allowed to withdraw bonuses. Please also note that additional charges may occur depending on third party providers in charge of the transfers"
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                    3.4 All withdrawals will be processed to the payment account supplied during registration . You would get an email. There is no set maximum withdrawal amount per day but mininum withdrawal request per day is 5000 naira and may not exceed 200,000 naira a day"
-                              ),
-                              _c("br"),
-                              _c("br"),
-                              _vm._v(
-                                "\n                    3.5 Should you be able to access and use the services of this company from your location which may be outside Nigeria, you shall be responsible for reporting your winnings and losses to the tax and/or other authorities as per the existing regulations within in your jurisdiction."
-                              ),
-                              _c("br"),
-                              _c("br")
-                            ],
-                            1
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-expansion-panel-content",
-                    [
-                      _c("div", { attrs: { slot: "header" }, slot: "header" }, [
-                        _vm._v("Privacy Policy")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "v-container",
-                        [
-                          _c("v-card-text", [_vm._v(" I. PRIVACY")]),
-                          _vm._v(
-                            "\n                Polibet will treat the data that you provide us with as strictly private and it shall only be used in accordance with this privacy statement by us,\n                by a member of our Group and/or by a selected third party who complies with our high standards of data protection in order to manage the personal account\n                which you open with us (“Account”), to create customer profiles, to ensure the security of the app and to enable you to use our services.\n                "
-                          ),
-                          _c("v-card-text", [_vm._v(" II. PERSONAL DATA")]),
-                          _vm._v(
-                            "\n                All references to ‘Personal Data’ in this Privacy Policy refer to any personal information about a natural person which enables that individual to be\n                identified directly or indirectly by reference to the data provided.\n                You will also be required to provide login details of your choice, namely an email, password which will be kept by us.\n                We require the above information in order to ensure that you can identify yourself when using the app, to ensure that you are of legal age to use our services,\n                to improve our services to you and to keep you informed regarding any of our services which may be of interest to you.\n                You also have the right to access your personal data at any time in order to make alterations to any personal information that may have changed or become obsolete.\n                Should you believe that any personal information we hold for you is incorrect, please email our customer services on support@polibet.ng and we will amend any information\n                found to be incorrect.\n                "
-                          ),
-                          _c("v-card-text", [
-                            _vm._v("III. USE OF PERSONAL DATA ")
-                          ]),
-                          _vm._v(
-                            "\n                Once your personal data is submitted to us, it shall be kept securely on our database.\n                As part of our partnership with companies in charge of electronic payment processing data, your details are at the disposal of these establishments.\n                However, these establishments are only entitled to use such information for legal investigation purposes.\n                We may also enter into partnerships with data processors and companies which provide security, age verification and identification verification services\n                (including, without limitation, financial institutions, age verification, and credit reference agencies) in order to improve the efficiency and security\n                of the app and/or to comply with relevant regulations.\n                These companies may have access to your personal data and may keep record in order that they can process necessary information data and maintain the security of the app.\n                The companies that we choose to carry out these functions have strict policies regarding privacy of personal data, although we accept no\n                responsibility for the privacy policies of those companies.\n                We will not disclose the amount of your winnings or losses to any person or third party other than to you unless we are required by law to disclose\n                such information to competent authorities or for legal purposes.\n                We reserve the right to pass on to public or other relevant authorities, customers’ personal data if necessary or required in the course of any legal investigation.\n                The personal data submitted by our customers may be stored and/or processed for the purposes set forth above in this Privacy Statement in any country in which we or our affiliates,\n                suppliers, subsidiaries or agents maintain facilities.\n                By accepting this Privacy Policy, you give your consent to the transfer of your personal data outside of your country.\n                Polibet is committed to taking all necessary steps to ensure that whenever personal data is transmitted, such transmission takes place solely within the Group and the Group's\n                select partners in which companies the standards of privacy and confidentiality should be of an acceptable standard, irrelevant of location.\n                Polibet shall in no manner whatsoever be held responsible for the manner in which third parties process and/or store the personal data of our customers.\n                Polibet shall only be responsible for its own Privacy Policy and it does not warrant the standard of the privacy policies of any of the third parties who\n                may have links placed on our app.\n                "
-                          ),
-                          _c("v-card-text", [
-                            _vm._v("IV. RETENTION OF YOUR PERSONAL DATA")
-                          ]),
-                          _vm._v(
-                            "\n                As our customer, you or we can close your Account with us at any time. Following\n                closure of your Account, we will retain your personal data on record for as long as required by law.\n                We will only use your data should such use be required by competent authorities in cases of fraud or investigation into any other illegal activity.\n                This will be the sole exception to use of your personal data until its complete deletion from our records.\n                "
-                          ),
-                          _c("v-card-text", [
-                            _vm._v("V. PROTECTION OF MINORS")
-                          ]),
-                          _vm._v(
-                            "\n                The online prediction services that we offer are strictly prohibited for persons less than 18 years of age or under the age of legal consent\n                for using online prediction services under the laws of the jurisdiction in which the person is located.\n                Consequently, minors may not register and predict on our app. We collect proof of identification from our customers as part of our age verification process.\n                Any minor who is found to be predicting on Polibet shall have his/her Account immediately blocked.\n                Polibet reserves the right to conduct a security review to validate your identity and age.\n                Acceptance of our Privacy Policy authorizes us to conduct such security reviews supplied by you against third party databases.\n                "
-                          ),
-                          _c("v-card-text", [_vm._v("VI. SECURITY")]),
-                          _vm._v(
-                            "\n                Polibet uses its best endeavors to protect the confidentiality of your personal data and to prevent any unauthorized external or internal users from accessing such information\n                without your consent.\n                However, Polibet shall take no responsibility whatsoever for events beyond its control inclusive of, but not limited to, acts of God or natural disasters and including power\n                cuts and strikes.\n                We are sure that, as our customer, you understand the evolving nature of our business due to continuous technological innovation and,\n                although we endeavor to do our best to ensure the protection and privacy of your personal data at all times,\n                we cannot guarantee that the performance of our service will be free from error at all times. Should any such error have an effect or consequence on the privacy\n                of your personal data, we shall not be liable in any manner whatsoever in damages or otherwise.\n                We strongly recommend that you do not divulge your personal data to strangers or third parties during live chat.\n                Remember that your personal data is sensitive and it’s important to stop and think\n                before passing on personal information.\n                "
-                          ),
-                          _c("v-card-text", [_vm._v("VII. MODIFICATIONS")]),
-                          _vm._v(
-                            "\n                It may become necessary, at any time, for us to make modifications to the app or to the Terms and Conditions or Privacy Policy governing its services.\n                The purpose of such modifications may be to further simplify user processes or to further reinforce security measures in order to upgrade to future technological innovations.\n                In such cases, customers previously registered on our app will keep their user name no modifications will be required on their part.\n                Continued use of our app by the members after any modifications to the app, the Terms and Conditions or Privacy Policy will be considered as their acceptance thereof.\n                It is the responsibility of each customer to regularly check the, Terms and Conditions and Privacy Policy for updates.\n          "
-                          )
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          )
-        ],
-        1
-      )
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-29d6cc53", module.exports)
-  }
-}
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

@@ -45,17 +45,17 @@ class Activation extends Notification
     {
         $url = url('/auth/'.$this->user->activation_token.'/activate');
 
-             //return (new MailMessage)
-                    //->subject('Account Activation')
-                    //->greeting('Hello!')
-                    //->line('Thank you for registering an account with us.')
-                    //->line('Click on the below link to verify your email!')
-                    //->action('Verify now!', $url)
-                    //->line('Thank you for using our application!');
+             return (new MailMessage)
+                    ->subject('Account Activation')
+                    ->greeting('Hello!')
+                    ->line('Thank you for registering an account with us.')
+                    ->line('Click on the below link to verify your email!')
+                    ->action('Verify now!', $url)
+                    ->line('Thank you for using our application!! Start Predicting!!');
 
-            return (new MailMessage)
-            ->subject('Account Activation')
-            ->markdown('mail.account.activation', ['url'=> $url]);
+            //return (new MailMessage)
+            //->subject('Account Activation')
+            //->markdown('mail.account.activation', ['url'=> $url]);
 
 
             //return (new MailMessage)->view(
