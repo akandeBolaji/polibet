@@ -5,10 +5,6 @@ import axios from 'axios'
 import VeeValidate from 'vee-validate'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import '@mdi/font/css/materialdesignicons.css' // Ensure you are using css-loader
-import '@fortawesome/fontawesome-free/css/all.css' // Ensure you are using css-loader
-import 'font-awesome/css/font-awesome.min.css' // Ensure you are using css-loader
 
 
 window.Vue = Vue;
@@ -17,10 +13,10 @@ window.axios = axios;
 Vue.use(VeeValidate);
 
 Vue.use(Vuetify, {
-    iconfont: 'fa'
+    //iconfont: 'fa'
     //iconfont: 'mdi' // 'md' || 'mdi' || 'fa' || 'fa4'
    });
-
+//
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('auth_token');

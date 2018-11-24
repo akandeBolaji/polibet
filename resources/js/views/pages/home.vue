@@ -1,6 +1,5 @@
 <template>
   <v-app id="inspire">
-    <v-content>
         <v-toolbar fixed>
          <v-toolbar-title class="green--text darken-1">Polibet</v-toolbar-title>
          <v-spacer></v-spacer>
@@ -415,7 +414,6 @@
     </v-card>
 
      </v-dialog>
-    </v-content>
   </v-app>
 </template>
 
