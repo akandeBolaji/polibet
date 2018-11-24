@@ -1,5 +1,5 @@
 <template>
-<v-app id="inspire" style="background-image: url('http://polibet.site/images/background/polibet/new.jpg')">
+<v-app id="inspire" style="background-image: url('http://polibet.ng/images/background/polibet/new.jpg')">
  <div>
     <v-container fill-height>
       <v-layout align-center>
