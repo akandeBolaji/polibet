@@ -14,7 +14,7 @@
        </v-toolbar>
        <section>
          <v-parallax
-       src="http://polibet.ng/images/background/polibet/new.jpg"
+       src="http:/images/background/polibet/new.jpg"
        height="600"
        >
     <v-layout
