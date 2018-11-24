@@ -70,6 +70,7 @@ class AuthController extends Controller
 
 
 
+
         $user = JWTAuth::parseToken()->authenticate();
         $profile = $user->Profile;
         $bet = $user->Bets;
@@ -77,8 +78,22 @@ class AuthController extends Controller
         $amount = ['candidate_one' => $candidate_one, 'candidate_two' => $candidate_two, 'candidate_three' => $candidate_three, 'candidate_four' => $candidate_four, 'category_one' => $category_one, 'category_two' => $category_two];
         $vote = ['candidate_one' => $votecandidate_one, 'candidate_two' => $votecandidate_two, 'candidate_three' => $votecandidate_three, 'candidate_four' => $votecandidate_four, 'category_one' => $votecategory_one, 'category_two' => $votecategory_two];
         $account = $user->Account;
+        //$win_total = \App\Bet::where('user_id', $user->id)->where('status', 'won')->sum('win_amount');
+        //if ($win_total){
+            //$withdraw = $win_total;
+        //}
+        //else {
+           // $withdraw = 0;
+        //}
         $referral_bonus = $user->ReferralBonus;
         $signup_bonus = $user->SignupBonus;
+        $referral_total = \App\referralBonus::where('user_id', $user->id)->sum('amount');
+        $withdraw_total = \App\Withdrawal::where('user_id', $user->id)->sum('amount');
+        $win_total = \App\Bet::where('user_id', $user->id)->where('status', 'won')->sum('win_amount');
+        $balance = $account->balance + $signup_bonus->amount + $referral_total + $win_total - $withdraw_total;
+        $withdrawable = $account->balance + $win_total - $withdraw_total;
+        $funds = $user->Funds;
+        $withdrawals = $user->withdrawals;
 
         $referrals = \App\User::where('referrer_id', $user->refer_id)->get();
 
@@ -86,10 +101,10 @@ class AuthController extends Controller
             $referrals_name = [];
         }
         else {
-        $referrals_name =  \App\User::where('referrer_id', $user->refer_id)->get(['full_name']);
+        $referrals_name =  \App\User::where('referrer_id', $user->refer_id)->get(['full_name', 'id']);
         }
 
-        return response()->json(compact('user','profile', 'bet', 'bet_friends', 'referrals_name', 'vote', 'amount', 'account', 'referral_bonus', 'signup_bonus'), 201);
+        return response()->json(compact('user','profile', 'withdrawals', 'bet', 'withdrawable', 'balance','funds', 'bet_friends', 'referrals_name', 'vote', 'amount', 'account', 'referral_bonus', 'signup_bonus'), 201);
     }
 
     public function getStats(){
@@ -169,6 +184,7 @@ class AuthController extends Controller
 
         $user = \App\User::create([
             'phone' => request('phone'),
+            'ip' => request()->ip(),
             'email' => request('email'),
             'full_name' => request('full_name'),
             'status' => 'pending_activation',
@@ -247,6 +263,8 @@ class AuthController extends Controller
         $referrer_id =  $user->referrer_id;
         if ($referrer_id) {
            $referrer = \App\User::where('refer_id', $referrer_id)->first();
+           $countIP = \App\User::where('ip', $user->ip)->count();
+           if ($countIP == 1) {
           if ($referrer) {
               $referrer_bonus = new \App\referralBonus;
               $referrer_bonus->amount = 100;
@@ -255,7 +273,8 @@ class AuthController extends Controller
               $referrer->referralBonus()->save($referrer_bonus);
           }
         }
-        $user->notify(new Activated($user));
+        }
+        //$user->notify(new Activated($user));
 
         return response()->json(['message' => 'Your account has been activated!']);
     }
@@ -336,7 +355,7 @@ class AuthController extends Controller
         $user->password = bcrypt(request('password'));
         $user->save();
 
-        $user->notify(new PasswordResetted($user));
+        //$user->notify(new PasswordResetted($user));
 
         return response()->json(['message' => 'Your password has been reset. Please login again!']);
     }

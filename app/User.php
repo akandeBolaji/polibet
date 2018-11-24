@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'phone', 'status', 'full_name', 'referrer_id', 'refer_id', 'bet_id'
+        'name', 'ip', 'email', 'password', 'phone', 'status', 'full_name', 'referrer_id', 'refer_id', 'bet_id'
     ];
 
     /**
@@ -48,6 +48,16 @@ class User extends Authenticatable implements JWTSubject
     public function bets()
     {
         return $this->hasMany('App\Bet');
+    }
+
+    public function funds()
+    {
+        return $this->hasMany('App\Fund');
+    }
+
+    public function withdrawals()
+    {
+        return $this->hasMany('App\Withdrawal');
     }
 
     public function account()

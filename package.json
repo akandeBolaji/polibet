@@ -30,6 +30,7 @@
         "v-offline": "^1.0.10",
         "vee-validate": "^2.1.1",
         "vue": "^2.5.7",
+        "vue-paystack": "^2.0.0",
         "vue-range-slider": "^0.2.4",
         "vue-router": "^2.8.1",
         "vuejs-datepicker": "^0.9.11",

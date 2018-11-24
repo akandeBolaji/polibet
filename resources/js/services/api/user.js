@@ -21,6 +21,14 @@ export default {
     return axios.post('/api/user/add-bet', betData )
   },
 
+  addFund ( fundData ) {
+    return axios.post('/api/user/add-fund', fundData )
+  },
+
+  withdrawFund ( withdrawData ) {
+    return axios.post('/api/user/withdraw-fund', withdrawData )
+  },
+
   addBetFriend ( betData ) {
     return axios.post('/api/user/add-betfriend', betData )
   },

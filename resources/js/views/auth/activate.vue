@@ -42,7 +42,33 @@
                 </div>
             </v-card>
             </v-dialog>
-       <v-footer fixed color="green"></v-footer>
+       <v-footer height="auto" color="green">
+            <v-layout
+      justify-center
+      row
+      wrap
+    >
+           <v-flex
+        white
+        lighten-2
+        py-3
+        text-xs-center
+        green--text
+        xs12
+      >
+        &copy;2018 — <strong>Polibet</strong>
+      </v-flex>
+      </v-layout>
+          <v-layout row wrap align-center>
+          <v-flex xs12>
+            <div class="white--text ml-3 text-xs-center">
+              Made with
+              <v-icon class="red--text">favorite</v-icon>
+              by <a class="white--text" href="https://codebators.com" target="_blank">CodeBators</a>
+            </div>
+          </v-flex>
+        </v-layout>
+       </v-footer>
     </v-content>
 </v-app>
 </template>
@@ -72,7 +98,7 @@
                );
             },
             login() {
-              this.dialog= true;
+              //this.dialog= true;
               this.$router.push('/login');
             },
         },
