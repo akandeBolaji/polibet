@@ -21,16 +21,12 @@ state: {
   editProfileMessage: '',
   addBetStatus: 0,
   addBetMessage: '',
+  addFundStatus: 0,
+  addFundMessage: '',
+  withdrawFundStatus: 0,
+  withdrawFundMessage: '',
   addBetFriendStatus: 0,
   addBetFriendMessage: '',
-  updateAvatarStatus: 0,
-  updateAvatarMessage: '',
-  removeSkillStatus: 0,
-  removeSkillMessage: '',
-  removeExperienceStatus: 0,
-  removeExperienceMessage: '',
-  removeAccomplishmentStatus: 0,
-  removeAccomplishmentMessage: '',
 },
 
 /*
@@ -41,6 +37,36 @@ actions: {
 /*
   Adds a post
 */
+withdrawFund( { commit, state, dispatch }, data ){
+    commit( 'setWithdrawFundStatus', 1 );
+
+    userAPI.withdrawFund( data.withdrawData )
+        .then( function( response ){
+          commit( 'setWithdrawFundStatus', 2 );
+          commit( 'setAddFundMessage', response.data.message);
+          dispatch('getUser');
+        })
+        .catch( function( error ){
+          commit( 'setWithdrawFundStatus', 3 );
+          commit( 'setwithdrawFundMessage', error.response.data.message );
+        });
+  },
+
+  addFund( { commit, state, dispatch }, data ){
+    commit( 'setAddFundStatus', 1 );
+
+    userAPI.addFund( data.fundData )
+        .then( function( response ){
+          commit( 'setAddFundStatus', 2 );
+          commit( 'setAddFundMessage', response.data.message);
+          dispatch('getUser');
+        })
+        .catch( function( error ){
+          commit( 'setAddFundStatus', 3 );
+          commit( 'setAddFundMessage', error.response.data.message );
+        });
+  },
+
 addBet( { commit, state, dispatch }, data ){
     commit( 'setAddBetStatus', 1 );
 
@@ -99,81 +125,6 @@ getStats( { commit, state, dispatch } ){
         });
   },
 
-editProfile( { commit, state, dispatch }, data ){
-  commit( 'setEditProfileStatus', 1 );
-
-  userAPI.editProfile( data.profileData, data.experienceData, data.skillData, data.accomplishmentData )
-      .then( function( response ){
-        commit( 'setEditProfileStatus', 2 );
-        commit( 'setEditProfileMessage', response.data.message);
-        //dispatch('getUser')
-      })
-      .catch( function( error ){
-        commit( 'setEditProfileStatus', 3 );
-        commit( 'setEditProfileMessage', error.response.data.message );
-      });
-},
-
-removeSkill( { commit, state, dispatch }, data ){
-  commit( 'setRemoveSkillStatus', 1 );
-
-  userAPI.removeSkill( data.key )
-      .then( function( response ){
-        commit( 'setRemoveSkillStatus', 2 );
-        commit( 'setRemoveSkillMessage', response.data.message);
-        dispatch('getUser')
-      })
-      .catch( function( error ){
-        commit( 'setRemoveSkillStatus', 3 );
-        commit( 'setRemoveSkillMessage', error.response.data.message );
-      });
-},
-
-removeExperience( { commit, state, dispatch }, data ){
-  commit( 'setRemoveExperienceStatus', 1 );
-
-  userAPI.removeExperience( data.key )
-      .then( function( response ){
-        commit( 'setRemoveExperienceStatus', 2 );
-        commit( 'setRemoveExperienceMessage', response.data.message);
-        dispatch('getUser')
-      })
-      .catch( function( error ){
-        commit( 'setRemoveExperienceStatus', 3 );
-        commit( 'setRemoveExperienceMessage', error.response.data.message );
-      });
-},
-
-removeAccomplishment( { commit, state, dispatch }, data ){
-  commit( 'setRemoveAccomplishmentStatus', 1 );
-
-  userAPI.removeAccomplishment( data.key )
-      .then( function( response ){
-        commit( 'setRemoveAccomplishmentStatus', 2 );
-        commit( 'setRemoveAccomplishmentMessage', response.data.message);
-        dispatch('getUser')
-      })
-      .catch( function( error ){
-        commit( 'setRemoveAccomplishmentStatus', 3 );
-        commit( 'setRemoveAccomplishmentMessage', error.response.data.message );
-      });
-},
-
-updateAvatar ({ commit, state, dispatch }, data ){
-  commit( 'setUpdateAvatarStatus', 1 );
-
-  userAPI.updateAvatar( data.formData )
-      .then( function( response ){
-        commit( 'setUpdateAvatarStatus', 2 );
-        commit( 'setUpdateAvatarMessage', response.data.message);
-        dispatch('getUser');
-      })
-      .catch( function( error ){
-        commit( 'setUpdateAvatarStatus', 3 );
-        commit( 'setUpdateAvatarMessage', error.response.data.message );
-      });
-},
-
 
 },
 
@@ -208,6 +159,22 @@ setAddBetMessage( state, message ){
     state.addBetMessage = message;
   },
 
+setAddFundStatus( state, status ){
+    state.addFundStatus = status;
+  },
+
+setAddFundMessage( state, message ){
+    state.addFundMessage = message;
+  },
+
+setWithdrawFundStatus( state, status ){
+    state.withdrawFundStatus = status;
+  },
+
+setwithdrawFundMessage( state, message ){
+    state.withdrawFundMessage = message;
+  },
+
 setAddBetFriendStatus( state, status ){
     state.addBetFriendStatus = status;
   },
@@ -215,46 +182,6 @@ setAddBetFriendStatus( state, status ){
 setAddBetFriendMessage( state, message ){
     state.addBetFriendMessage = message;
   },
-
-setEditProfileStatus( state, status ){
-  state.editProfileStatus = status;
-},
-
-setEditProfileMessage( state, message ){
-  state.editProfileMessage = message;
-},
-
-setRemoveSkillStatus( state, status ){
-  state.removeSkillStatus = status;
-},
-
-setRemoveSkillMessage( state, message ){
-  state.removeSkillMessage = message;
-},
-
-setRemoveExperienceStatus( state, status ){
-  state.removeExperienceStatus = status;
-},
-
-setRemoveExperienceMessage( state, message ){
-  state.removeExperienceMessage = message;
-},
-
-setRemoveAccomplishmentStatus( state, status ){
-  state.removeAccomplishmentStatus = status;
-},
-
-setRemoveAccomplishmentMessage( state, message ){
-  state.removeAccomplishmentMessage = message;
-},
-
-setUpdateAvatarStatus( state, status ){
-  state.updateAvatarStatus = status;
-},
-
-setUpdateAvatarMessage( state, message ){
-  state.updateAvatarMessage = message;
-},
 },
 
 /*
@@ -289,52 +216,28 @@ setUpdateAvatarMessage( state, message ){
     return state.addBetMessage;
   },
 
+  getAddFundStatus( state ){
+    return state.addFundStatus;
+  },
+
+  getAddFundMessage( state ){
+    return state.addFundMessage;
+  },
+
+  getWithdrawFundStatus( state ){
+    return state.withdrawFundStatus;
+  },
+
+  getWithdrawFundMessage( state ){
+    return state.withdrawFundMessage;
+  },
+
   getAddBetFriendStatus( state ){
     return state.addBetFriendStatus;
   },
 
   getAddBetFriendMessage( state ){
     return state.addBetFriendMessage;
-  },
-
-  getEditProfileStatus( state ){
-    return state.editProfileStatus;
-  },
-
-  getEditProfileMessage( state ){
-    return state.editProfileMessage;
-  },
-
-  getRemoveSkillStatus( state ){
-    return state.removeSkillStatus;
-  },
-
-  getRemoveSkillMessage( state ){
-    return state.removeSkillMessage;
-  },
-
-  getRemoveExperienceStatus( state ){
-    return state.removeExperienceStatus;
-  },
-
-  getRemoveExperienceMessage( state ){
-    return state.removeExperienceMessage;
-  },
-
-  getRemoveAccomplishmentStatus( state ){
-    return state.removeAccomplishmentStatus;
-  },
-
-  getRemoveAccomplishmentMessage( state ){
-    return state.removeAccomplishmentMessage;
-  },
-
-  getUpdateAvatarStatus( state ){
-    return state.updateAvatarStatus;
-  },
-
-  getUpdateAvatarMessage( state ){
-    return state.updateAvatarMessage;
   },
   }
 }

@@ -50,35 +50,35 @@
                 <v-form>
                   <v-card-text><b>PERSONAL INFORMATION</b></v-card-text>
                   <v-text-field prepend-icon="person_add" v-validate="'required|min:4'" v-model="data.full_name" name="Full Name" label="Name in full" type="text" ref="name"></v-text-field>
-                  <v-alert :value="errors.has('Full Name')" type="error">{{ errors.first('Full Name') }}</v-alert>
+                  <span :value="errors.has('Full Name')" style="color:red">{{ errors.first('Full Name') }}</span>
                   <v-text-field prepend-icon="contact_mail" v-validate="'required|email'" v-model="data.email" name="email" label="Email" type="text"></v-text-field>
-                  <v-alert :value="errors.has('Email')" type="error">{{ errors.first('Email') }}</v-alert>
+                  <span :value="errors.has('Email')" style="color:red">{{ errors.first('Email') }}</span>
                   <v-text-field prepend-icon="person_outline" v-validate="'required|numeric|min_value:18'" v-model="data.age" name="Age" label="Age" type="text"></v-text-field>
-                  <v-alert :value="errors.has('Age')" type="error">{{ errors.first('Age') }}</v-alert>
+                  <span :value="errors.has('Age')" style="color:red">{{ errors.first('Age') }}</span>
                   <v-select  prepend-icon="add_location" :items="states" label="Choose Location"  v-validate="'required'" v-model="data.location" name="Location" type="text" ></v-select>
-                  <v-alert :value="errors.has('Location')" type="error">{{ errors.first('Location') }}</v-alert>
+                  <span :value="errors.has('Location')" style="color:red">{{ errors.first('Location') }}</span>
                   <v-select  prepend-icon="people" :items="sex" label="Choose Gender"  v-validate="'required'" v-model="data.gender" name="Gender" type="text" ></v-select>
-                  <v-alert :value="errors.has('Gender')" type="error">{{ errors.first('Gender') }}</v-alert>
+                  <span :value="errors.has('Gender')" style="color:red">{{ errors.first('Gender') }}</span>
                   <v-text-field prepend-icon="phone" name="Phone" v-validate="'required|numeric'" v-model="data.phone" label="Phone number" type="text"></v-text-field>
-                  <v-alert :value="errors.has('Phone')" type="error">{{ errors.first('Phone') }}</v-alert>
+                  <span :value="errors.has('Phone')" style="color:red">{{ errors.first('Phone') }}</span>
                   <v-text-field id="password"  v-validate="'required|min:6'" prepend-icon="lock" v-model="data.password" name="password" label="Password" type="password" ref="password"></v-text-field>
-                  <v-alert :value="errors.has('password')" type="error">{{ errors.first('password') }}</v-alert>
+                  <span :value="errors.has('password')" style="color:red">{{ errors.first('password') }}</span>
                   <v-text-field id="password_confirmation" v-validate="'required|confirmed:password'" prepend-icon="lock" v-model="data.password_confirmation" name="password_confirmation" data-vv-as="password" label="Password Again" type="password"></v-text-field>
-                  <v-alert :value="errors.has('password_confirmation')" type="error">{{ errors.first('password_confirmation') }}</v-alert>
+                  <span :value="errors.has('password_confirmation')" style="color:red">{{ errors.first('password_confirmation') }}</span>
                   <v-divider></v-divider>
                   <v-card-text><b>BANK ACCOUNT INFORMATION</b></v-card-text>
                   <v-select  prepend-icon="account_balance" :items="banks" label="Choose Bank"  v-validate="'required'" v-model="data.bank_name" name="Bank Name" type="text" ></v-select>
-                  <v-alert :value="errors.has('Bank Name')" type="error">{{ errors.first('Bank Name') }}</v-alert>
+                  <span :value="errors.has('Bank Name')" style="color:red">{{ errors.first('Bank Name') }}</span>
                   <v-text-field prepend-icon="account_box" v-validate="'required|confirmed:name'" v-model="data.account_name" name="Account Name" label="Account Name (Same as Full Name)" type="text" data-vv-as="name"></v-text-field>
-                  <v-alert :value="errors.has('Account Name')" type="error">{{ errors.first('Account Name') }}</v-alert>
+                  <span :value="errors.has('Account Name')" style="color:red">{{ errors.first('Account Name') }}</span>
                   <v-text-field prepend-icon="account_balance_wallet" v-validate="'required|numeric|min:10|max:10'" v-model="data.account_number" name="Account Number" label="Account Number" type="text" required></v-text-field>
-                  <v-alert :value="errors.has('Account Number')" type="error">{{ errors.first('Account Number') }}</v-alert>
+                  <span :value="errors.has('Account Number')" style="color:red">{{ errors.first('Account Number') }}</span>
                   <v-divider></v-divider>
                   <v-card-text><b>OTHER INFORMATION</b></v-card-text>
                    <v-text-field prepend-icon="people_outline" v-if="ifreferred" disabled v-model="referrer_name" name="Referrer's Name" label="Referrer's Name" type="text" ref="name"></v-text-field>
                    <v-checkbox v-model="data.accredited" label="Are you an Accredited Voter?(Optional)"></v-checkbox>
                    <v-checkbox v-validate="'required:true'" name="terms and condition" v-model="data.checkbox" label="Do you agree with our terms and condition?"></v-checkbox>
-                   <v-alert :value="errors.has('terms and condition')" type="error">{{ errors.first('terms and condition') }}</v-alert>
+                   <span :value="errors.has('terms and condition')" style="color:red">{{ errors.first('terms and condition') }}</span>
                 </v-form>
               </v-card-text>
               <v-card-actions>
@@ -90,7 +90,33 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <v-footer color="green"></v-footer>
+      <v-footer height="auto" color="green">
+           <v-layout
+      justify-center
+      row
+      wrap
+    >
+           <v-flex
+        white
+        lighten-2
+        py-3
+        text-xs-center
+        green--text
+        xs12
+      >
+        &copy;2018 — <strong>Polibet</strong>
+      </v-flex>
+      </v-layout>
+          <v-layout row wrap align-center>
+          <v-flex xs12>
+            <div class="white--text ml-3 text-xs-center">
+              Made with
+              <v-icon class="red--text">favorite</v-icon>
+              by <a class="white--text" href="https://codebators.com" target="_blank">CodeBators</a>
+            </div>
+          </v-flex>
+        </v-layout>
+      </v-footer>
       <v-dialog
       v-model="dialog"
       hide-overlay
@@ -300,11 +326,11 @@
             },
 
         login() {
-          this.dialog= true;
+          //this.dialog= true;
           this.$router.push('/login');
         },
          home() {
-          this.dialog= true;
+          //this.dialog= true;
           this.$router.push('/');
         }
     }
