@@ -18,18 +18,6 @@ let routes = [
     },
 
     {
-        path: '/user',
-        component: require('./views/user/index'),
-        meta: { requiresAuth: true },
-    },
-
-    {
-        path: '/profile',
-        component: require('./views/user/profile'),
-        meta: { requiresAuth: true },
-    },
-
-    {
         path: '/login/',
         component: require('./views/auth/login'),
         meta: { requiresGuest: true },
