@@ -112,19 +112,8 @@ class AuthController extends Controller
     }
 
     public function getStats(){
-
-        //return response()->json('success', 201);
-        //$user = auth()->user();
-
-        //$total_bet_candidate = \App\bet::where('candidate', request('candidate'))->sum('amount');
-        //$total_bet_category = \App\bet::where('category', request('category'))->sum('amount');
-        //$win_amount = ((request('amount')/$total_bet_candidate) * $total_bet_category);
-        //if (\App\User::count() != 0){
             $users = \App\User::count();
-        //}
-        //else if (\App\User::count() == 0){
-        //$users = 6;
-        //}
+
         if (\App\Vote::count() != 0){
         $votecategory_one = \App\Vote::where('category', 1)->where('user_id', '!=', 'null')->count();
         $votecategory_two = \App\Vote::where('category', 2)->where('user_id', '!=', 'null')->count();
