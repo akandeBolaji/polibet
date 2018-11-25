@@ -123,7 +123,7 @@ class AuthController extends Controller
             $users = \App\User::count();
         }
         else if (\App\User::count() == 0){
-        $users = \App\User::count();
+        $users = 6;
         }
         if (\App\Vote::count() != 0){
         $votecategory_one = \App\Vote::where('category', 1)->where('user_id', '!=', 'null')->count();
