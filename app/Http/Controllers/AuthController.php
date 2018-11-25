@@ -48,18 +48,22 @@ class AuthController extends Controller
             return response()->json(['authenticated' => false],422);
         }
 
-        //return response()->json('success', 201);
-        //$user = auth()->user();
-
-        //$total_bet_candidate = \App\bet::where('candidate', request('candidate'))->sum('amount');
-        //$total_bet_category = \App\bet::where('category', request('category'))->sum('amount');
-        //$win_amount = ((request('amount')/$total_bet_candidate) * $total_bet_category);
-        $votecategory_one = \App\Vote::where('category', 1)->where('user_id', '!=', 'null')->count();
-        $votecategory_two = \App\Vote::where('category', 2)->where('user_id', '!=', 'null')->count();
-        $votecandidate_one = \App\Vote::where('candidate', 1)->where('user_id', '!=', 'null')->count();
-        $votecandidate_two = \App\Vote::where('candidate', 2)->where('user_id', '!=', 'null')->count();
-        $votecandidate_three = \App\Vote::where('candidate', 3)->where('user_id', '!=', 'null')->count();
-        $votecandidate_four = \App\Vote::where('candidate', 4)->where('user_id', '!=', 'null')->count();
+        if (\App\Vote::count() != 0){
+            $votecategory_one = \App\Vote::where('category', 1)->where('user_id', '!=', 'null')->count();
+            $votecategory_two = \App\Vote::where('category', 2)->where('user_id', '!=', 'null')->count();
+            $votecandidate_one = \App\Vote::where('candidate', 1)->where('user_id', '!=', 'null')->count();
+            $votecandidate_two = \App\Vote::where('candidate', 2)->where('user_id', '!=', 'null')->count();
+            $votecandidate_three = \App\Vote::where('candidate', 3)->where('user_id', '!=', 'null')->count();
+            $votecandidate_four = \App\Vote::where('candidate', 4)->where('user_id', '!=', 'null')->count();
+            }
+            else if (\App\Vote::count() == 0) {
+                $votecategory_one = 0;
+                $votecategory_two = 0;
+                $votecandidate_one = 0;
+                $votecandidate_two = 0;
+                $votecandidate_three = 0;
+                $votecandidate_four = 0;
+            }
 
         $category_one = \App\Bet::where('category', 1)->sum('amount');
         $category_two = \App\Bet::where('category', 2)->sum('amount');
@@ -116,13 +120,22 @@ class AuthController extends Controller
         //$total_bet_category = \App\bet::where('category', request('category'))->sum('amount');
         //$win_amount = ((request('amount')/$total_bet_candidate) * $total_bet_category);
         $users = \App\User::count();
+        if (\App\Vote::count() != 0){
         $votecategory_one = \App\Vote::where('category', 1)->where('user_id', '!=', 'null')->count();
         $votecategory_two = \App\Vote::where('category', 2)->where('user_id', '!=', 'null')->count();
         $votecandidate_one = \App\Vote::where('candidate', 1)->where('user_id', '!=', 'null')->count();
         $votecandidate_two = \App\Vote::where('candidate', 2)->where('user_id', '!=', 'null')->count();
         $votecandidate_three = \App\Vote::where('candidate', 3)->where('user_id', '!=', 'null')->count();
         $votecandidate_four = \App\Vote::where('candidate', 4)->where('user_id', '!=', 'null')->count();
-
+        }
+        else if (\App\Vote::count() == 0) {
+            $votecategory_one = 0;
+            $votecategory_two = 0;
+            $votecandidate_one = 0;
+            $votecandidate_two = 0;
+            $votecandidate_three = 0;
+            $votecandidate_four = 0;
+        }
         $category_one = \App\Bet::where('category', 1)->sum('amount');
         $category_two = \App\Bet::where('category', 2)->sum('amount');
         $candidate_one = \App\Bet::where('candidate', 1)->sum('amount');
