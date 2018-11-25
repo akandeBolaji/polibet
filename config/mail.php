@@ -56,7 +56,7 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'support@polibet.ng'),
+        'address' => env('MAIL_FROM_ADDRESS', 'info@polibet.ng'),
         'name' => env('MAIL_FROM_NAME', 'Polibet'),
     ],
 
