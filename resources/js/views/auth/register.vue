@@ -326,11 +326,11 @@
             },
 
         login() {
-          //this.dialog= true;
+          this.dialog= true;
           this.$router.push('/login');
         },
          home() {
-          //this.dialog= true;
+          this.dialog= true;
           this.$router.push('/');
         }
     }

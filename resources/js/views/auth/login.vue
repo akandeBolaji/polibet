@@ -235,15 +235,15 @@
             },
 
         register() {
-          //this.dialog= true;
+          this.dialog= true;
           this.$router.push('/register');
         },
          home() {
-          //this.dialog= true;
+          this.dialog= true;
           this.$router.push('/');
         },
         forgot() {
-          //this.dialog= true;
+          this.dialog= true;
           this.$router.push('/password');
         }
     }

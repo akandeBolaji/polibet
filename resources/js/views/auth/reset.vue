@@ -189,15 +189,15 @@
                  );
             },
                login() {
-                //this.dialog= true;
+                this.dialog= true;
                 this.$router.push('/login');
                 },
                 register() {
-                //this.dialog= true;
+                this.dialog= true;
                 this.$router.push('/register');
                 },
                 home() {
-                //this.dialog= true;
+                this.dialog= true;
                 this.$router.push('/');
                 }
         },

@@ -309,8 +309,7 @@
       >
         <div slot="header">Withdrawals</div>
         <v-card>
-          <v-card-text v-if="userData.withdrawals != 0" class="grey lighten-3">
-            <div v-for="withdrawal in userData.withdrawals" :key="withdrawal.id">
+            <div v-if="userData.withdrawals != 0" v-for="withdrawal in userData.withdrawals" :key="withdrawal.id">
             <v-list-tile >
               <v-list-tile-content>Withdrawal ID:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{withdrawal.id}}</v-list-tile-content>
@@ -329,7 +328,6 @@
             </v-list-tile>
             <v-divider></v-divider>
             </div>
-          </v-card-text>
           <v-card-text v-else class="grey lighten-3">No withdrawals yet</v-card-text>
         </v-card>
       </v-expansion-panel-content>
@@ -627,7 +625,7 @@ import paystack from 'vue-paystack';
         return {
             paystackkey: "pk_test_8e49810c12ca188a313ff2340e5d4d7113fd1acf", //paystack public key
             fund: {
-            real_amount: 0,
+            real_amount: '',
             //email: userData.user.email, // Customer email
             //amount: real_amount * 100,  // in kobo
             },
@@ -1124,15 +1122,19 @@ import paystack from 'vue-paystack';
          this.$store.dispatch( 'getUser');
        },
         login() {
+             this.dialog = true;
           this.$router.push('/login');
         },
         register() {
+             this.dialog = true;
           this.$router.push('/register');
         },
         home() {
+             this.dialog = true;
           this.$router.push('/');
         },
         logout() {
+             this.dialog = true;
           this.$store.dispatch( 'logoutUser');
         },
     }

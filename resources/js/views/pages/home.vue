@@ -528,18 +528,18 @@
        },
 
         login() {
-          //this.dialog = true;
+          this.dialog = true;
           this.$router.push('/login');
 
         },
         register() {
-          //this.dialog = true;
+          this.dialog = true;
           this.$router.push({ path: '/register', query: { ref: this.$route.query.ref }})
           //this.$router.push('/register');
         },
         dashboard() {
           //const info = false;
-          //this.dialog = true;
+          this.dialog = true;
           this.$router.push('/dashboard');
           //this.$router.push({ name: 'home', params: { info }})
           //this.$router.push({ path: `'/home/${info}'`})

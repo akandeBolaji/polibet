@@ -98,7 +98,7 @@
                );
             },
             login() {
-              //this.dialog= true;
+              this.dialog= true;
               this.$router.push('/login');
             },
         },
