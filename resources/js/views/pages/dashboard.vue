@@ -121,11 +121,11 @@
              </v-list-tile>
              <v-list-tile>
               <v-list-tile-content>Predict Amount:</v-list-tile-content>
-            <v-list-tile-content v-if="userData.bet.amount" class="align-end">N {{bet.amount}}</v-list-tile-content>
+            <v-list-tile-content  class="align-end">N {{bet.amount}}</v-list-tile-content>
             </v-list-tile>
              <v-list-tile>
               <v-list-tile-content>Status:</v-list-tile-content>
-            <v-list-tile-content v-if="userData.bet.status" class="align-end">N {{bet.status}}</v-list-tile-content>
+            <v-list-tile-content class="align-end">{{bet.status}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Placed By:</v-list-tile-content>
@@ -133,7 +133,7 @@
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content> Present Win Amount:</v-list-tile-content>
-              <v-list-tile-content v-if="userData.bet.amount"  class="align-end">N {{adjustWinAmount(bet.amount, bet.category, bet.candidate)}}</v-list-tile-content>
+              <v-list-tile-content class="align-end">N {{adjustWinAmount(bet.amount, bet.category, bet.candidate)}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Predict Candidate and Category:</v-list-tile-content>
@@ -281,7 +281,7 @@
             <v-card-title><h4>Account Balance</h4></v-card-title>
             <v-list dense v-if="userData.account">
                 <v-list-tile class="grey lighten-3">
-              <v-list-tile-content> <h4>Account Balance Left:</h4></v-list-tile-content>
+              <v-list-tile-content> <h4>Amount withdrawable:</h4></v-list-tile-content>
               <v-list-tile-content class="align-end">N {{userData.withdrawable}}.00</v-list-tile-content>
             </v-list-tile>
             <div  v-if="userData.funds != 0">
@@ -321,10 +321,10 @@
             </v-list-tile>
             <v-list-tile >
               <v-list-tile-content>Status:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{ withdrawal.status }}</v-list-tile-content>
+              <v-list-tile-content class="align-end"> {{ withdrawal.status }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
-              <v-list-tile-content>Fund Date:</v-list-tile-content>
+              <v-list-tile-content>Request Date:</v-list-tile-content>
               <v-list-tile-content class="align-end" > {{ withdrawal.created_at }}</v-list-tile-content>
             </v-list-tile>
             <v-divider></v-divider>
@@ -472,7 +472,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn flat @click.native="betFriends_dialog = false">Close</v-btn>
-          <v-btn color="green" class="white--text" @click="submitFriendBet">Submit</v-btn>
+          <v-btn color="green" class="white--text" :disabled="dialog" :loading="dialog" @click="submitFriendBet">Submit</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -506,7 +506,7 @@
         :embed="false"
        >
 
-          <v-btn color="green"  class="white--text fas fa-money-bill-alt">Make Payment</v-btn>
+          <v-btn :disabled="dialog" :loading="dialog" color="green" class="white--text fas fa-money-bill-alt">Make Payment</v-btn>
        </paystack>
 
         </v-card-actions>
@@ -533,7 +533,7 @@
         <v-card-actions>
           <v-btn flat @click.native="withdrawWins_dialog = false">Close</v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="green" class="white--text" @click="withdrawConfirmed">Withdraw</v-btn>
+          <v-btn color="green" :disabled="dialog" :loading="dialog" class="white--text" @click="withdrawConfirmed">Withdraw</v-btn>
 
 
         </v-card-actions>
@@ -582,7 +582,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn flat @click.native="addBet_dialog = false">Close</v-btn>
-          <v-btn color="green" class="white--text" @click="submitBet">Submit</v-btn>
+          <v-btn color="green" :disabled="dialog" :loading="dialog" class="white--text" @click="submitBet">Submit</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -608,7 +608,7 @@
             <div class="white--text ml-3 text-xs-center">
               Made with
               <v-icon class="red--text">favorite</v-icon>
-              by <a class="white--text" href="https://codebators.com" target="_blank">CodeBators</a>
+              by <a class="white--text" href="http://codebator.me" target="_blank">CodeBator</a>
             </div>
           </v-flex>
         </v-layout>
@@ -760,13 +760,13 @@ import paystack from 'vue-paystack';
          if(this.withdrawFundStatus == 2){
              this.withdrawWins_dialog = false;
              this.dialog = false;
-             this.infotext = this.$store.getters.getwithdrawFundMessage;
+             this.infotext = this.$store.getters.getWithdrawFundMessage;
              this.info = true;
          }
          else if (this.withdrawFundStatus == 3){
            this.dialog = false;
-           if (this.$store.getters.getAddFundMessage) {
-           this.infotext = this.$store.getters.getwithdrawFundMessage
+           if (this.$store.getters.getWithdrawFundMessage) {
+           this.infotext = this.$store.getters.getWithdrawFundMessage
            this.info = true;
            }
            else {

@@ -89,7 +89,7 @@
             <div class="white--text ml-3 text-xs-center">
               Made with
               <v-icon class="red--text">favorite</v-icon>
-              by <a class="white--text" href="https://codebators.com" target="_blank">CodeBators</a>
+              by <a class="white--text" href="http://codebator.me" target="_blank">CodeBator</a>
             </div>
           </v-flex>
         </v-layout>

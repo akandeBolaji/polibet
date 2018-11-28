@@ -186,7 +186,7 @@
             <div class="white--text ml-3 text-xs-center">
               Made with
               <v-icon class="red--text">favorite</v-icon>
-              by <a class="white--text" href="https://codebators.com" target="_blank">CodeBators</a>
+              by <a class="white--text" href="http://codebator.me" target="_blank">CodeBator</a>
             </div>
           </v-flex>
         </v-layout>
@@ -474,22 +474,34 @@
           let category = this.calculate.category;
           let candidate = this.calculate.candidate;
           if (category == 1){
-              if (candidate == 1  && data.amount.category_one != 0) {
+              if (candidate == 1  && data.amount.category_one != 0 && data.amount.candidate_one != 0) {
                 this.calculate.win_amount =  (amount/data.amount.candidate_one) * data.amount.category_one;
               }
-              else if (candidate == 2  && data.amount.category_one != 0) {
+              else if (candidate == 2  && data.amount.category_one != 0 && data.amount.candidate_two != 0) {
                 this.calculate.win_amount =  (amount/data.amount.candidate_two) * data.amount.category_one;
+              }
+              else if (candidate == 1  && data.amount.category_one != 0 && data.amount.candidate_one == 0){
+                  this.calculate.win_amount =  data.amount.category_one;
+              }
+               else if (candidate == 2  && data.amount.category_one != 0 && data.amount.candidate_two == 0){
+                  this.calculate.win_amount =  data.amount.category_one;
               }
               else {
                   this.calculate.win_amount = amount;
               }
           }
           else if (category == 2 ) {
-              if (candidate == 3  && data.amount.category_two != 0 ) {
+              if (candidate == 3  && data.amount.category_two != 0 && data.amount.candidate_three != 0) {
                 this.calculate.win_amount =  (amount/data.amount.candidate_three) * data.amount.category_two;
               }
-              else if (candidate == 4  && data.amount.category_two != 0) {
+              else if (candidate == 4  && data.amount.category_two != 0 && data.amount.candidate_four != 0) {
                 this.calculate.win_amount =  (amount/data.amount.candidate_four) * data.amount.category_two;
+              }
+               else if (candidate == 3  && data.amount.category_two != 0 && data.amount.candidate_three == 0){
+                  this.calculate.win_amount =  data.amount.category_two;
+              }
+               else if (candidate == 4  && data.amount.category_two != 0 && data.amount.candidate_four == 0){
+                  this.calculate.win_amount =  data.amount.category_two;
               }
               else {
                   this.calculate.win_amount = amount ;

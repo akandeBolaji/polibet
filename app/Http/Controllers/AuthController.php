@@ -90,11 +90,16 @@ class AuthController extends Controller
            // $withdraw = 0;
         //}
         $referral_bonus = $user->ReferralBonus;
-        $signup_bonus = $user->SignupBonus;
+        if ($user->SignupBonus){
+        $signup_bonus = $user->SignupBonus->amount;
+        }
+        else if (!$user->SignupBonus){
+            $signup_bonus = 0 ;
+        }
         $referral_total = \App\referralBonus::where('user_id', $user->id)->sum('amount');
         $withdraw_total = \App\Withdrawal::where('user_id', $user->id)->sum('amount');
         $win_total = \App\Bet::where('user_id', $user->id)->where('status', 'won')->sum('win_amount');
-        $balance = $account->balance + $signup_bonus->amount + $referral_total + $win_total - $withdraw_total;
+        $balance = $account->balance + $signup_bonus + $referral_total + $win_total - $withdraw_total;
         $withdrawable = $account->balance + $win_total - $withdraw_total;
         $funds = $user->Funds;
         $withdrawals = $user->withdrawals;
