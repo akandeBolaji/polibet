@@ -1,6 +1,15 @@
+
 <?php
 
 use Faker\Generator as Faker;
+use App\Account;
+use App\Fund;
+use App\Profile;
+use App\Bet;
+use App\Vote;
+use App\signupBonus;
+use App\referralBonus;
+use App\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,11 +22,55 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
         'remember_token' => str_random(10),
+        'ip' => $faker->ipv4,
+        'phone' => $faker->phoneNumber,
+        'status' => 'pending',
+        'full_name' => $faker->name,
+        'referrer_id' => str_random(10),
+        'refer_id' => str_random(10) ,
+        'bet_id' => str_random(4) ,
     ];
 });
+
+
+$factory->define(Bet::class, function (Faker $faker) {
+    return [
+        'user_id' => function () {
+            return User::where('id', '<=' , 1000)->inRandomOrder()->first()->id;
+        },
+        'amount' => rand(5000, 20000),
+        'status' => 'pending',
+        //'candidate' => rand(1, 4),
+        //'category' => rand(1,2),
+    ];
+});
+
+$factory->define(Vote::class, function (Faker $faker) {
+    return [
+        'user_id' => function () {
+            return User::where('id', '<=' , 1000)->inRandomOrder()->first()->id;
+        },
+        'candidate' => rand(1, 4),
+        'category' => rand(1,2),
+    ];
+});
+
+$factory->define(Fund::class, function (Faker $faker) {
+    return [
+        'user_id' => function () {
+            return User::where('id', '<=' , 1000)->inRandomOrder()->first()->id;
+        },
+        'amount' => rand(),
+    ];
+});
+
+
+
+
+
+

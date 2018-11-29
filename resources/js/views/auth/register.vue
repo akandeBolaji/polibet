@@ -1,6 +1,5 @@
 <template>
   <v-app id="inspire">
-    <v-content>
     <v-navigation-drawer
       v-model="drawer"
       fixed
@@ -30,13 +29,13 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-        <v-toolbar fixed dense>
+        <v-toolbar>
          <v-toolbar-title class="green--text">Polibet</v-toolbar-title>
          <v-spacer></v-spacer>
          <v-toolbar-side-icon class="hidden-md-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
          <div class="hidden-sm-and-down">
-         <v-btn @click="login" color="green">Login</v-btn>
-         <v-btn @click="home" color="green">Home</v-btn>
+         <v-btn @click="login" class="white--text" color="green">Login</v-btn>
+         <v-btn @click="home" class="white--text" color="green">Home</v-btn>
         </div>
        </v-toolbar>
       <v-container fluid fill-height>
@@ -150,7 +149,6 @@
         </div>
      </v-card>
     </v-dialog>
-    </v-content>
   </v-app>
 </template>
 

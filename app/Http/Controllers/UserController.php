@@ -126,6 +126,7 @@ class UserController extends Controller
                        $newBet = new \App\Bet;
                        $newBet->placed_by = $user->full_name;
                        $newBet->placed_for = $friend->full_name;
+                       $newBet->betid = str_random(8);
                        $newBet->amount = request('amount');
                        $newBet->status = 'pending';
                        $newBet->signup_bonus_used =  $signup_bonus;
@@ -154,6 +155,7 @@ class UserController extends Controller
                     //referral bonus left = $referral_bonus - $balanceleft
                     $newBet->referral_bonus_used =  $balanceleft;
                     $newBet->category = request('category');
+                    $newBet->betid = str_random(8);
                     $newBet->status = 'pending';
                     $newBet->placed_for = $friend->full_name;
                     $newBet->candidate = request('candidate');
@@ -178,6 +180,7 @@ class UserController extends Controller
                 //delete signup bonus
                 $newBet->signup_bonus_used =  $signup_bonus;
                 $newBet->status = 'pending';
+                $newBet->betid = str_random(8);
                 $newBet->placed_for = $friend->full_name;
                 $newBet->account_balance_used =  $balanceleft;
                 $account->balance = $account->balance - $balanceleft;
@@ -201,6 +204,7 @@ class UserController extends Controller
             $newBet->signup_bonus_used =  request('amount');
             $newBet->placed_for = $friend->full_name;
             $newBet->status = 'pending';
+            $newBet->betid = str_random(8);
             $newBet->category = request('category');
             $newBet->candidate = request('candidate');
             $friend->bets()->save($newBet);
@@ -228,6 +232,7 @@ class UserController extends Controller
                 $newBet->placed_for = $friend->full_name;
                 $newBet->account_balance_used =  $balanceleft;
                 $newBet->status = 'pending';
+                $newBet->betid = str_random(8);
                 $account->balance = $account->balance - $balanceleft;
                 $account->save();
                 \App\referralBonus::where('user_id', $user->id )->delete();
@@ -250,6 +255,7 @@ class UserController extends Controller
             $newBet->referral_bonus_used = request('amount');
             $newBet->status = 'pending';
             $newBet->placed_for = $friend->full_name;
+            $newBet->betid = str_random(8);
             $newBet->category = request('category');
             $newBet->candidate = request('candidate');
             $friend->bets()->save($newBet);
@@ -271,6 +277,7 @@ class UserController extends Controller
         $newBet->amount = request('amount');
         $newBet->status = 'pending';
         $newBet->placed_for = $friend->full_name;
+        $newBet->betid = str_random(8);
         $newBet->account_balance_used = request('amount');
         $account->balance = $account->balance - request('amount');
         $account->save();
@@ -373,6 +380,7 @@ class UserController extends Controller
                            $newBet->placed_by = $user->full_name;
                            $newBet->placed_for = $user->full_name;
                            $newBet->amount = request('amount');
+                           $newBet->betid = str_random(8);
                            $newBet->status = 'pending';
                            $newBet->signup_bonus_used =  $signup_bonus;
                            $newBet->referral_bonus_used =  $referral_bonus;
@@ -399,6 +407,7 @@ class UserController extends Controller
                         $newBet->signup_bonus_used =  $signup_bonus;
                         //referral bonus left = $referral_bonus - $balanceleft
                         $newBet->referral_bonus_used =  $balanceleft;
+                        $newBet->betid = str_random(8);
                         $newBet->category = request('category');
                         $newBet->placed_for = $user->full_name;
                         $newBet->status = 'pending';
@@ -423,6 +432,7 @@ class UserController extends Controller
                     $newBet->amount = request('amount');
                     //delete signup bonus
                     $newBet->signup_bonus_used =  $signup_bonus;
+                    $newBet->betid = str_random(8);
                     $newBet->status = 'pending';
                     $newBet->placed_for = $user->full_name;
                     $newBet->account_balance_used =  $balanceleft;
@@ -446,6 +456,7 @@ class UserController extends Controller
                 $newBet->amount = request('amount');
                 $newBet->placed_for = $user->full_name;
                 $newBet->signup_bonus_used =  request('amount');
+                $newBet->betid = str_random(8);
                 $newBet->status = 'pending';
                 $newBet->category = request('category');
                 $newBet->candidate = request('candidate');
@@ -469,6 +480,7 @@ class UserController extends Controller
                     $newBet = new \App\Bet;
                     $newBet->placed_by = $user->full_name;
                     $newBet->placed_for = $user->full_name;
+                    $newBet->betid = str_random(8);
                     $newBet->amount = request('amount');
                     //delete referral bonus
                     $newBet->referral_bonus_used =  $referral_bonus;
@@ -495,6 +507,7 @@ class UserController extends Controller
                 //delete referral bonus and create new one
                 //referral bonus left = $referral_bonus - request('amount')
                 $newBet->referral_bonus_used = request('amount');
+                $newBet->betid = str_random(8);
                 $newBet->category = request('category');
                 $newBet->status = 'pending';
                 $newBet->candidate = request('candidate');
@@ -515,6 +528,7 @@ class UserController extends Controller
             $newBet = new \App\Bet;
             $newBet->placed_by = $user->full_name;
             $newBet->placed_for = $user->full_name;
+            $newBet->betid = str_random(8);
             $newBet->amount = request('amount');
             $newBet->status = 'pending';
             $newBet->account_balance_used = request('amount');

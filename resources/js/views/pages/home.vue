@@ -402,7 +402,7 @@
                 v-model="calculate.candidate"
                 ></v-select>
                 <span :value="errors.has('calculate.Candidate')" style="color:red">{{ errors.first('calculate.Candidate') }}</span>
-                <span class="headline">Win amount: {{ this.calculate.win_amount }}</span>
+                <span class="headline">Win amount: N{{ this.calculate.win_amount }}</span>
             </v-layout>
           </v-container>
         </v-card-text>
@@ -475,10 +475,10 @@
           let candidate = this.calculate.candidate;
           if (category == 1){
               if (candidate == 1  && data.amount.category_one != 0 && data.amount.candidate_one != 0) {
-                this.calculate.win_amount =  (amount/data.amount.candidate_one) * data.amount.category_one;
+                this.calculate.win_amount =  Math.floor((amount/data.amount.candidate_one) * data.amount.category_one);
               }
               else if (candidate == 2  && data.amount.category_one != 0 && data.amount.candidate_two != 0) {
-                this.calculate.win_amount =  (amount/data.amount.candidate_two) * data.amount.category_one;
+                this.calculate.win_amount =   Math.floor((amount/data.amount.candidate_two) * data.amount.category_one);
               }
               else if (candidate == 1  && data.amount.category_one != 0 && data.amount.candidate_one == 0){
                   this.calculate.win_amount =  data.amount.category_one;
@@ -492,10 +492,10 @@
           }
           else if (category == 2 ) {
               if (candidate == 3  && data.amount.category_two != 0 && data.amount.candidate_three != 0) {
-                this.calculate.win_amount =  (amount/data.amount.candidate_three) * data.amount.category_two;
+                this.calculate.win_amount =   Math.floor((amount/data.amount.candidate_three) * data.amount.category_two);
               }
               else if (candidate == 4  && data.amount.category_two != 0 && data.amount.candidate_four != 0) {
-                this.calculate.win_amount =  (amount/data.amount.candidate_four) * data.amount.category_two;
+                this.calculate.win_amount =   Math.floor((amount/data.amount.candidate_four) * data.amount.category_two);
               }
                else if (candidate == 3  && data.amount.category_two != 0 && data.amount.candidate_three == 0){
                   this.calculate.win_amount =  data.amount.category_two;
@@ -559,7 +559,7 @@
        buhariProb(){
         let data = this.$store.getters.getStatsData;
         if (data.vote.category_one != 0 && data.vote.candidate_one != 0){
-        let answer = data.vote.candidate_one/data.vote.category_one * 100;
+        let answer = (data.vote.candidate_one/data.vote.category_one * 100).toFixed(1);
         return answer + '%';
         }
          else {
@@ -569,7 +569,7 @@
         atikuProb(){
         let data = this.$store.getters.getStatsData;
         if (data.vote.category_one != 0 && data.vote.candidate_two != 0){
-        let answer = (data.vote.candidate_two/data.vote.category_one) * 100;
+        let answer = ((data.vote.candidate_two/data.vote.category_one) * 100).toFixed(1);
         return answer + '%';
         }
         else {
@@ -579,7 +579,7 @@
         sanwoProb(){
         let data = this.$store.getters.getStatsData;
         if (data.vote.category_two != 0 && data.vote.candidate_three != 0){
-        let answer = (data.vote.candidate_three/data.vote.category_two) * 100;
+        let answer =((data.vote.candidate_three/data.vote.category_two) * 100).toFixed(1);
         return answer + '%';
         }
         else {
@@ -589,7 +589,7 @@
        agbajeProb(){
         let data = this.$store.getters.getStatsData;
         if (data.vote.category_two != 0 && data.vote.candidate_four != 0){
-        let answer = (data.vote.candidate_four/data.vote.category_two) * 100;
+        let answer = ((data.vote.candidate_four/data.vote.category_two) * 100).toFixed(1);
         return answer + '%';
         }
         else {

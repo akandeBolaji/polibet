@@ -6,9 +6,9 @@
          <v-spacer></v-spacer>
          <v-toolbar-side-icon class="hidden-md-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
          <div class="hidden-sm-and-down">
-         <v-btn @click="register" color="green">Register</v-btn>
-         <v-btn @click="home" color="green">Home</v-btn>
-         <v-btn @click="login" color="green">Login</v-btn>
+         <v-btn @click="register" class="white--text" color="green">Register</v-btn>
+         <v-btn @click="home" class="white--text" color="green">Home</v-btn>
+         <v-btn @click="login" class="white--text" color="green">Login</v-btn>
         </div>
        </v-toolbar>
        <v-navigation-drawer

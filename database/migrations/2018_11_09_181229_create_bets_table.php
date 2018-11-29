@@ -20,6 +20,7 @@ class CreateBetsTable extends Migration
             $table->integer('amount')->nullable();
             $table->integer('win_amount')->nullable();
             $table->string('status')->nullable();
+            $table->string('betid')->nullable();
             $table->string('candidate')->nullable();
             $table->string('placed_by')->nullable();
             $table->string('placed_for')->nullable();

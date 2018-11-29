@@ -107,21 +107,21 @@
           <v-list dense v-if="userData.bet != 0">
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Predicts Amount:</v-list-tile-content>
-              <v-list-tile-content v-if="userData.bet != 0" class="align-end">N {{computedTotal}}</v-list-tile-content>
+              <v-list-tile-content v-if="userData.bet != 0" class="align-end">N{{computedTotal}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Present Win Amount:</v-list-tile-content>
-              <v-list-tile-content class="align-end" >N {{ computedWinAmount }}</v-list-tile-content>
+              <v-list-tile-content class="align-end" >N{{ computedWinAmount }}</v-list-tile-content>
             </v-list-tile>
             <v-divider></v-divider>
             <div v-if="userData.bet != 0" v-for="bet in userData.bet" :key="bet.id">
              <v-list-tile >
               <v-list-tile-content>Predict ID:</v-list-tile-content>
-              <v-list-tile-content class="align-end">{{adjustId(bet.id)}}</v-list-tile-content>
+              <v-list-tile-content class="align-end">{{bet.betid}}</v-list-tile-content>
              </v-list-tile>
              <v-list-tile>
               <v-list-tile-content>Predict Amount:</v-list-tile-content>
-            <v-list-tile-content  class="align-end">N {{bet.amount}}</v-list-tile-content>
+            <v-list-tile-content  class="align-end">N{{bet.amount}}</v-list-tile-content>
             </v-list-tile>
              <v-list-tile>
               <v-list-tile-content>Status:</v-list-tile-content>
@@ -133,7 +133,7 @@
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content> Present Win Amount:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{adjustWinAmount(bet.amount, bet.category, bet.candidate)}}</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{adjustWinAmount(bet.amount, bet.category, bet.candidate)}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Predict Candidate and Category:</v-list-tile-content>
@@ -164,7 +164,7 @@
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Total Amount staked in Category:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{ userData.amount.category_one }}</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{ userData.amount.category_one }}</v-list-tile-content>
             </v-list-tile>
              <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Probability of Buhari Winning:</v-list-tile-content>
@@ -184,11 +184,11 @@
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Amount Staked for Buhari:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{ userData.amount.candidate_one }}</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{ userData.amount.candidate_one }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Total Amount Staked for Atiku:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{ userData.amount.candidate_two }}</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{ userData.amount.candidate_two }}</v-list-tile-content>
             </v-list-tile>
           </v-list>
         </v-card>
@@ -203,7 +203,7 @@
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Total Amount staked in Category:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{ userData.amount.category_two }}</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{ userData.amount.category_two }}</v-list-tile-content>
             </v-list-tile>
              <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Probability of Sanwo olu Winning:</v-list-tile-content>
@@ -223,11 +223,11 @@
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Amount Staked for Sanwo-Olu:</v-list-tile-content>
-              <v-list-tile-content class="align-end" >N {{ userData.amount.candidate_three }}</v-list-tile-content>
+              <v-list-tile-content class="align-end" >N{{ userData.amount.candidate_three }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Total Amount Staked for Agbaje:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{ userData.amount.candidate_four }}</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{ userData.amount.candidate_four }}</v-list-tile-content>
             </v-list-tile>
           </v-list>
         </v-card>
@@ -243,7 +243,7 @@
             <v-list dense v-if="userData.signup_bonus">
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Signup Bonus balance:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{userData.signup_bonus.amount}}</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{userData.signup_bonus.amount}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Expires on:</v-list-tile-content>
@@ -253,7 +253,7 @@
             <v-list v-else>
               <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Signup Bonus balance:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N 0.00</v-list-tile-content>
+              <v-list-tile-content class="align-end">N0.00</v-list-tile-content>
             </v-list-tile>
             </v-list>
         </v-card>
@@ -267,7 +267,7 @@
             </v-list-tile>
               <v-list-tile >
               <v-list-tile-content>Amount:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{ bonus.amount }}</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{ bonus.amount }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Expires on:</v-list-tile-content>
@@ -282,7 +282,7 @@
             <v-list dense v-if="userData.account">
                 <v-list-tile class="grey lighten-3">
               <v-list-tile-content> <h4>Amount withdrawable:</h4></v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{userData.withdrawable}}.00</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{userData.withdrawable}}.00</v-list-tile-content>
             </v-list-tile>
             <div  v-if="userData.funds != 0">
             <v-card-title><h4>Fund Details</h4></v-card-title>
@@ -293,7 +293,7 @@
             </v-list-tile>
               <v-list-tile >
               <v-list-tile-content>Amount:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{ fund.amount }}</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{ fund.amount }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Fund Date:</v-list-tile-content>
@@ -316,7 +316,7 @@
             </v-list-tile>
               <v-list-tile >
               <v-list-tile-content>Amount:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{ withdrawal.amount }}</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{ withdrawal.amount }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
               <v-list-tile-content>Status:</v-list-tile-content>
@@ -371,7 +371,7 @@
              </v-list-tile>
              <v-list-tile>
               <v-list-tile-content>Predict Amount:</v-list-tile-content>
-              <v-list-tile-content class="align-end">N {{bet.amount}}</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{bet.amount}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Placed By:</v-list-tile-content>
@@ -626,8 +626,6 @@ import paystack from 'vue-paystack';
             paystackkey: "pk_test_8e49810c12ca188a313ff2340e5d4d7113fd1acf", //paystack public key
             fund: {
             real_amount: '',
-            //email: userData.user.email, // Customer email
-            //amount: real_amount * 100,  // in kobo
             },
             panel:[],
             withdraw: {
@@ -801,9 +799,13 @@ import paystack from 'vue-paystack';
          }
          else if (this.userLoadStatus == 3){
            this.dialog = false;
-           if (!this.$store.getters.getUserMessage) {
+           if (!this.$store.getters.getUserData) {
             this.infotext = 'An Error Occured. Please check your Network and Reload page';
              this.info = true;
+           }
+           else {
+               this.infotext = this.$store.getters.getUserData.message;
+           this.info = true;
            }
          }
          else if (this.userLoadStatus == 1){
@@ -816,7 +818,7 @@ import paystack from 'vue-paystack';
         buhariProb(){
         let data = this.$store.getters.getUserData;
         if (data.vote.category_one != 0 && data.vote.candidate_one != 0){
-        let answer = data.vote.candidate_one/data.vote.category_one * 100;
+        let answer = (data.vote.candidate_one/data.vote.category_one * 100).toFixed(1);
         return answer + '%';
         }
          else {
@@ -826,7 +828,7 @@ import paystack from 'vue-paystack';
         atikuProb(){
         let data = this.$store.getters.getUserData;
         if (data.vote.category_one != 0 && data.vote.candidate_two != 0){
-        let answer = (data.vote.candidate_two/data.vote.category_one) * 100;
+        let answer = ((data.vote.candidate_two/data.vote.category_one) * 100).toFixed(1);
         return answer + '%';
         }
         else {
@@ -836,7 +838,7 @@ import paystack from 'vue-paystack';
         sanwoProb(){
         let data = this.$store.getters.getUserData;
         if (data.vote.category_two != 0 && data.vote.candidate_three != 0){
-        let answer = (data.vote.candidate_three/data.vote.category_two) * 100;
+        let answer = ((data.vote.candidate_three/data.vote.category_two) * 100).toFixed(1);
         return answer + '%';
         }
         else {
@@ -846,7 +848,7 @@ import paystack from 'vue-paystack';
        agbajeProb(){
         let data = this.$store.getters.getUserData;
         if (data.vote.category_two != 0 && data.vote.candidate_four != 0){
-        let answer = (data.vote.candidate_four/data.vote.category_two) * 100;
+        let answer =((data.vote.candidate_four/data.vote.category_two) * 100).toFixed(1);
         return answer + '%';
         }
         else {
@@ -962,7 +964,6 @@ import paystack from 'vue-paystack';
                {
                fundData
                });
-                //this.$router.go();
                 }
                 else {
                      this.infotext = "Transaction not successful, please try again";
@@ -1033,7 +1034,6 @@ import paystack from 'vue-paystack';
         },
         addBet() {
             this.addBet_dialog = true;
-          console.log('add bet');
         },
 
         withdrawConfirmed(){
@@ -1070,7 +1070,6 @@ import paystack from 'vue-paystack';
                betData
                }
                );
-          console.log('submit bet');
         }  else {
              this.infotext = 'Insufficient Funds';
              this.info = true;
@@ -1093,7 +1092,6 @@ import paystack from 'vue-paystack';
                betData
                }
                );
-          console.log('submit friend bet');
         } else {
              this.infotext = 'Insufficient Funds';
              this.info = true;
@@ -1106,17 +1104,14 @@ import paystack from 'vue-paystack';
 
         withdrawWins() {
           this.withdrawWins_dialog = true;
-          console.log(' withdraw wins');
         },
 
         betFriends() {
             this.betFriends_dialog = true;
-          console.log('bet for friends');
         },
 
         fundAccount() {
             this.fundAccount_dialog = true;
-          console.log('fund account');
         },
        fetchData() {
          this.$store.dispatch( 'getUser');
