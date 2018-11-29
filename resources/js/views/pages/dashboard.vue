@@ -168,11 +168,11 @@
             </v-list-tile>
              <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Probability of Buhari Winning:</v-list-tile-content>
-              <v-list-tile-content class="align-end"> {{sanwoProb }}</v-list-tile-content>
+              <v-list-tile-content class="align-end"> {{buhariProb }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile >
               <v-list-tile-content>Probability of Atiku Winning:</v-list-tile-content>
-              <v-list-tile-content class="align-end"> {{agbajeProb}}</v-list-tile-content>
+              <v-list-tile-content class="align-end"> {{atikuProb}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Predicts for Buhari:</v-list-tile-content>
