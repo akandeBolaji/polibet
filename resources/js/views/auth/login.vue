@@ -88,7 +88,7 @@
           <v-flex xs12>
             <div class="white--text ml-3 text-xs-center">
               Made with
-              <v-icon class="red--text">favorite</v-icon>
+              <v-icon class="white--text">favorite</v-icon>
               by <a class="white--text" href="http://codebator.me" target="_blank">CodeBator</a>
             </div>
           </v-flex>
@@ -151,7 +151,6 @@
        watch: {
        'loginLoadStatus': function(){
          if(this.loginLoadStatus == 2){
-            console.log(this.$store.getters.getLoginMessage);
             localStorage.setItem('auth_token', this.$store.getters.getToken);
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('auth_token');
             this.$router.push('/dashboard');
@@ -169,7 +168,6 @@
          }
          else if (this.loginLoadStatus == 1){
            this.dialog = true;
-           console.log('loading...')
          }
        },
    },

@@ -185,7 +185,7 @@
           <v-flex xs12>
             <div class="white--text ml-3 text-xs-center">
               Made with
-              <v-icon class="red--text">favorite</v-icon>
+              <v-icon class="white--text">favorite</v-icon>
               by <a class="white--text" href="http://codebator.me" target="_blank">CodeBator</a>
             </div>
           </v-flex>
@@ -454,7 +454,7 @@
       infotext: '',
       openStats_dialog: false,
       calculateWin_dialog:false,
-      loggedOut: null,
+      loggedOut: true,
       disable: false,
       drawer: null,
     }),
@@ -535,15 +535,10 @@
         register() {
           this.dialog = true;
           this.$router.push({ path: '/register', query: { ref: this.$route.query.ref }})
-          //this.$router.push('/register');
         },
         dashboard() {
-          //const info = false;
           this.dialog = true;
           this.$router.push('/dashboard');
-          //this.$router.push({ name: 'home', params: { info }})
-          //this.$router.push({ path: `'/home/${info}'`})
-          //this.$router.push({ path: '/home', query: { info: 'true' }})
         },
         logout() {
           this.$store.dispatch( 'logoutUser');
@@ -622,9 +617,7 @@
            }
          }
          else if (this.checkStatus == 3){
-            this.dialog = false;
-            // this.infotext = "Network is unavailable";
-            // this.info = true;
+            this.$router.go();
          }
          else if (this.checkStatus == 1){
            this.dialog = true;

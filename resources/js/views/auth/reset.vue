@@ -101,7 +101,7 @@
           <v-flex xs12>
             <div class="white--text ml-3 text-xs-center">
               Made with
-              <v-icon class="red--text">favorite</v-icon>
+              <v-icon class="white--text">favorite</v-icon>
               by <a class="white--text" href="http://codebator.me" target="_blank">CodeBator</a>
             </div>
           </v-flex>

@@ -605,7 +605,7 @@
           <v-flex xs12>
             <div class="white--text ml-3 text-xs-center">
               Made with
-              <v-icon class="red--text">favorite</v-icon>
+              <v-icon class="white--text">favorite</v-icon>
               by <a class="white--text" href="http://codebator.me" target="_blank">CodeBator</a>
             </div>
           </v-flex>
@@ -798,15 +798,7 @@ import paystack from 'vue-paystack';
              this.dialog = false;
          }
          else if (this.userLoadStatus == 3){
-           this.dialog = false;
-           if (!this.$store.getters.getUserData) {
-            this.infotext = 'An Error Occured. Please check your Network and Reload page';
-             this.info = true;
-           }
-           else {
-               this.infotext = this.$store.getters.getUserData.message;
-           this.info = true;
-           }
+           this.$router.go();
          }
          else if (this.userLoadStatus == 1){
            this.dialog = true;

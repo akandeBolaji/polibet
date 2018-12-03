@@ -16,15 +16,12 @@
       expand
       >
        <v-expansion-panel-content>
-          <div slot="header">About us</div>
-      </v-expansion-panel-content>
-       <v-expansion-panel-content>
           <div slot="header">Terms of Service</div>
           <v-card>
               <v-container fluid>
               <v-card-title><b>User Agreement</b></v-card-title>
               <v-card-text>1 GENERAL</v-card-text>
-                 1.1. Polibet (herein after referred to as the "the Company"), a company registered under the laws of Nigeria<br/><br/>
+                 1.1. Polibet (herein after referred to as the "the Company"), is managed by 'ELITE TECH' RC Number - 2704402 registered under the cooperate affairs commission, Nigeria<br/><br/>
                 1.2. This agreement establishes the Terms and Conditions for the contractual relationship between the Company and you.
                      The Terms shall apply to predicting via this mobile platform.
                      You are required to accept these Terms and Conditions when registering for an account with the Company and you are
