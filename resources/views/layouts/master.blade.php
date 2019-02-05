@@ -27,7 +27,7 @@
         <script>
             if ('serviceWorker' in navigator ) {
               window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/serviceworker.js').then(function(registration) {
+                  navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
                       // Registration was successful
                       console.log('ServiceWorker registration successful with scope: ', registration.scope);
                   }, function(err) {
@@ -42,9 +42,9 @@
 	    <div id="root">
 	        <router-view>
                 <h1 style="color:green; position: fixed;
-                top: 40%;
+                top: 35%;
                 left: 50%;
-                transform: translate(-40%, -50%); font-style:italic; font-weight:bolder; font:larger;">Polibet</h1>
+                transform: translate(-35%, -50%); font-style:italic; font-weight:bolder; font:larger;">Polibet</h1>
                 <div class="spinner">
                         <div class="blob top"></div>
                         <div class="blob bottom"></div>
