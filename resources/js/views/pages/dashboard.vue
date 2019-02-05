@@ -175,12 +175,20 @@
               <v-list-tile-content class="align-end"> {{atikuProb}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
+              <v-list-tile-content>Probability of None Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end"> {{noneProb}}</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
               <v-list-tile-content>Total Predicts for Buhari:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{ userData.vote.candidate_one }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Total Predicts for Atiku:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{ userData.vote.candidate_two }}</v-list-tile-content>
+            </v-list-tile>
+             <v-list-tile>
+              <v-list-tile-content>Total Predicts for None Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end">{{ userData.vote.candidate_five }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Amount Staked for Buhari:</v-list-tile-content>
@@ -189,6 +197,10 @@
             <v-list-tile>
               <v-list-tile-content>Total Amount Staked for Atiku:</v-list-tile-content>
               <v-list-tile-content class="align-end">N{{ userData.amount.candidate_two }}</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-content>Total Amount Staked for None Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{ userData.amount.candidate_five }}</v-list-tile-content>
             </v-list-tile>
           </v-list>
         </v-card>
@@ -209,17 +221,25 @@
               <v-list-tile-content>Probability of Sanwo olu Winning:</v-list-tile-content>
               <v-list-tile-content class="align-end"> {{sanwoProb }}</v-list-tile-content>
             </v-list-tile>
-            <v-list-tile >
+            <v-list-tile>
               <v-list-tile-content>Probability of Agbaje Winning:</v-list-tile-content>
               <v-list-tile-content class="align-end"> {{agbajeProb}}</v-list-tile-content>
             </v-list-tile>
-            <v-list-tile class="grey lighten-3">
+             <v-list-tile class="grey lighten-3">
+              <v-list-tile-content>Probability of None Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end"> {{noneProbl}}</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
               <v-list-tile-content>Total Predicts for Sanwo-Olu:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{ userData.vote.candidate_three }}</v-list-tile-content>
             </v-list-tile>
-            <v-list-tile>
+            <v-list-tile  class="grey lighten-3">
               <v-list-tile-content>Total Predicts for Agbaje:</v-list-tile-content>
               <v-list-tile-content class="align-end">{{ userData.vote.candidate_four }}</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-content>Total Predicts for None Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end">{{ userData.vote.candidate_six }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Amount Staked for Sanwo-Olu:</v-list-tile-content>
@@ -228,6 +248,10 @@
             <v-list-tile>
               <v-list-tile-content>Total Amount Staked for Agbaje:</v-list-tile-content>
               <v-list-tile-content class="align-end">N{{ userData.amount.candidate_four }}</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile class="grey lighten-3">
+              <v-list-tile-content>Total Amount Staked for None Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{ userData.amount.candidate_six }}</v-list-tile-content>
             </v-list-tile>
           </v-list>
         </v-card>
@@ -242,7 +266,7 @@
             <v-card-title><h4>Signup Bonus</h4></v-card-title>
             <v-list dense v-if="userData.signup_bonus">
             <v-list-tile class="grey lighten-3">
-              <v-list-tile-content>Signup Bonus balance:</v-list-tile-content>
+              <v-list-tile-content>Signup Bonus:</v-list-tile-content>
               <v-list-tile-content class="align-end">N{{userData.signup_bonus.amount}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
@@ -252,7 +276,7 @@
             </v-list>
             <v-list v-else>
               <v-list-tile class="grey lighten-3">
-              <v-list-tile-content>Signup Bonus balance:</v-list-tile-content>
+              <v-list-tile-content>Signup Bonus:</v-list-tile-content>
               <v-list-tile-content class="align-end">N0.00</v-list-tile-content>
             </v-list-tile>
             </v-list>
@@ -335,7 +359,7 @@
       >
         <div slot="header">Check Referral link</div>
         <v-card>
-             <v-card-title><h4>Share your referral link below with friends and foes and get a bonus of 100 naira for each valid referral. Each referral bonus has a validity of 5 days</h4></v-card-title>
+             <v-card-title><h4>Share your referral link below with friends</h4></v-card-title>
           <v-card-text class="grey lighten-3" v-if="userData.user">https://polibet.ng/?ref={{userData.user.refer_id}}</v-card-text>
         </v-card>
       </v-expansion-panel-content>
@@ -439,7 +463,7 @@
             <v-layout wrap>
                 <v-text-field prepend-icon="person_add" data-vv-scope="addfriendbet" v-model="betfriend.friend_id" v-validate="'required|min:4'" name="Friends id" label="Friend's Bet id" type="text"></v-text-field>
                 <span :value="errors.has('addfriendbet.Friends id')" style="color:red">{{ errors.first('addfriendbet.Friends id') }}</span>
-                <v-text-field label="Stake Amount" data-vv-scope="addfriendbet" v-model="betfriend.amount"  name="amount" v-validate="'required|numeric|min_value:5000'"  hint="Minimum stake amount is N5000"></v-text-field>
+                <v-text-field label="Stake Amount" data-vv-scope="addfriendbet" v-model="betfriend.amount"  name="amount" v-validate="'required|numeric|min_value:100'"  hint="Minimum stake amount is N100"></v-text-field>
                 <span :value="errors.has('addfriendbet.amount')" style="color:red">{{ errors.first('addfriendbet.amount') }}</span>
                 <v-select
                 :items="options.category"
@@ -504,7 +528,7 @@
         :embed="false"
        >
 
-          <v-btn :disabled="dialog" :loading="dialog" color="green" class="white--text fas fa-money-bill-alt">Make Payment</v-btn>
+          <v-btn color="green" class="white--text fas fa-money-bill-alt">Make Payment</v-btn>
        </paystack>
 
         </v-card-actions>
@@ -522,7 +546,7 @@
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
-                <v-text-field label="Amount" v-model="withdraw.amount" data-vv-scope="withdraw" name="Amount" v-validate="'required|numeric|min_value:5000|max_value:200000'" hint="You cannot withdraw your bonuses"></v-text-field>
+                <v-text-field label="Amount" v-model="withdraw.amount" data-vv-scope="withdraw" name="Amount" v-validate="'required|numeric|min_value:500|max_value:200000'" hint="You cannot withdraw your bonuses"></v-text-field>
                 <span :value="errors.has('withdraw.Amount')" style="color:red">{{ errors.first('withdraw.Amount') }}</span>
             </v-layout>
           </v-container>
@@ -549,7 +573,7 @@
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
-                <v-text-field label="Stake Amount" v-model="bet.amount" data-vv-scope="addbet" name="Amount" v-validate="'required|numeric|min_value:5000'"  hint="Minimum stake amount is N5000"></v-text-field>
+                <v-text-field label="Stake Amount" v-model="bet.amount" data-vv-scope="addbet" name="Amount" v-validate="'required|numeric|min_value:100'"  hint="Minimum stake amount is N100"></v-text-field>
                 <span :value="errors.has('addbet.Amount')" style="color:red">{{ errors.first('addbet.Amount') }}</span>
                 <v-select
                 :items="options.category"
@@ -598,7 +622,7 @@
         green--text
         xs12
       >
-        &copy;2018 — <strong>Polibet</strong>
+        &copy;2019 — <strong>Polibet</strong>
       </v-flex>
       </v-layout>
           <v-layout row wrap align-center>
@@ -625,7 +649,7 @@ import paystack from 'vue-paystack';
         return {
             paystackkey: "pk_live_805b84f9e98bd631a16257be6ff0c3565c60acd8", //paystack public key
             fund: {
-            real_amount: '',
+            real_amount: 0,
             },
             panel:[],
             withdraw: {
@@ -657,15 +681,26 @@ import paystack from 'vue-paystack';
                dependency: 1 }, {
                text: 'Atiku Abubakar (PDP)',
                value: 2,
-               dependency: 1 }, {
+               dependency: 1 },
+               {
+               text: 'None of both',
+               value: 5,
+               dependency: 1 },
+
+              {
                text: 'Jide Sanwo-olu (APC)',
                value: 3,
-               dependency: 2 }, {
+               dependency: 2 },
+               {
                text: 'Jimi Agbaje (PDP)',
                value: 4,
                dependency: 2
-           }]
+           },               {
+               text: 'None of both',
+               value: 6,
+               dependency: 2 }]
       },
+      paystack_dialog: false,
       addBet_dialog: false,
       withdrawWins_dialog: false,
       betFriends_dialog: false,
@@ -814,7 +849,7 @@ import paystack from 'vue-paystack';
         return answer + '%';
         }
          else {
-            return '100%' ;
+            return '0%' ;
         }
        },
         atikuProb(){
@@ -824,7 +859,17 @@ import paystack from 'vue-paystack';
         return answer + '%';
         }
         else {
-            return '100%' ;
+            return '0%' ;
+        }
+       },
+       noneProb(){
+        let data = this.$store.getters.getUserData;
+        if (data.vote.category_one != 0 && data.vote.candidate_five != 0){
+        let answer = ((data.vote.candidate_five/data.vote.category_one) * 100).toFixed(1);
+        return answer + '%';
+        }
+        else {
+            return '0%' ;
         }
        },
         sanwoProb(){
@@ -834,7 +879,7 @@ import paystack from 'vue-paystack';
         return answer + '%';
         }
         else {
-            return '100%' ;
+            return '0%' ;
         }
        },
        agbajeProb(){
@@ -844,12 +889,29 @@ import paystack from 'vue-paystack';
         return answer + '%';
         }
         else {
-            return '100%' ;
+            return '0%' ;
+        }
+       },
+       noneProbl(){
+        let data = this.$store.getters.getUserData;
+        if (data.vote.category_two != 0 && data.vote.candidate_six != 0){
+        let answer = ((data.vote.candidate_six/data.vote.category_two) * 100).toFixed(1);
+        return answer + '%';
+        }
+        else {
+            return '0%' ;
         }
        },
         amount(){
-          let kobo = 100;
-          return this.fund.real_amount * kobo ;
+            let amount = this.fund.real_amount * 100;
+            let percentage = this.fund.real_amount * 0.015 * 100;
+            let kobo = 100 * 100;
+          if (amount < 2500) {
+          return amount + percentage;
+          }
+          else {
+            return amount + percentage + kobo;
+          }
         },
         email(){
           let userData = this.$store.getters.getUserData;
@@ -894,6 +956,11 @@ import paystack from 'vue-paystack';
                 let candidate_amount = userData.amount.candidate_two;
                 let winamount = Math.floor(((element.amount)/candidate_amount) * category_amount);
                 total = winamount + total;
+              } else if (element.candidate == 5){
+                 let category_amount = userData.amount.category_one;
+                let candidate_amount = userData.amount.candidate_five;
+                let winamount = Math.floor(((element.amount)/candidate_amount) * category_amount);
+                total = winamount + total;
               }
           } else if (element.category == 2){
             if (element.candidate == 3){
@@ -901,9 +968,14 @@ import paystack from 'vue-paystack';
                 let candidate_amount = userData.amount.candidate_three;
                 let winamount =  Math.floor(((element.amount)/candidate_amount) * category_amount);
                 total = winamount + total;
-              } else if (candidate == 2){
+              } else if (element.candidate == 4){
                  let category_amount = userData.amount.category_two;
                 let candidate_amount = userData.amount.candidate_four;
+                let winamount =  Math.floor(((element.amount)/candidate_amount) * category_amount);
+                total = winamount + total;
+              } else if (element.candidate == 6){
+                 let category_amount = userData.amount.category_two;
+                let candidate_amount = userData.amount.candidate_six;
                 let winamount =  Math.floor(((element.amount)/candidate_amount) * category_amount);
                 total = winamount + total;
               }
@@ -972,12 +1044,16 @@ import paystack from 'vue-paystack';
                    return 'Presidential - Buhari';
                } else if (candidate == 2){
                    return 'Presidential - Atiku';
+               } else if (candidate == 5){
+                   return 'Presidential - None of Buhari or Atiku';
                }
            } else if (category == 2) {
                if (candidate == 3) {
                    return 'Lagos - Sanwo-Olu';
                } else if (candidate == 4) {
                    return 'Lagos - Agbaje';
+               } else if (candidate == 6) {
+                   return 'Lagos - None of Sanwo-Olu or Agbaje';
                }
            }
         },
@@ -994,6 +1070,11 @@ import paystack from 'vue-paystack';
                 let candidate_amount = userData.amount.candidate_two;
                 let winamount = Math.floor(((amount)/candidate_amount) * category_amount);
                 return winamount;
+              } else if (candidate == 5){
+                 let category_amount = userData.amount.category_one;
+                let candidate_amount = userData.amount.candidate_five;
+                let winamount = Math.floor(((amount)/candidate_amount) * category_amount);
+                return winamount;
               }
           } else if (category == 2){
             if (candidate == 3){
@@ -1004,6 +1085,11 @@ import paystack from 'vue-paystack';
               } else if (candidate == 2){
                  let category_amount = userData.amount.category_two;
                 let candidate_amount = userData.amount.candidate_four;
+                let winamount =  Math.floor(((amount)/candidate_amount) * category_amount);
+                return winamount;
+              } else if (candidate == 6){
+                 let category_amount = userData.amount.category_two;
+                let candidate_amount = userData.amount.candidate_six;
                 let winamount =  Math.floor(((amount)/candidate_amount) * category_amount);
                 return winamount;
               }

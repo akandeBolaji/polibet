@@ -23,7 +23,7 @@
       justify-center
     >
       <h1 class="display-2 font-weight-thin mb-2 text-xs-center">Polibet</h1>
-      <h4 class="subheading mb-5 text-xs-center">Research, Predict, and Vote</h4>
+      <h4 class="subheading mb-5 text-xs-center">Predict, Vote, and Win</h4>
       <v-divider></v-divider>
       <v-btn
               class="white green--text darken-2 mt-5"
@@ -86,7 +86,7 @@
                       <div class="headline">How we operate</div>
                     </v-card-title>
                     <v-card-title class="layout justify-center">
-                      <div><b>Win up to 200% of your stake amount !!!</b></div>
+                      <div><b>Minimum stake now 100 naira - Win up to 200% of your stake amount !!!</b></div>
                     </v-card-title>
                     <v-card-text>
                         Win amounts are variable and dependent on other users as they are calculated by dividing the amount staked for a predict and dividing it by the total similar predicts for that category,
@@ -98,7 +98,15 @@
                     <v-card-text>
                         Since Accounts can only be funded via Paystack, The total amount staked in the system can be verified via our account statement from Paystack which would be shared with all users.
                         Each user would be allowed to place subsequent predicts for only one candidate in a category.
-                       <b>A 5% transaction fee would be deducted on all earnings.</b>
+                       <b>A 5% transaction fee would be deducted on all withdrawals.</b>
+                    </v-card-text>
+                     <v-card-title class="layout justify-center">
+                      <div><b>What Happens to Polibet after elections ?</b></div>
+                    </v-card-title>
+                    <v-card-text>
+                        <b>Polibet would be taking a big pivot (existing users and credentials would not be affected) after elections has been concluded. In line with our aim
+                        to become the first peer to peer prediction platform in Nigeria, we would be giving our users the power to create their own predicts, define their own win conditions, get it approved within minutes and
+                        share the link with their friends to start playing !!!. Awesome right ? We can't wait too.</b>
                     </v-card-text>
                     <h3 class="text-xs-center">
                     <v-btn
@@ -178,7 +186,7 @@
         green--text
         xs12
       >
-        &copy;2018 — <strong>Polibet</strong>
+        &copy;2019 — <strong>Polibet</strong>
       </v-flex>
       </v-layout>
           <v-layout row wrap align-center>
@@ -309,12 +317,20 @@
               <v-list-tile-content class="align-end"> {{atikuProb}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
+              <v-list-tile-content>Probability of None Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end"> {{noneProb}}</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Predicts for Buhari:</v-list-tile-content>
               <v-list-tile-content class="align-end"> {{statsData.vote.candidate_one}}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile>
               <v-list-tile-content>Total Predicts for Atiku:</v-list-tile-content>
               <v-list-tile-content class="align-end"> {{statsData.vote.candidate_two}}</v-list-tile-content>
+            </v-list-tile>
+             <v-list-tile>
+              <v-list-tile-content>Total Predicts for None Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end">{{ statsData.vote.candidate_five }}</v-list-tile-content>
             </v-list-tile>
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Amount Staked for Buhari:</v-list-tile-content>
@@ -323,6 +339,10 @@
             <v-list-tile>
               <v-list-tile-content>Total Amount Staked for Atiku:</v-list-tile-content>
               <v-list-tile-content class="align-end">N{{statsData.amount.candidate_two}}</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-content>Total Amount Staked for None Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{ statsData.amount.candidate_five }}</v-list-tile-content>
             </v-list-tile>
           </v-list>
         </v-card>
@@ -347,6 +367,10 @@
               <v-list-tile-content>Probability of Agbaje Winning:</v-list-tile-content>
               <v-list-tile-content class="align-end"> {{agbajeProb}}</v-list-tile-content>
             </v-list-tile>
+             <v-list-tile class="grey lighten-3">
+              <v-list-tile-content>Probability of None Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end"> {{noneProbl}}</v-list-tile-content>
+            </v-list-tile>
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Predicts for Sanwo-Olu:</v-list-tile-content>
               <v-list-tile-content class="align-end"> {{statsData.vote.candidate_three}}</v-list-tile-content>
@@ -355,6 +379,10 @@
               <v-list-tile-content>Total Predicts for Agbaje:</v-list-tile-content>
               <v-list-tile-content class="align-end"> {{statsData.vote.candidate_four}}</v-list-tile-content>
             </v-list-tile>
+            <v-list-tile>
+              <v-list-tile-content>Total Predicts for None Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end">{{ statsData.vote.candidate_six }}</v-list-tile-content>
+            </v-list-tile>
             <v-list-tile class="grey lighten-3">
               <v-list-tile-content>Total Amount Staked for Sanwo-Olu:</v-list-tile-content>
               <v-list-tile-content class="align-end" >N{{statsData.amount.candidate_three}}</v-list-tile-content>
@@ -362,6 +390,10 @@
             <v-list-tile>
               <v-list-tile-content>Total Amount Staked for Agbaje:</v-list-tile-content>
               <v-list-tile-content class="align-end"> N{{statsData.amount.candidate_four}}</v-list-tile-content>
+            </v-list-tile>
+            <v-list-tile class="grey lighten-3">
+              <v-list-tile-content>Total Amount Staked for None Winning:</v-list-tile-content>
+              <v-list-tile-content class="align-end">N{{ statsData.amount.candidate_six }}</v-list-tile-content>
             </v-list-tile>
           </v-list>
         </v-card>
@@ -381,7 +413,7 @@
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
-                <v-text-field label="Stake Amount" v-model="calculate.amount" data-vv-scope="calculate" name="Amount" v-validate="'required|numeric|min_value:5000'"></v-text-field>
+                <v-text-field label="Stake Amount" v-model="calculate.amount" data-vv-scope="calculate" name="Amount" v-validate="'required|numeric|min_value:100'"></v-text-field>
                 <span :value="errors.has('calculate.Amount')" style="color:red">{{ errors.first('calculate.Amount') }}</span>
                 <v-select
                 :items="options.category"
@@ -434,14 +466,24 @@
                dependency: 1 }, {
                text: 'Atiku Abubakar (PDP)',
                value: 2,
-               dependency: 1 }, {
+               dependency: 1 },
+               {
+               text: 'None of both',
+               value: 5,
+               dependency: 1 },
+
+              {
                text: 'Jide Sanwo-olu (APC)',
                value: 3,
-               dependency: 2 }, {
+               dependency: 2 },
+               {
                text: 'Jimi Agbaje (PDP)',
                value: 4,
                dependency: 2
-           }]
+           },               {
+               text: 'None of both',
+               value: 6,
+               dependency: 2 }]
       },
         calculate: {
          amount: '',
@@ -480,10 +522,16 @@
               else if (candidate == 2  && data.amount.category_one != 0 && data.amount.candidate_two != 0) {
                 this.calculate.win_amount =   Math.floor((amount/data.amount.candidate_two) * data.amount.category_one);
               }
+              else if (candidate == 5  && data.amount.category_one != 0 && data.amount.candidate_five != 0) {
+                this.calculate.win_amount =   Math.floor((amount/data.amount.candidate_five) * data.amount.category_one);
+              }
               else if (candidate == 1  && data.amount.category_one != 0 && data.amount.candidate_one == 0){
                   this.calculate.win_amount =  data.amount.category_one;
               }
                else if (candidate == 2  && data.amount.category_one != 0 && data.amount.candidate_two == 0){
+                  this.calculate.win_amount =  data.amount.category_one;
+              }
+              else if (candidate == 5  && data.amount.category_one != 0 && data.amount.candidate_five == 0){
                   this.calculate.win_amount =  data.amount.category_one;
               }
               else {
@@ -497,10 +545,16 @@
               else if (candidate == 4  && data.amount.category_two != 0 && data.amount.candidate_four != 0) {
                 this.calculate.win_amount =   Math.floor((amount/data.amount.candidate_four) * data.amount.category_two);
               }
+              else if (candidate == 6  && data.amount.category_two != 0 && data.amount.candidate_six != 0) {
+                this.calculate.win_amount =   Math.floor((amount/data.amount.candidate_six) * data.amount.category_two);
+              }
                else if (candidate == 3  && data.amount.category_two != 0 && data.amount.candidate_three == 0){
                   this.calculate.win_amount =  data.amount.category_two;
               }
                else if (candidate == 4  && data.amount.category_two != 0 && data.amount.candidate_four == 0){
+                  this.calculate.win_amount =  data.amount.category_two;
+              }
+               else if (candidate == 6  && data.amount.category_two != 0 && data.amount.candidate_six == 0){
                   this.calculate.win_amount =  data.amount.category_two;
               }
               else {
@@ -558,7 +612,7 @@
         return answer + '%';
         }
          else {
-            return '100%' ;
+            return '0%' ;
         }
        },
         atikuProb(){
@@ -568,7 +622,17 @@
         return answer + '%';
         }
         else {
-            return '100%' ;
+            return '0%' ;
+        }
+       },
+       noneProb(){
+        let data = this.$store.getters.getStatsData;
+        if (data.vote.category_one != 0 && data.vote.candidate_five != 0){
+        let answer = ((data.vote.candidate_five/data.vote.category_one) * 100).toFixed(1);
+        return answer + '%';
+        }
+        else {
+            return '0%' ;
         }
        },
         sanwoProb(){
@@ -578,7 +642,7 @@
         return answer + '%';
         }
         else {
-            return '100%' ;
+            return '0%' ;
         }
        },
        agbajeProb(){
@@ -588,7 +652,17 @@
         return answer + '%';
         }
         else {
-            return '100%' ;
+            return '0%' ;
+        }
+       },
+        noneProbl(){
+        let data = this.$store.getters.getStatsData;
+        if (data.vote.category_two != 0 && data.vote.candidate_six != 0){
+        let answer = ((data.vote.candidate_six/data.vote.category_two) * 100).toFixed(1);
+        return answer + '%';
+        }
+        else {
+            return '0%' ;
         }
        },
           logoutLoadStatus(){

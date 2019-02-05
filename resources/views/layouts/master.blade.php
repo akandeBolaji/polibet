@@ -12,7 +12,7 @@
 	    <meta name="csrf-token" content="{{ csrf_token() }}" />
     	<link rel="shortcut icon" href="/images/favi/pb.png">
         <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
-	    <link href="/css/style.css" rel="stylesheet">
+        <link href="/css/loaderone.css" type="text/css" rel="stylesheet">
 	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	    <!--[if lt IE 9]>
@@ -39,7 +39,18 @@
 	</head>
 	<body>
 	    <div id="root">
-	        <router-view></router-view>
+	        <router-view>
+                <h1 style="color:green; position: fixed;
+                top: 40%;
+                left: 50%;
+                transform: translate(-40%, -50%); font-style:italic; font-weight:bolder; font:larger;">Polibet</h1>
+                <div class="spinner">
+                        <div class="blob top"></div>
+                        <div class="blob bottom"></div>
+                        <div class="blob left"></div>
+                        <div class="blob move-blob"></div>
+                      </div>
+            </router-view>
 	    </div>
 	    <script src="/js/app.js"></script>
 	</body>

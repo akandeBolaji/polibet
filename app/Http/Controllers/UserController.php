@@ -68,9 +68,9 @@ class UserController extends Controller
             'candidate' => 'required',
             'category' => 'required',
             'friend_id' => 'required',
-            'amount' => 'required|numeric|min:5000',
+            'amount' => 'required|numeric|min:100',
         ],[
-          'amount.min' => 'You surprisingly got through our front end validation. Minimum stake amount still remains 5000 naira'
+          'amount.min' => 'You surprisingly got through our front end validation. Minimum stake amount still remains 100 naira'
         ]
     );
 
@@ -312,9 +312,9 @@ class UserController extends Controller
         $validation = Validator::make($request->all(),[
             'candidate' => 'required',
             'category' => 'required',
-            'amount' => 'required|numeric|min:5000',
+            'amount' => 'required|numeric|min:100',
         ],[
-          'amount.min' => 'You surprisingly got through our front end validation. Minimum stake amount still remains 5000 naira'
+          'amount.min' => 'You surprisingly got through our front end validation. Minimum stake amount still remains 100 naira'
         ]
 
     );

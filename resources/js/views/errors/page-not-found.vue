@@ -35,8 +35,5 @@
     }
 </script>
 <style scoped>
-body {
-  background-image: url("http://polibet.site/images/background/polibet/new.jpg");
-}
 </style>
 

@@ -55,6 +55,8 @@ class AuthController extends Controller
             $votecandidate_two = \App\Vote::where('candidate', 2)->where('user_id', '!=', 'null')->count();
             $votecandidate_three = \App\Vote::where('candidate', 3)->where('user_id', '!=', 'null')->count();
             $votecandidate_four = \App\Vote::where('candidate', 4)->where('user_id', '!=', 'null')->count();
+            $votecandidate_five = \App\Vote::where('candidate', 5)->where('user_id', '!=', 'null')->count();
+            $votecandidate_six = \App\Vote::where('candidate', 6)->where('user_id', '!=', 'null')->count();
             }
             else if (\App\Vote::count() == 0) {
                 $votecategory_one = 0;
@@ -63,6 +65,8 @@ class AuthController extends Controller
                 $votecandidate_two = 0;
                 $votecandidate_three = 0;
                 $votecandidate_four = 0;
+                $votecandidate_five = 0;
+                $votecandidate_six = 0;
             }
 
         $category_one = \App\Bet::where('category', 1)->sum('amount');
@@ -71,6 +75,8 @@ class AuthController extends Controller
         $candidate_two = \App\Bet::where('candidate', 2)->sum('amount');
         $candidate_three = \App\Bet::where('candidate', 3)->sum('amount');
         $candidate_four = \App\Bet::where('candidate', 4)->sum('amount');
+        $candidate_five = \App\Bet::where('candidate', 5)->sum('amount');
+        $candidate_six = \App\Bet::where('candidate', 6)->sum('amount');
 
 
 
@@ -79,27 +85,16 @@ class AuthController extends Controller
         $profile = $user->Profile;
         $bet = $user->Bets;
         $bet_friends = \App\Bet::where('placed_by', $user->full_name)->where('user_id', '!=', $user->id)->get();
-        $amount = ['candidate_one' => $candidate_one, 'candidate_two' => $candidate_two, 'candidate_three' => $candidate_three, 'candidate_four' => $candidate_four, 'category_one' => $category_one, 'category_two' => $category_two];
-        $vote = ['candidate_one' => $votecandidate_one, 'candidate_two' => $votecandidate_two, 'candidate_three' => $votecandidate_three, 'candidate_four' => $votecandidate_four, 'category_one' => $votecategory_one, 'category_two' => $votecategory_two];
+        $amount = ['candidate_one' => $candidate_one, 'candidate_two' => $candidate_two, 'candidate_three' => $candidate_three, 'candidate_four' => $candidate_four, 'candidate_five' => $candidate_five, 'candidate_six' => $candidate_six, 'category_one' => $category_one, 'category_two' => $category_two];
+        $vote = ['candidate_one' => $votecandidate_one, 'candidate_two' => $votecandidate_two, 'candidate_three' => $votecandidate_three, 'candidate_four' => $votecandidate_four, 'candidate_five' => $votecandidate_five, 'candidate_six' => $votecandidate_six, 'category_one' => $votecategory_one, 'category_two' => $votecategory_two];
         $account = $user->Account;
-        //$win_total = \App\Bet::where('user_id', $user->id)->where('status', 'won')->sum('win_amount');
-        //if ($win_total){
-            //$withdraw = $win_total;
-        //}
-        //else {
-           // $withdraw = 0;
-        //}
-        $referral_bonus = $user->ReferralBonus;
-        if ($user->SignupBonus){
-        $signup_bonus = $user->SignupBonus->amount;
-        }
-        else if (!$user->SignupBonus){
-            $signup_bonus = 0 ;
-        }
-        $referral_total = \App\referralBonus::where('user_id', $user->id)->sum('amount');
+        $time = now();
+        $referral_total = \App\referralBonus::where('user_id', $user->id)->where('expires_at', '>' , $time)->sum('amount');
+        $signup_bonus = \App\signupBonus::where('user_id', $user->id)->first();
+        $signup_total = \App\signupBonus::where('user_id', $user->id)->where('expires_at', '>' , $time)->sum('amount');
         $withdraw_total = \App\Withdrawal::where('user_id', $user->id)->sum('amount');
         $win_total = \App\Bet::where('user_id', $user->id)->where('status', 'won')->sum('win_amount');
-        $balance = $account->balance + $signup_bonus + $referral_total + $win_total - $withdraw_total;
+        $balance = $account->balance + $signup_total + $referral_total + $win_total - $withdraw_total;
         $withdrawable = $account->balance + $win_total - $withdraw_total;
         $funds = $user->Funds;
         $withdrawals = $user->withdrawals;
@@ -126,6 +121,8 @@ class AuthController extends Controller
         $votecandidate_two = \App\Vote::where('candidate', 2)->where('user_id', '!=', 'null')->count();
         $votecandidate_three = \App\Vote::where('candidate', 3)->where('user_id', '!=', 'null')->count();
         $votecandidate_four = \App\Vote::where('candidate', 4)->where('user_id', '!=', 'null')->count();
+        $votecandidate_five = \App\Vote::where('candidate', 5)->where('user_id', '!=', 'null')->count();
+        $votecandidate_six = \App\Vote::where('candidate', 6)->where('user_id', '!=', 'null')->count();
         }
         else if (\App\Vote::count() == 0) {
             $votecategory_one = 0;
@@ -134,6 +131,8 @@ class AuthController extends Controller
             $votecandidate_two = 0;
             $votecandidate_three = 0;
             $votecandidate_four = 0;
+            $votecandidate_five = 0;
+            $votecandidate_six = 0;
         }
         $category_one = \App\Bet::where('category', 1)->sum('amount');
         $category_two = \App\Bet::where('category', 2)->sum('amount');
@@ -141,9 +140,11 @@ class AuthController extends Controller
         $candidate_two = \App\Bet::where('candidate', 2)->sum('amount');
         $candidate_three = \App\Bet::where('candidate', 3)->sum('amount');
         $candidate_four = \App\Bet::where('candidate', 4)->sum('amount');
+        $candidate_five = \App\Bet::where('candidate', 5)->sum('amount');
+        $candidate_six = \App\Bet::where('candidate', 6)->sum('amount');
 
-        $amount = ['candidate_one' => $candidate_one, 'candidate_two' => $candidate_two, 'candidate_three' => $candidate_three, 'candidate_four' => $candidate_four, 'category_one' => $category_one, 'category_two' => $category_two];
-        $vote = ['candidate_one' => $votecandidate_one, 'candidate_two' => $votecandidate_two, 'candidate_three' => $votecandidate_three, 'candidate_four' => $votecandidate_four, 'category_one' => $votecategory_one, 'category_two' => $votecategory_two];
+        $amount = ['candidate_one' => $candidate_one, 'candidate_two' => $candidate_two, 'candidate_three' => $candidate_three, 'candidate_four' => $candidate_four, 'candidate_five' => $candidate_five, 'candidate_six' => $candidate_six, 'category_one' => $category_one, 'category_two' => $category_two];
+        $vote = ['candidate_one' => $votecandidate_one, 'candidate_two' => $votecandidate_two, 'candidate_three' => $votecandidate_three, 'candidate_four' => $votecandidate_four, 'candidate_five' => $votecandidate_five, 'candidate_six' => $votecandidate_six, 'category_one' => $votecategory_one, 'category_two' => $votecategory_two];
 
         return response()->json(compact('users','amount', 'vote'), 201);
     }
@@ -246,12 +247,12 @@ class AuthController extends Controller
         $account->balance = 0;
         $user->account()->save($account);
         $users = \App\User::count();
-        if ($users < 10001 ){
-            $signup_bonus = new \App\signupBonus;
-            $signup_bonus->amount = 2000;
-            $signup_bonus->expires_at = now()->addDays(5);
-            $user->signupBonus()->save($signup_bonus);
-        }
+        //if ($users < 10001 ){
+          //  $signup_bonus = new \App\signupBonus;
+           // $signup_bonus->amount = 2000;
+            //$signup_bonus->expires_at = now()->addDays(5);
+            //$user->signupBonus()->save($signup_bonus);
+        //}
 
         $user->notify(new Activation($user));
 
@@ -273,19 +274,19 @@ class AuthController extends Controller
         $user->status = 'activated';
         $user->save();
         $referrer_id =  $user->referrer_id;
-        if ($referrer_id) {
-           $referrer = \App\User::where('refer_id', $referrer_id)->first();
-           $countIP = \App\User::where('ip', $user->ip)->count();
-           if ($countIP == 1) {
-          if ($referrer) {
-              $referrer_bonus = new \App\referralBonus;
-              $referrer_bonus->amount = 100;
-              $referrer_bonus->expires_at = now()->addDays(5);
-              $referrer_bonus->referred = $user->full_name;
-              $referrer->referralBonus()->save($referrer_bonus);
-          }
-        }
-        }
+        //if ($referrer_id) {
+          // $referrer = \App\User::where('refer_id', $referrer_id)->first();
+          // $countIP = \App\User::where('ip', $user->ip)->count();
+          // if ($countIP == 1) {
+          //if ($referrer) {
+             // $referrer_bonus = new \App\referralBonus;
+             // $referrer_bonus->amount = 100;
+             // $referrer_bonus->expires_at = now()->addDays(5);
+            //  $referrer_bonus->referred = $user->full_name;
+            //  $referrer->referralBonus()->save($referrer_bonus);
+         // }
+       // }
+       // }
         //$user->notify(new Activated($user));
 
         return response()->json(['message' => 'Your account has been activated!']);
