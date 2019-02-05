@@ -6,6 +6,7 @@
 	    <!-- Tell the browser to be responsive to screen width -->
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
+        <meta http-equiv="cache-control" content="max-age=3600" />
         <link rel="manifest" href="{{url('/manifest.json')}}">
 	    <meta name="author" content="">
 	    <title>Polibet</title>
