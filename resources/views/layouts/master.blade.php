@@ -52,6 +52,6 @@
                       </div>
             </router-view>
 	    </div>
-	    <script src="/js/app.js?v=2"></script>
+	    <script src="/js/build.js"></script>
 	</body>
 </html>
