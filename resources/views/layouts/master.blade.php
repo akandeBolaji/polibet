@@ -23,6 +23,19 @@
            {{-- checks for service worker support.if you have the push manager package then use this line
         if ('serviceWorker' in navigator && 'PushManager' in window) instead of
         if ('serviceWorker' in navigator ) --}}
+        <script>
+            if ('serviceWorker' in navigator ) {
+              window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+                      // Registration was successful
+                      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                  }, function(err) {
+                      // registration failed :(
+                      console.log('ServiceWorker registration failed: ', err);
+                  });
+              });
+          }
+          </script>
 	</head>
 	<body>
 	    <div id="root">
@@ -39,6 +52,6 @@
                       </div>
             </router-view>
 	    </div>
-	    <script src="/js/build.js"></script>
+	    <script src="/js/app.js"></script>
 	</body>
 </html>
