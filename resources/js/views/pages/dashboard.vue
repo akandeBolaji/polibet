@@ -906,7 +906,7 @@ import paystack from 'vue-paystack';
             let amount = this.fund.real_amount * 100;
             let percentage = this.fund.real_amount * 0.015 * 100;
             let kobo = 100 * 100;
-          if (amount < 2500) {
+          if (this.fund.real_amount < 2500) {
           return amount + percentage;
           }
           else {
