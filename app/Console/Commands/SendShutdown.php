@@ -41,7 +41,7 @@ class SendShutdown extends Command
      */
     public function handle()
     {
-        $user = User::where('email', $this->argument('email'));
+        $user = User::where('email', $this->argument('email'))->first();
         Mail::to($this->argument('email'))->send(new temporaryShutdown($user));
     }
 }
