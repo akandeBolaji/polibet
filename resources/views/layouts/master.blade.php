@@ -10,7 +10,12 @@
         <link rel="manifest" href="{{url('/manifest.json')}}">
 	    <meta name="author" content="">
 	    <title>Polibet</title>
-	    <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+        <meta property="og:site_name" content="Polibet">
+        <meta property="og:title" content="First Peer to Peer Betting Platform" />
+        <meta property="og:description" content="Polibet allows its users to create their own bets, set their options and conditions and share" />
+        <meta property="og:image" itemprop="image" content="/images/favi/pb.png">
+        <meta property="og:type" content="website" />
     	<link rel="shortcut icon" href="/images/favi/pb.png">
         <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
         <link href="/css/loaderone.css" type="text/css" rel="stylesheet">
