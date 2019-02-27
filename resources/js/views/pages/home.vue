@@ -250,7 +250,7 @@ import Bet from './bet-component.vue';
       dialog: false,
       info: false,
       infotext: '',
-      loggedOut: '',
+      loggedOut: true,
       disable: false,
       drawer: null,
     }),

@@ -8,15 +8,10 @@
         <meta name="description" content="">
         <link rel="manifest" href="{{url('/manifest.json')}}">
         <meta name="author" content="">
-        <meta property="og:site_name" content="Polibet">
-        <meta property="og:title" content="First Peer to Peer Betting Platform" />
-        <meta property="og:description" content="Polibet allows its users to create their own bets, set their options and conditions and share" />
-        <meta property="og:image" itemprop="image" content="/images/favi/pb.png">
-        <meta property="og:type" content="website" />
+
 	    <title>Polibet</title>
 	    <meta name="csrf-token" content="{{ csrf_token() }}" />
-        <link rel="shortcut icon" href="/images/favi/pb.png">
-        <link href="/css/loaderone.css" type="text/css" rel="stylesheet">
+    	<link rel="shortcut icon" href="/images/favi/pb.png">
         <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
 	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -45,7 +40,7 @@
 	<body>
 	    <div id="root">
 	        <router-view>
-                <h1 style="color:green; position: fixed;
+                 <h1 style="color:green; position: fixed;
                 top: 35%;
                 left: 50%;
                 transform: translate(-35%, -50%); font-style:italic; font-weight:bolder; font:larger;">Polibet</h1>
