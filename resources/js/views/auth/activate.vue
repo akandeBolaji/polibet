@@ -6,9 +6,6 @@
          <v-spacer></v-spacer>
          <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
        </v-toolbar>
-                 <v-container fluid fill-height align-center justify-center>
-                <v-btn @click="login" class="white--text" color="green" >Go back to Login</v-btn>
-                 </v-container>
             <v-dialog
                 v-model="dialog"
                 hide-overlay
@@ -38,7 +35,7 @@
                 <v-card-title class="headline">{{this.infotext}}</v-card-title>
                 <div>
                 <v-spacer></v-spacer>
-                <v-btn color="green" @click="info = false">OK</v-btn>
+                <v-btn color="green" @click="this.$router.go(-1);">OK</v-btn>
                 </div>
             </v-card>
             </v-dialog>
@@ -56,7 +53,7 @@
         green--text
         xs12
       >
-        &copy;2018 — <strong>Polibet</strong>
+        &copy;2019 — <strong>Polibet</strong>
       </v-flex>
       </v-layout>
           <v-layout row wrap align-center>
@@ -75,6 +72,24 @@
 
 <script>
     export default {
+        metaInfo: {
+         // if no subcomponents specify a metaInfo.title, this title will be used
+      title: 'Activate',
+      // all titles will be injected into this template
+      titleTemplate: '%s | Polibet',
+  meta: [
+    // OpenGraph data (Most widely used)
+    {property: 'og:title', content: 'Polibet Account Activation'},
+    {property: 'og:site_name', content: 'Polibet'},
+    // The list of types is available here: http://ogp.me/#types
+    {property: 'og:type', content: 'website'},
+    // Should the the same as your canonical link, see below.
+    {property: 'og:url', content: 'http://beta.polibet.ng/create-bet'},
+    {property: 'og:image', content: 'http://beta.polibet.ng/images/favi/pb.png'},
+    // Often the same as your meta description, but not always.
+    {property: 'og:description', content: 'Polibet allows its users to create their own bets, set their options and conditions and share.'}
+  ]
+},
         data() {
             return {
                 dialog: false,
@@ -83,7 +98,7 @@
                 token:this.$route.params.token,
             }
         },
-        created(){
+        mounted(){
             this.activate();
         },
 
@@ -97,17 +112,14 @@
                }
                );
             },
-            login() {
-              this.dialog= true;
-              this.$router.push('/login');
-            },
         },
 
         watch: {
        'activateLoadStatus': function(){
          if(this.activateLoadStatus == 2){
              this.dialog = false;
-            this.$router.push('/login');
+             this.infotext = this.$store.getters.getActivateMessage;
+              this.info = true;
          }
          else if (this.activateLoadStatus == 3){
              this.dialog = false;

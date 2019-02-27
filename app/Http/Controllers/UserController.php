@@ -5,9 +5,68 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Validator;
 use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Contracts\JWTSubject as JWTSubject;
 
 class UserController extends Controller
 {
+    public function getBet($id) {
+      $bet = \App\customBet::where('random', $id)->first();
+      try {
+        JWTAuth::parseToken()->authenticate();
+       } catch (JWTException $e) {
+        return response()->json(['message' => $bet, 'authenticated' => false]);
+        //return response(['authenticated' => false]);
+      }
+      $user = JWTAuth::parseToken()->authenticate();
+      $authenticated = true;
+      if ($user->id == $bet->user_id){
+         $bet->owner = true;
+      }
+      return response()->json(['message' => $bet, 'authenticated' => true]);
+    }
+
+    public function createBet(Request $request){
+        //$request = dd($request);
+
+        //return response()->json(['message' => 'Check response for request object!', 'request' => $request]);
+
+
+        $validation = Validator::make($request->all(),[
+            'bet_master' => 'required',
+            'summary' => 'required',
+            'minimum_stake' => 'required|numeric',
+            'outcome1' => 'required',
+            'outcome2' => 'required',
+            'close_date' => 'required|date',
+            'outcome_date' => 'required|date|after:close_date',
+            'maximum_part' => 'numeric',
+        ]
+    );
+    if($validation->fails())
+    return response()->json(['message' => $validation->messages()->first()],422);
+
+    $user = JWTAuth::parseToken()->authenticate();
+
+    $customBet = new \App\customBet;
+    do {
+        $random = str_random(6);
+    } while ( \DB::table('custom_bets')->where('random',$random)->exists());
+
+    $customBet->bet_master =  request('bet_master');
+    $customBet->summary =  request('summary');
+    $customBet->minimum_stake =  request('minimum_stake');
+    $customBet->outcome1 =  request('outcome1');
+    $customBet->outcome2 =  request('outcome2');
+    $customBet->close_date =  request('close_date');
+    $customBet->outcome_date =  request('outcome_date');
+    $customBet->random =  $random;
+    if (request('maximum_part')){
+      $customBet->maximum_part =  request('maximum_part');
+    }
+    $user->customBet()->save($customBet);
+    return response()->json(['message' => 'Your Bet was created successfully', 'random' => $customBet->random]);
+}
     public function withdrawFund(Request $request){
         $validation = Validator::make($request->all(),[
             'amount' => 'required|numeric',

@@ -47,37 +47,20 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-card-text><b>PERSONAL INFORMATION</b></v-card-text>
-                  <v-text-field prepend-icon="person_add" v-validate="'required|min:4'" v-model="data.full_name" name="Full Name" label="Name in full" type="text" ref="name"></v-text-field>
+                  <v-text-field prepend-icon="person_add" v-validate="'required|min:4'" v-model="data.full_name" name="Full Name" label="Full Name" type="text"></v-text-field>
                   <span :value="errors.has('Full Name')" style="color:red">{{ errors.first('Full Name') }}</span>
+                   <v-text-field prepend-icon="person_add" v-validate="'required|min:2'" v-model="data.user_name" name="UserName" label="Codename" type="text"></v-text-field>
+                  <span :value="errors.has('UserName')" style="color:red">{{ errors.first('UserName') }}</span>
                   <v-text-field prepend-icon="contact_mail" v-validate="'required|email'" v-model="data.email" name="email" label="Email" type="text"></v-text-field>
                   <span :value="errors.has('email')" style="color:red">{{ errors.first('email') }}</span>
-                  <v-text-field prepend-icon="person_outline" v-validate="'required|numeric|min_value:18'" v-model="data.age" name="Age" label="Age" type="text"></v-text-field>
+                  <v-select prepend-icon="person_outline" :items="age" v-validate="'required'" v-model="data.age" name="Age" label="Age" type="text"></v-select>
                   <span :value="errors.has('Age')" style="color:red">{{ errors.first('Age') }}</span>
-                  <v-select  prepend-icon="add_location" :items="states" label="Choose Location"  v-validate="'required'" v-model="data.location" name="Location" type="text" ></v-select>
-                  <span :value="errors.has('Location')" style="color:red">{{ errors.first('Location') }}</span>
                   <v-select  prepend-icon="people" :items="sex" label="Choose Gender"  v-validate="'required'" v-model="data.gender" name="Gender" type="text" ></v-select>
                   <span :value="errors.has('Gender')" style="color:red">{{ errors.first('Gender') }}</span>
                   <v-text-field prepend-icon="phone" name="Phone" v-validate="'required|numeric'" v-model="data.phone" label="Phone number" type="text"></v-text-field>
                   <span :value="errors.has('Phone')" style="color:red">{{ errors.first('Phone') }}</span>
-                  <v-text-field id="password"  v-validate="'required|min:6'" prepend-icon="lock" v-model="data.password" name="password" label="Password" type="password" ref="password"></v-text-field>
+                  <v-text-field id="password"  :append-icon="show1 ? 'visibility_off' : 'visibility'" :type="show1 ? 'text' : 'password'"  v-validate="'required|min:6'" prepend-icon="lock" @click:append="show1 = !show1" v-model="data.password" name="password" label="Set Password"></v-text-field>
                   <span :value="errors.has('password')" style="color:red">{{ errors.first('password') }}</span>
-                  <v-text-field id="password_confirmation" v-validate="'required|confirmed:password'" prepend-icon="lock" v-model="data.password_confirmation" name="password_confirmation" data-vv-as="password" label="Password Again" type="password"></v-text-field>
-                  <span :value="errors.has('password_confirmation')" style="color:red">{{ errors.first('password_confirmation') }}</span>
-                  <v-divider></v-divider>
-                  <v-card-text v-if="data.password_confirmation"><b>BANK ACCOUNT INFORMATION</b></v-card-text>
-                  <v-select v-if="data.password_confirmation" prepend-icon="account_balance" :items="banks" label="Choose Bank"  v-validate="'required'" v-model="data.bank_name" name="Bank Name" type="text" ></v-select>
-                  <span :value="errors.has('Bank Name')" style="color:red">{{ errors.first('Bank Name') }}</span>
-                  <v-text-field v-if="data.password_confirmation" prepend-icon="account_box" v-validate="'required|confirmed:name'" v-model="data.account_name" name="Account Name" label="Account Name (Same as Full Name)" type="text" data-vv-as="name"></v-text-field>
-                  <span :value="errors.has('Account Name')" style="color:red">{{ errors.first('Account Name') }}</span>
-                  <v-text-field v-if="data.password_confirmation" prepend-icon="account_balance_wallet" v-validate="'required|numeric|min:10|max:10'" v-model="data.account_number" name="Account Number" label="Account Number" type="text" required></v-text-field>
-                  <span :value="errors.has('Account Number')" style="color:red">{{ errors.first('Account Number') }}</span>
-                  <v-divider></v-divider>
-                  <v-card-text v-if="data.account_number"><b>OTHER INFORMATION</b></v-card-text>
-                   <v-text-field prepend-icon="people_outline" v-if="ifreferred && data.account_number" disabled v-model="referrer_name" name="Referrer's Name" label="Referrer's Name" type="text" ref="name"></v-text-field>
-                   <v-checkbox v-if="data.account_number" v-model="data.accredited" label="Are you an Accredited Voter?(Optional)"></v-checkbox>
-                   <v-checkbox v-if="data.account_number" v-validate="'required:true'" name="terms and condition" v-model="data.checkbox" label="Do you agree with our terms and condition?"></v-checkbox>
-                   <span :value="errors.has('terms and condition')" style="color:red">{{ errors.first('terms and condition') }}</span>
                 </v-form>
               </v-card-text>
               <v-card-actions>
@@ -103,7 +86,7 @@
         green--text
         xs12
       >
-        &copy;2018 — <strong>Polibet</strong>
+        &copy;2019 — <strong>Polibet</strong>
       </v-flex>
       </v-layout>
           <v-layout row wrap align-center>
@@ -154,71 +137,36 @@
 
 <script>
   export default {
+      metaInfo: {
+         // if no subcomponents specify a metaInfo.title, this title will be used
+      title: 'Register',
+      // all titles will be injected into this template
+      titleTemplate: '%s | Polibet',
+  meta: [
+    // OpenGraph data (Most widely used)
+    {property: 'og:title', content: 'Register on Polibet'},
+    {property: 'og:site_name', content: 'Polibet'},
+    // The list of types is available here: http://ogp.me/#types
+    {property: 'og:type', content: 'website'},
+    // Should the the same as your canonical link, see below.
+    {property: 'og:url', content: 'http://beta.polibet.ng/create-bet'},
+    {property: 'og:image', content: 'http://beta.polibet.ng/images/favi/pb.png'},
+    // Often the same as your meta description, but not always.
+    {property: 'og:description', content: 'Polibet allows its users to create their own bets, set their options and conditions and share.'}
+  ]
+},
     data() {
         return {
-           states: [
-                "Abia",
-                "Adamawa",
-                "Anambra",
-                "Akwa Ibom",
-                "Bauchi",
-                "Bayelsa",
-                "Benue",
-                "Borno",
-                "Cross River",
-                "Delta",
-                "Ebonyi",
-                "Enugu",
-                "Edo",
-                "Ekiti",
-                "FCT - Abuja",
-                "Gombe",
-                "Imo",
-                "Jigawa",
-                "Kaduna",
-                "Kano",
-                "Katsina",
-                "Kebbi",
-                "Kogi",
-                "Kwara",
-                "Lagos",
-                "Nasarawa",
-                "Niger",
-                "Ogun",
-                "Ondo",
-                "Osun",
-                "Oyo",
-                "Plateau",
-                "Rivers",
-                "Sokoto",
-                "Taraba",
-                "Yobe",
-                "Zamfara"
-           ],
-           banks: [
-               'Access Bank',
-               'Citi Bank',
-               'Diamond Bank',
-               'Ecobank Nigeria',
-               'Fidelity Bank',
-               'First City Monument Bank',
-               'First Bank of Nigeria',
-               'GTB',
-               'Heritage Banking Company',
-               'Keystone Bank',
-               'Polaris Bank',
-               'Stanbic IBTC Bank',
-               'Standard Chartered',
-               'Sterling Bank',
-               'Union Bank',
-               'UBA',
-               'Unity Bank',
-               'Wema Bank',
-               'Zenith Bank'
-           ],
+            show1: false,
            sex: [
                'Male',
-               'Female'
+               'Female',
+               'Rather not say'
+           ],
+           age: [
+               '18 - 24',
+               '25 - 34',
+               '35 + above'
            ],
            ifreferred: false,
            dialog: false,
@@ -228,19 +176,16 @@
            drawer: null,
            referrer_name: '',
             data: {
+                 show1: false,
                     email: '',
                     age: '',
                     checkbox: '',
                     accredited: '',
-                    location: '',
                     gender: '',
                     phone: '',
                     referrer_id: this.$route.query.ref,
-                    bank_name: '',
-                    account_name: '',
-                    account_number: '',
+                    user_name: '',
                     password: '',
-                    password_confirmation: '',
                     full_name: '',
                 }
         }
@@ -255,8 +200,9 @@
     watch: {
        'registerLoadStatus': function(){
          if(this.registerLoadStatus == 2){
-             this.dialog = false;
-            this.$router.push('/login');
+            localStorage.setItem('auth_token', this.$store.getters.getToken);
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('auth_token');
+            this.$router.push(this.$route.query.redirect || '/dashboard');
          }
          else if (this.registerLoadStatus == 3){
              this.dialog = false;

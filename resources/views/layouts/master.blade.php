@@ -7,12 +7,17 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <link rel="manifest" href="{{url('/manifest.json')}}">
-	    <meta name="author" content="">
+        <meta name="author" content="">
+        <meta property="og:site_name" content="Polibet">
+        <meta property="og:title" content="First Peer to Peer Betting Platform" />
+        <meta property="og:description" content="Polibet allows its users to create their own bets, set their options and conditions and share" />
+        <meta property="og:image" itemprop="image" content="/images/favi/pb.png">
+        <meta property="og:type" content="website" />
 	    <title>Polibet</title>
 	    <meta name="csrf-token" content="{{ csrf_token() }}" />
-    	<link rel="shortcut icon" href="/images/favi/pb.png">
+        <link rel="shortcut icon" href="/images/favi/pb.png">
+        <link href="/css/loaderone.css" type="text/css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Material+Icons" rel="stylesheet">
-	    <link href="/css/style.css" rel="stylesheet">
 	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	    <!--[if lt IE 9]>
@@ -39,8 +44,22 @@
 	</head>
 	<body>
 	    <div id="root">
-	        <router-view></router-view>
-	    </div>
-	    <script src="/js/app.js"></script>
+	        <router-view>
+                <h1 style="color:green; position: fixed;
+                top: 35%;
+                left: 50%;
+                transform: translate(-35%, -50%); font-style:italic; font-weight:bolder; font:larger;">Polibet</h1>
+                <div class="spinner">
+                        <div class="blob top"></div>
+                        <div class="blob bottom"></div>
+                        <div class="blob left"></div>
+                        <div class="blob move-blob"></div>
+                      </div>
+            </router-view>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.23/moment-timezone.min.js"></script>
+        <script src="/js/app.js"></script>
 	</body>
 </html>

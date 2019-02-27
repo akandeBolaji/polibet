@@ -1,14 +1,10 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Account;
-use App\Fund;
-use App\Profile;
+use App\customBet;
 use App\Bet;
-use App\Vote;
-use App\signupBonus;
-use App\referralBonus;
 use App\User;
+use App\Option;
 
 class DatabaseSeeder extends Seeder
 {
@@ -30,45 +26,9 @@ class DatabaseSeeder extends Seeder
 
              $this->command->line("Data cleared, starting from blank database.");
          }
-         $users = factory(User::class, 1235)->create();
+         $users = factory(User::class, 50)->create();
 
          $this->command->info('Users Created!');
-
-             factory(Bet::class, 98)->create([
-                 'category' => 1,
-                 'candidate' => 1
-             ]);
-             factory(Bet::class, 90)->create([
-                'category' => 1,
-                'candidate' => 2
-            ]);
-            factory(Bet::class, 40)->create([
-                'category' => 2,
-                'candidate' => 3
-            ]);
-            factory(Bet::class, 45)->create([
-                'category' => 2,
-                'candidate' => 4
-            ]);
-
-
-
-            factory(Vote::class, 98)->create([
-                'category' => 1,
-                'candidate' => 1
-            ]);
-            factory(Vote::class, 90)->create([
-               'category' => 1,
-               'candidate' => 2
-           ]);
-           factory(Vote::class, 40)->create([
-               'category' => 2,
-               'candidate' => 3
-           ]);
-           factory(Vote::class, 45)->create([
-               'category' => 2,
-               'candidate' => 4
-           ]);
 
 
          $this->command->info("Hurrah! Database has been seeded.");

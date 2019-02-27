@@ -50,7 +50,7 @@
                 <v-form>
                   <v-text-field prepend-icon="person" v-validate="'required|email'" v-model="loginForm.email" name="Email" label="Email" type="text"></v-text-field>
                   <span :value="errors.has('Email')" style="color:red">{{ errors.first('Email') }}</span>
-                  <v-text-field id="password"  v-validate="'required|min:6'" prepend-icon="lock" v-model="loginForm.password" name="password" label="Password" type="password"></v-text-field>
+                  <v-text-field id="password" :append-icon="show1 ? 'visibility_off' : 'visibility'" :type="show1 ? 'text' : 'password'"  v-validate="'required|min:6'" prepend-icon="lock" v-model="loginForm.password" name="password" label="Password" @click:append="show1 = !show1"></v-text-field>
                   <span :value="errors.has('password')" style="color:red">{{ errors.first('password') }}</span>
                 </v-form>
               </v-card-text>
@@ -81,7 +81,7 @@
         green--text
         xs12
       >
-        &copy;2018 — <strong>Polibet</strong>
+        &copy;2019 — <strong>Polibet</strong>
       </v-flex>
       </v-layout>
           <v-layout row wrap align-center>
@@ -133,8 +133,27 @@
 
 <script>
   export default {
+       metaInfo: {
+         // if no subcomponents specify a metaInfo.title, this title will be used
+      title: 'Login',
+      // all titles will be injected into this template
+      titleTemplate: '%s | Polibet',
+  meta: [
+    // OpenGraph data (Most widely used)
+    {property: 'og:title', content: 'Login on Polibet'},
+    {property: 'og:site_name', content: 'Polibet'},
+    // The list of types is available here: http://ogp.me/#types
+    {property: 'og:type', content: 'website'},
+    // Should the the same as your canonical link, see below.
+    {property: 'og:url', content: 'http://beta.polibet.ng/create-bet'},
+    {property: 'og:image', content: 'http://beta.polibet.ng/images/favi/pb.png'},
+    // Often the same as your meta description, but not always.
+    {property: 'og:description', content: 'Polibet allows its users to create their own bets, set their options and conditions and share.'}
+  ]
+},
     data() {
         return {
+             show1: false,
       infotext: '',
       info: false,
       dialog: false,
@@ -153,7 +172,7 @@
          if(this.loginLoadStatus == 2){
             localStorage.setItem('auth_token', this.$store.getters.getToken);
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('auth_token');
-            this.$router.push('/dashboard');
+            this.$router.push(this.$route.query.redirect || '/dashboard');
          }
          else if (this.loginLoadStatus == 3){
            this.dialog = false;
@@ -234,7 +253,7 @@
 
         register() {
           this.dialog= true;
-          this.$router.push('/register');
+          this.$router.push({ path: '/register', query: { redirect: this.$route.query.redirect }})
         },
          home() {
           this.dialog= true;
