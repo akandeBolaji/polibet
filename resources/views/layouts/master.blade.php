@@ -8,7 +8,11 @@
         <meta name="description" content="">
         <link rel="manifest" href="{{url('/manifest.json')}}">
         <meta name="author" content="">
-
+        <meta property="og:site_name" content="Polibet">
+        <meta property="og:title" content="First Peer to Peer Betting Platform" />
+        <meta property="og:description" content="Polibet allows its users to create their own bets, set their options and conditions and share" />
+        <meta property="og:image" itemprop="image" content="/images/favi/pb.png">
+        <meta property="og:type" content="website" />
 	    <title>Polibet</title>
 	    <meta name="csrf-token" content="{{ csrf_token() }}" />
     	<link rel="shortcut icon" href="/images/favi/pb.png">
