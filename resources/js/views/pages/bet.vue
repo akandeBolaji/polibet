@@ -665,7 +665,7 @@ export default {
         },
         email(){
 
-          return user.email;
+          return this.user.email;
 
         },
           reference(){
