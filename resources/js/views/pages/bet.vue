@@ -664,11 +664,9 @@ export default {
           return this.fund.real_amount * kobo ;
         },
         email(){
-          let userData = this.$store.getters.getUserData;
-          if (userData.user){
-          return userData.user.email;
-          }
-          return "no email found";
+
+          return user.email;
+
         },
           reference(){
         let text = "";
