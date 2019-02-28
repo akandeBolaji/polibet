@@ -444,7 +444,7 @@ import paystack from 'vue-paystack';
     data() {
         return {
             showverify: true,
-            paystackkey: "pk_live_805b84f9e98bd631a16257be6ff0c3565c60acd8", //paystack public key
+            paystackkey: "pk_test_8e49810c12ca188a313ff2340e5d4d7113fd1acf", //paystack public key
             fund: {
             real_amount: '',
             },
