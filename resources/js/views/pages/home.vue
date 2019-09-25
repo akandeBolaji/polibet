@@ -1,8 +1,9 @@
-<template>
+ <template>
   <v-app id="inspire">
         <v-toolbar fixed>
          <v-toolbar-title class="green--text darken-1">Polibet</v-toolbar-title>
          <v-spacer></v-spacer>
+         <v-app-bar-nav-icon class="hidden-md-and-up" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
          <v-toolbar-side-icon class="hidden-md-and-up" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
          <div class="hidden-sm-and-down">
          <v-btn @click="openStats" class="white--text" color="green darken-2">Check Statistics</v-btn>

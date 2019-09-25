@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
    // return $request->user();
 //});
 
+Route::post('/ussd', 'UssdController@index');
+
 Route::group(['prefix' => 'auth'], function () {
     Route::post('/login','AuthController@authenticate');
     Route::post('/logout','AuthController@logout');

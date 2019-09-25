@@ -11,19 +11,17 @@
 |
 */
 
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-*/
 
-//Route::get('/auth/social/{provider}', 'SocialAuthController@providerRedirect');
-//Route::get('/auth/{provider}/callback', 'SocialAuthController@providerRedirectCallback');
+Route::get('/auth/social/{provider}', 'SocialAuthController@providerRedirect');
+Route::get('/auth/{provider}/callback', 'SocialAuthController@providerRedirectCallback');
 
+Route::post('/ussd', 'UssdController@index');
 Route::get('/{vue?}', function () {
     return view('home');
 })->where('vue', '[\/\w\.-]*')->name('home');
