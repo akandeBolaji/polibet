@@ -1,11 +1,25 @@
 import Vue from 'vue'
-//import VueRouter from 'vue-router'
 import axios from 'axios'
 //import Form from './services/Form'
 import VeeValidate from 'vee-validate'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 //import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import DatetimePicker from 'vuetify-datetime-picker'
+import VueCountdown from '@chenfengyuan/vue-countdown'
+import SocialSharing from 'vue-social-sharing';
+import Meta from 'vue-meta';
+
+Vue.use(Meta);
+
+Vue.use(SocialSharing);
+
+Vue.component(VueCountdown.name, VueCountdown);
+//import 'vuetify-datetime-picker/src/stylus/main.styl'
+
+Vue.use(DatetimePicker);
+
+
 
 
 window.Vue = Vue;

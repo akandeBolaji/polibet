@@ -2,14 +2,10 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\Account;
-use App\Fund;
-use App\Profile;
+use App\customBet;
 use App\Bet;
-use App\Vote;
-use App\signupBonus;
-use App\referralBonus;
 use App\User;
+use App\Option;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,43 +27,52 @@ $factory->define(User::class, function (Faker $faker) {
         'phone' => $faker->phoneNumber,
         'status' => 'pending',
         'full_name' => $faker->name,
-        'referrer_id' => str_random(10),
-        'refer_id' => str_random(10) ,
-        'bet_id' => str_random(4) ,
+        'user_name' => $faker->userName,
+        'rep' => rand(40, 100)
     ];
 });
-
 
 $factory->define(Bet::class, function (Faker $faker) {
     return [
         'user_id' => function () {
-            return User::where('id', '<=' , 1000)->inRandomOrder()->first()->id;
+            return User::where('id', '<=' , 50)->inRandomOrder()->first()->id;
         },
-        'amount' => rand(5000, 20000),
+        'amount' => rand(100, 5000),
         'status' => 'pending',
+        'custom_bet_id' => function () {
+            return customBet::where('id', '<=' , 50)->inRandomOrder()->first()->id;
+        },
         //'candidate' => rand(1, 4),
         //'category' => rand(1,2),
     ];
 });
 
-$factory->define(Vote::class, function (Faker $faker) {
+$factory->define(customBet::class, function (Faker $faker) {
     return [
         'user_id' => function () {
-            return User::where('id', '<=' , 1000)->inRandomOrder()->first()->id;
+            return User::where('id', '<=' , 50)->inRandomOrder()->first()->id;
         },
-        'candidate' => rand(1, 4),
-        'category' => rand(1,2),
+        'status' => 'approved',
+        'custom_bet_id' => function () {
+            return custOmBet::where('id', '<=' , 50)->inRandomOrder()->first()->id;
+        },
+        //'candidate' => rand(1, 4),
+        //'category' => rand(1,2),
     ];
 });
 
-$factory->define(Fund::class, function (Faker $faker) {
+$factory->define(Option::class, function (Faker $faker) {
     return [
-        'user_id' => function () {
-            return User::where('id', '<=' , 1000)->inRandomOrder()->first()->id;
+        'status' => 'approved',
+        'custom_bet_id' => function () {
+            return custOmBet::where('id', '<=' , 50)->inRandomOrder()->first()->id;
         },
-        'amount' => rand(),
+        'value' => $faker->name,
+        //'candidate' => rand(1, 4),
+        //'category' => rand(1,2),
     ];
 });
+
 
 
 

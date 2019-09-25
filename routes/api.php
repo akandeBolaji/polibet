@@ -32,10 +32,22 @@ Route::group(['prefix' => 'auth'], function () {
     Route::get('/get-stats','AuthController@getStats');
 });
 
-Route::group(['middleware' => ['jwt.auth']], function () {
+
+Route::get('/get-bet/{id}','BetController@getBet');
+Route::get('/trending-bets','BetController@trendingBet');
+
+Route::group(['middleware' => ['jwt.auth', 'last_seen']], function () {
     Route::get('/auth/user','AuthController@getAuthUser');
       Route::get('/user','UserController@index');
-      Route::post('/user/add-bet','UserController@addBet');
+      Route::post('/verify-account','AuthController@verifyAccount');
+      Route::post('/edit-user','AuthController@editUser');
+      Route::get('/get-dispute/{id}','BetController@getDispute');
+      Route::post('/add-bet','BetController@addBet');
+      Route::post('/accept-outcome','BetController@acceptOutcome');
+      Route::post('/submit-comment','BetController@submitComment');
+      Route::post('/submit-outcome','BetController@submitOutcome');
+      Route::post('/create-dispute','BetController@createDispute');
+      Route::post('/create-bet','BetController@createBet');
       Route::post('/user/add-fund','UserController@addFund');
       Route::post('/user/withdraw-fund','UserController@withdrawFund');
       Route::post('/user/add-betfriend','UserController@addBetFriend');

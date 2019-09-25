@@ -17,7 +17,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'ip', 'email', 'password', 'phone', 'status', 'full_name', 'referrer_id', 'refer_id', 'bet_id'
+        'name', 'ip', 'email', 'password', 'phone', 'last_seen', 'status', 'full_name', 'user_name', 'referrer_id', 'refer_id', 'bet_id'
     ];
 
     /**
@@ -26,7 +26,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'activation_token', 'ip', 'phone', 'provider', 'provider_id', 'created_at', 'updated_at', 'refer_id', 'referrer_id'
     ];
 
     public function getJWTIdentifier()
@@ -45,9 +45,29 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne('App\Profile');
     }
 
+    public function disputes()
+    {
+        return $this->hasMany('App\Dispute');
+    }
+
+    public function accepts()
+    {
+        return $this->hasMany('App\Accept');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
     public function bets()
     {
         return $this->hasMany('App\Bet');
+    }
+
+    public function customBets()
+    {
+        return $this->hasMany('App\customBet');
     }
 
     public function funds()

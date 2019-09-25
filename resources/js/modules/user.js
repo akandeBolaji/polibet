@@ -14,7 +14,21 @@ export const user = {
   */
 state: {
   userStatus: 0,
-  userData : {},
+  userData : {
+      user: {
+          email: '',
+          account: {
+
+          },
+          custom_bets: [],
+          profile: {
+              full_name: ''
+          },
+          funds: [],
+          withdrawals: []
+      },
+      bet: []
+  },
   statsStatus: 0,
   statsData : {},
   editProfileStatus: 0,

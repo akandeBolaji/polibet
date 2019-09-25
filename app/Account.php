@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
-    protected $hidden = [];
+    protected $hidden = ['created_at', 'updated_at'];
 
     public function user()
     {

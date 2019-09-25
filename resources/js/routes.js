@@ -6,9 +6,26 @@ Vue.use(VueRouter);
 
 let routes = [
     {
+        path: '/bet/:id',
+        component : require('./views/pages/bet'),
+    },
+
+    {
+        path: '/dispute/:id',
+        component : require('./views/pages/dispute'),
+    },
+
+    {
         path: '/',
         query: {ref: ''},
         component : require('./views/pages/home'),
+    },
+
+    {
+        path: '/create-bet',
+        query: {ref: ''},
+        component : require('./views/pages/create'),
+        meta: { requiresAuth: true },
     },
 
     {
@@ -18,7 +35,9 @@ let routes = [
     },
 
     {
-        path: '/login/',
+        name: 'login',
+        query: {redirect: ''},
+        path: '/login',
         component: require('./views/auth/login'),
         meta: { requiresGuest: true },
     },
@@ -30,6 +49,8 @@ let routes = [
     },
 
     {
+        name: 'register',
+        query: {redirect: ''},
         path: '/register',
         component: require('./views/auth/register'),
         meta: { requiresGuest: true },
@@ -44,7 +65,7 @@ let routes = [
     {
         path: '/auth/:token/activate',
         component: require('./views/auth/activate'),
-        meta: { requiresGuest: true },
+       // meta: { requiresGuest: true },
     },
 
     {
@@ -70,7 +91,9 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(m => m.meta.requiresAuth)){
         return helper.check().then(response => {
             if(!response){
-                return next({ path : '/login'})
+                const loginpath = window.location.pathname;
+                console.log(window.location);
+                return next({ path : '/login', query: {redirect: loginpath}})
             }
 
             return next()

@@ -144,6 +144,24 @@
 <script>
 
     export default {
+         metaInfo: {
+         // if no subcomponents specify a metaInfo.title, this title will be used
+      title: 'Password Reset',
+      // all titles will be injected into this template
+      titleTemplate: '%s | Polibet',
+  meta: [
+    // OpenGraph data (Most widely used)
+    {property: 'og:title', content: 'Reset Password'},
+    {property: 'og:site_name', content: 'Polibet'},
+    // The list of types is available here: http://ogp.me/#types
+    {property: 'og:type', content: 'website'},
+    // Should the the same as your canonical link, see below.
+    {property: 'og:url', content: 'http://beta.polibet.ng/create-bet'},
+    {property: 'og:image', content: 'http://beta.polibet.ng/images/favi/pb.png'},
+    // Often the same as your meta description, but not always.
+    {property: 'og:description', content: 'Polibet allows its users to create their own bets, set their options and conditions and share.'}
+  ]
+},
         data() {
             return {
                 drawer: null,

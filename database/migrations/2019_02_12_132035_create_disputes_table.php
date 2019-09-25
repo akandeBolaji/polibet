@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccountsTable extends Migration
+class CreateDisputesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('accounts', function (Blueprint $table) {
+        Schema::create('disputes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('balance')->nullable()->default(0);
-            $table->integer('withdrawal')->nullable()->default(0);
-            $table->integer('fund')->nullable()->default(0);
-            $table->integer('win')->nullable()->default(0);
-            $table->integer('bonus')->nullable()->default(0);
+            $table->integer('option_id')->unsigned();
+            $table->foreign('option_id')->references('id')->on('options')->onDelete('cascade');
+            $table->text('reason')->nullable();
+            $table->string('status')->default('pending');
+            $table->string('random')->nullable();
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ class CreateAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('disputes');
     }
 }

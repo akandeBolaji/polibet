@@ -22,10 +22,8 @@ class CreateProfilesTable extends Migration
             $table->string('email')->nullable();
             $table->string('gender')->nullable();
             $table->string('phone')->nullable();
-            $table->integer('age')->nullable();
+            $table->string('age')->nullable();
             $table->string('location')->nullable();
-            $table->string('referred_by')->nullable();
-            $table->boolean('accredited')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('account_name')->nullable();
             $table->string('account_number')->nullable();
