@@ -160,7 +160,7 @@ class AuthController extends Controller
         $account->balance = 0;
         $user->account()->save($account);
 
-        $user->notify(new Registration($user));
+        //$user->notify(new Registration($user));
 
         $credentials = $request->only('email', 'password');
         $token = JWTAuth::attempt($credentials);

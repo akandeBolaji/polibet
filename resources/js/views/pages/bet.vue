@@ -192,7 +192,7 @@
      </span>
          </span>
 </v-container>
-       <v-footer class="elevation-3" color="green darken-2" height="auto">
+       <v-footer class="elevation-3" color="white darken-2" height="auto">
           <v-layout
 
       justify-center
@@ -207,18 +207,10 @@
         green--text
         xs12
       >
-        &copy;2019 — <strong>Polibet</strong>
+        &copy;2020 — <strong>Polibet</strong>
       </v-flex>
-      </v-layout>
-          <v-layout row wrap align-center>
-          <v-flex xs12>
-            <div class="white--text ml-3 text-xs-center">
-              Made with
-              <v-icon class="white--text">favorite</v-icon>
-              by <a class="white--text" href="http://codebator.me" target="_blank">CodeBator</a>
-            </div>
-          </v-flex>
-        </v-layout>
+      </v-layout >
+
       </v-footer>
        <v-navigation-drawer
       v-model="drawer"
